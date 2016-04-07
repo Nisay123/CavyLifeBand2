@@ -64,9 +64,10 @@ class GuideViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        allViewsLayOut()
+
         updateViewStyle()
         
-        allViewsLayOut()
         
     }
     
@@ -244,7 +245,7 @@ class GuideViewController: BaseViewController {
             self.pushVC(nextView)
         case .BandSuccess:
             
-            if loginUserId == "" {
+            if CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId == "" {
                 nextView.viewStyle = .GuideGender
                 self.pushVC(nextView)
                 return
@@ -261,6 +262,7 @@ class GuideViewController: BaseViewController {
                         self.pushVC(nextView)
                     } else {
                         
+                        UserInfoModelView.shareInterface.updateInfo()
                         // 如果有个人信息 就是直接跳到主页
                         self.pushVC(StoryboardScene.Home.instantiateRootView())
                     }
@@ -290,7 +292,7 @@ class GuideViewController: BaseViewController {
             self.pushVC(nextView)
         case .SettingLocationShare:
             
-            if loginUserId.isEmpty {
+            if CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId.isEmpty {
                 let nextVC = StoryboardScene.Main.instantiateAccountManagerView()
                 nextVC.configView(PhoneSignUpViewModel())
                 pushVC(nextVC)
@@ -391,6 +393,7 @@ class GuideViewController: BaseViewController {
         
         goalView!.sliderStepAttribute(6000, recommandValue: 8000, minValue: 0, maxValue: 20000)
         goalView!.sliderSleepAttribute(5, avgM: 30, recomH: 8, recomM: 30, minH: 2, minM: 0, maxH: 12, maxM: 00)
+        
         middleView.addSubview(goalView!)
         
         

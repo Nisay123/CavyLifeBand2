@@ -68,16 +68,21 @@
 		918435E31C7C2C4E005B6E92 /* UploadPicture_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 918435E21C7C2C4E005B6E92 /* UploadPicture_Ok.json */; };
 		918435EF1C7D629D005B6E92 /* ColorsDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918435EE1C7D629D005B6E92 /* ColorsDefine.swift */; };
 		918435F31C7D6784005B6E92 /* LocalizableDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918435F21C7D6784005B6E92 /* LocalizableDefine.swift */; };
-		91850E271CA8D75C00915C44 /* GetFrendListResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 91850E261CA8D75C00915C44 /* GetFrendListResult.json */; };
 		918E26D31C88307900115C4E /* NSUserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918E26D21C88307900115C4E /* NSUserDefaultsExtension.swift */; };
 		918E26DC1C891CDE00115C4E /* SignInUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918E26DB1C891CDE00115C4E /* SignInUITests.swift */; };
 		9197CF9E1C58BADE00E5D1C9 /* NetRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197CF9D1C58BADE00E5D1C9 /* NetRequestAdapter.swift */; };
 		9199DA251C48D2BF009672C4 /* SignUpTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9199DA241C48D2BF009672C4 /* SignUpTest.swift */; };
+		9199E4881CAE4A7D00397883 /* AccountMangerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9199E4871CAE4A7D00397883 /* AccountMangerProtocol.swift */; };
 		91A09DAD1C488AF400BB1599 /* Sign_In_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91A09DAC1C488AF400BB1599 /* Sign_In_Ok.json */; };
 		91A0FED61C90303500717B83 /* SignUpEmailUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A0FED51C90303500717B83 /* SignUpEmailUITests.swift */; };
 		91A0FED81C9033DD00717B83 /* ForgotPasswdPhoneUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A0FED71C9033DD00717B83 /* ForgotPasswdPhoneUITest.swift */; };
 		91A0FEDA1C903CBE00717B83 /* ForgotPasswdEmailUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A0FED91C903CBE00717B83 /* ForgotPasswdEmailUITest.swift */; };
 		91A1E1DD1C7ACF140059E53B /* ForgotPasswd_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91A1E1DC1C7ACF140059E53B /* ForgotPasswd_Ok.json */; };
+		91A2EC901CB350D200361952 /* AccountInfoSecurityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2EC891CB350D200361952 /* AccountInfoSecurityVC.swift */; };
+		91A2EC911CB350D200361952 /* InfoSecurity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91A2EC8A1CB350D200361952 /* InfoSecurity.storyboard */; };
+		91A2EC921CB350D200361952 /* AccountInfoSecurityCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2EC8C1CB350D200361952 /* AccountInfoSecurityCellViewModel.swift */; };
+		91A2EC931CB350D200361952 /* AccountInfoSecurityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2EC8E1CB350D200361952 /* AccountInfoSecurityCell.swift */; };
+		91A2EC941CB350D200361952 /* AccountInfoSecurityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91A2EC8F1CB350D200361952 /* AccountInfoSecurityCell.xib */; };
 		91BBB6061C671F1800EC1ED1 /* Sign_In_Error.json in Resources */ = {isa = PBXBuildFile; fileRef = 91BBB6051C671F1800EC1ED1 /* Sign_In_Error.json */; };
 		91C3AE501C461EA0006B67AF /* SecurityCode_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91C3AE4F1C461EA0006B67AF /* SecurityCode_Ok.json */; };
 		91C3AE521C462FE5006B67AF /* String_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C3AE511C462FE5006B67AF /* String_Extension.swift */; };
@@ -125,18 +130,18 @@
 		91E1B4FB1CA6A475008ADEE6 /* FriendInfoListOper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E1B4FA1CA6A475008ADEE6 /* FriendInfoListOper.swift */; };
 		91E981291C8937CB00802C5F /* AccountPageSwitchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E981281C8937CB00802C5F /* AccountPageSwitchUITests.swift */; };
 		91EB79581CAC049700ED3E67 /* SearchFrendListResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB79571CAC049700ED3E67 /* SearchFrendListResult.json */; };
-		91EB795A1CAC04BE00ED3E67 /* SearchFrendListResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB79591CAC04BE00ED3E67 /* SearchFrendListResult.json */; };
+		91EB79661CAE075C00ED3E67 /* CommonResultOk.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB795C1CAE075C00ED3E67 /* CommonResultOk.json */; };
+		91EB79671CAE075C00ED3E67 /* ForgotPasswd_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB795D1CAE075C00ED3E67 /* ForgotPasswd_Ok.json */; };
+		91EB79681CAE075C00ED3E67 /* GetFrendListResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB795E1CAE075C00ED3E67 /* GetFrendListResult.json */; };
+		91EB79691CAE075C00ED3E67 /* Profile_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB795F1CAE075C00ED3E67 /* Profile_Ok.json */; };
+		91EB796B1CAE075C00ED3E67 /* SecurityCode_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB79611CAE075C00ED3E67 /* SecurityCode_Ok.json */; };
+		91EB796C1CAE075C00ED3E67 /* Sign_In_Error.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB79621CAE075C00ED3E67 /* Sign_In_Error.json */; };
+		91EB796D1CAE075C00ED3E67 /* Sign_In_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB79631CAE075C00ED3E67 /* Sign_In_Ok.json */; };
+		91EB796E1CAE075C00ED3E67 /* Sign_Up_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB79641CAE075C00ED3E67 /* Sign_Up_Ok.json */; };
+		91EB796F1CAE075C00ED3E67 /* UploadPicture_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91EB79651CAE075C00ED3E67 /* UploadPicture_Ok.json */; };
 		91F0361B1C8D2A1D003E059A /* ProfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F0361A1C8D2A1D003E059A /* ProfileTest.swift */; };
 		91F0361D1C8D57DE003E059A /* CommonResultOk.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F0361C1C8D57DE003E059A /* CommonResultOk.json */; };
 		91F0361F1C8D6BB6003E059A /* Profile_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F0361E1C8D6BB6003E059A /* Profile_Ok.json */; };
-		91F0369B1C8EE433003E059A /* CommonResultOk.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F036931C8EE433003E059A /* CommonResultOk.json */; };
-		91F0369C1C8EE433003E059A /* ForgotPasswd_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F036941C8EE433003E059A /* ForgotPasswd_Ok.json */; };
-		91F0369D1C8EE433003E059A /* Profile_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F036951C8EE433003E059A /* Profile_Ok.json */; };
-		91F0369E1C8EE433003E059A /* SecurityCode_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F036961C8EE433003E059A /* SecurityCode_Ok.json */; };
-		91F0369F1C8EE433003E059A /* Sign_In_Error.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F036971C8EE433003E059A /* Sign_In_Error.json */; };
-		91F036A01C8EE433003E059A /* Sign_In_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F036981C8EE433003E059A /* Sign_In_Ok.json */; };
-		91F036A11C8EE433003E059A /* Sign_Up_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F036991C8EE433003E059A /* Sign_Up_Ok.json */; };
-		91F036A21C8EE433003E059A /* UploadPicture_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F0369A1C8EE433003E059A /* UploadPicture_Ok.json */; };
 		98CE4AAE2910AB63E72ECA83 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CE436F5AB3387A6ACC0F69 /* UIImageExtension.swift */; };
 		C8ECCA2E1C4C7F2D00805826 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECCA2D1C4C7F2D00805826 /* Weather.swift */; };
 		CCC7C82BB91E803A273BED90 /* Pods_CavyLifeBand2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8459E91F9A54D3E7AB8FF576 /* Pods_CavyLifeBand2Tests.framework */; };
@@ -238,17 +243,22 @@
 		918435F01C7D6641005B6E92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		918435F11C7D6644005B6E92 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		918435F21C7D6784005B6E92 /* LocalizableDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizableDefine.swift; sourceTree = "<group>"; };
-		91850E261CA8D75C00915C44 /* GetFrendListResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = GetFrendListResult.json; sourceTree = "<group>"; };
 		918E26D21C88307900115C4E /* NSUserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSUserDefaultsExtension.swift; sourceTree = "<group>"; };
 		918E26DB1C891CDE00115C4E /* SignInUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInUITests.swift; sourceTree = "<group>"; };
 		91931FBDB93D6202BBC98835 /* Pods-CavyLifeBand2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CavyLifeBand2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CavyLifeBand2Tests/Pods-CavyLifeBand2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		9197CF9D1C58BADE00E5D1C9 /* NetRequestAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetRequestAdapter.swift; sourceTree = "<group>"; };
 		9199DA241C48D2BF009672C4 /* SignUpTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTest.swift; sourceTree = "<group>"; };
+		9199E4871CAE4A7D00397883 /* AccountMangerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountMangerProtocol.swift; path = View/Account/AccountMangerProtocol.swift; sourceTree = "<group>"; };
 		91A09DAC1C488AF400BB1599 /* Sign_In_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sign_In_Ok.json; sourceTree = "<group>"; };
 		91A0FED51C90303500717B83 /* SignUpEmailUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpEmailUITests.swift; sourceTree = "<group>"; };
 		91A0FED71C9033DD00717B83 /* ForgotPasswdPhoneUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswdPhoneUITest.swift; sourceTree = "<group>"; };
 		91A0FED91C903CBE00717B83 /* ForgotPasswdEmailUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswdEmailUITest.swift; sourceTree = "<group>"; };
 		91A1E1DC1C7ACF140059E53B /* ForgotPasswd_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ForgotPasswd_Ok.json; sourceTree = "<group>"; };
+		91A2EC891CB350D200361952 /* AccountInfoSecurityVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoSecurityVC.swift; sourceTree = "<group>"; };
+		91A2EC8A1CB350D200361952 /* InfoSecurity.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InfoSecurity.storyboard; sourceTree = "<group>"; };
+		91A2EC8C1CB350D200361952 /* AccountInfoSecurityCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoSecurityCellViewModel.swift; sourceTree = "<group>"; };
+		91A2EC8E1CB350D200361952 /* AccountInfoSecurityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoSecurityCell.swift; sourceTree = "<group>"; };
+		91A2EC8F1CB350D200361952 /* AccountInfoSecurityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountInfoSecurityCell.xib; sourceTree = "<group>"; };
 		91BBB6051C671F1800EC1ED1 /* Sign_In_Error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sign_In_Error.json; sourceTree = "<group>"; };
 		91C3AE4F1C461EA0006B67AF /* SecurityCode_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SecurityCode_Ok.json; sourceTree = "<group>"; };
 		91C3AE511C462FE5006B67AF /* String_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String_Extension.swift; sourceTree = "<group>"; };
@@ -296,18 +306,18 @@
 		91E1B4FA1CA6A475008ADEE6 /* FriendInfoListOper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendInfoListOper.swift; sourceTree = "<group>"; };
 		91E981281C8937CB00802C5F /* AccountPageSwitchUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPageSwitchUITests.swift; sourceTree = "<group>"; };
 		91EB79571CAC049700ED3E67 /* SearchFrendListResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchFrendListResult.json; sourceTree = "<group>"; };
-		91EB79591CAC04BE00ED3E67 /* SearchFrendListResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SearchFrendListResult.json; sourceTree = "<group>"; };
+		91EB795C1CAE075C00ED3E67 /* CommonResultOk.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CommonResultOk.json; sourceTree = "<group>"; };
+		91EB795D1CAE075C00ED3E67 /* ForgotPasswd_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ForgotPasswd_Ok.json; sourceTree = "<group>"; };
+		91EB795E1CAE075C00ED3E67 /* GetFrendListResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = GetFrendListResult.json; sourceTree = "<group>"; };
+		91EB795F1CAE075C00ED3E67 /* Profile_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Profile_Ok.json; sourceTree = "<group>"; };
+		91EB79611CAE075C00ED3E67 /* SecurityCode_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SecurityCode_Ok.json; sourceTree = "<group>"; };
+		91EB79621CAE075C00ED3E67 /* Sign_In_Error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sign_In_Error.json; sourceTree = "<group>"; };
+		91EB79631CAE075C00ED3E67 /* Sign_In_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sign_In_Ok.json; sourceTree = "<group>"; };
+		91EB79641CAE075C00ED3E67 /* Sign_Up_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sign_Up_Ok.json; sourceTree = "<group>"; };
+		91EB79651CAE075C00ED3E67 /* UploadPicture_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = UploadPicture_Ok.json; sourceTree = "<group>"; };
 		91F0361A1C8D2A1D003E059A /* ProfileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTest.swift; sourceTree = "<group>"; };
 		91F0361C1C8D57DE003E059A /* CommonResultOk.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CommonResultOk.json; sourceTree = "<group>"; };
 		91F0361E1C8D6BB6003E059A /* Profile_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Profile_Ok.json; sourceTree = "<group>"; };
-		91F036931C8EE433003E059A /* CommonResultOk.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CommonResultOk.json; sourceTree = "<group>"; };
-		91F036941C8EE433003E059A /* ForgotPasswd_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ForgotPasswd_Ok.json; sourceTree = "<group>"; };
-		91F036951C8EE433003E059A /* Profile_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Profile_Ok.json; sourceTree = "<group>"; };
-		91F036961C8EE433003E059A /* SecurityCode_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SecurityCode_Ok.json; sourceTree = "<group>"; };
-		91F036971C8EE433003E059A /* Sign_In_Error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sign_In_Error.json; sourceTree = "<group>"; };
-		91F036981C8EE433003E059A /* Sign_In_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sign_In_Ok.json; sourceTree = "<group>"; };
-		91F036991C8EE433003E059A /* Sign_Up_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sign_Up_Ok.json; sourceTree = "<group>"; };
-		91F0369A1C8EE433003E059A /* UploadPicture_Ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = UploadPicture_Ok.json; sourceTree = "<group>"; };
 		98CE436F5AB3387A6ACC0F69 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		AD7D0502CC392B502E081F26 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B308C2BA77F2EED99C226A28 /* Pods_CavyLifeBand2UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CavyLifeBand2UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -394,6 +404,7 @@
 		9114D1BF1C97AB05008CB4CE /* User */ = {
 			isa = PBXGroup;
 			children = (
+				9199E4891CAE4B0D00397883 /* Protocol */,
 				9114D1C01C97AB05008CB4CE /* Model */,
 				9114D1C21C97AB05008CB4CE /* ModelView */,
 				9114D1C51C97AB05008CB4CE /* View */,
@@ -584,13 +595,14 @@
 		917DA96A1C3B8EB700FF675D /* CavyLifeBand2 */ = {
 			isa = PBXGroup;
 			children = (
+				91A2EC881CB350D200361952 /* InfoSecurity */,
+				91EB795B1CAE075C00ED3E67 /* json */,
 				913D0BD51C3FA126006EE7F8 /* Common */,
 				91E1B49E1CA510BD008ADEE6 /* Contacts */,
 				91E1B49A1CA50DEF008ADEE6 /* AccountInfo */,
 				9114D2001C99314E008CB4CE /* Home */,
 				9114D1BF1C97AB05008CB4CE /* User */,
 				9114D1BC1C97A1BB008CB4CE /* Resource */,
-				91F036921C8EE433003E059A /* json */,
 				913D0BCF1C3FA126006EE7F8 /* Camera */,
 				913D0BD21C3FA126006EE7F8 /* Weather */,
 				91C3ED891C3BB685000A414D /* Localization */,
@@ -604,6 +616,7 @@
 		917DA97F1C3B8EB800FF675D /* CavyLifeBand2Tests */ = {
 			isa = PBXGroup;
 			children = (
+				91C3AE4C1C461E61006B67AF /* json */,
 				4CC498FF1CA9102800B2EE85 /* ContactsTest */,
 				9199DA241C48D2BF009672C4 /* SignUpTest.swift */,
 				912D29DA1C6088B5005A06E9 /* SignInTest.swift */,
@@ -611,7 +624,6 @@
 				918435DC1C7AF624005B6E92 /* SecurityCodeTest.swift */,
 				918435E01C7C2B8E005B6E92 /* UploadPicture.swift */,
 				91F0361A1C8D2A1D003E059A /* ProfileTest.swift */,
-				91C3AE4C1C461E61006B67AF /* json */,
 				917DA9821C3B8EB800FF675D /* Info.plist */,
 			);
 			path = CavyLifeBand2Tests;
@@ -632,6 +644,42 @@
 			path = CavyLifeBand2UITests;
 			sourceTree = "<group>";
 		};
+		9199E4891CAE4B0D00397883 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				9199E4871CAE4A7D00397883 /* AccountMangerProtocol.swift */,
+			);
+			name = Protocol;
+			sourceTree = "<group>";
+		};
+		91A2EC881CB350D200361952 /* InfoSecurity */ = {
+			isa = PBXGroup;
+			children = (
+				91A2EC891CB350D200361952 /* AccountInfoSecurityVC.swift */,
+				91A2EC8A1CB350D200361952 /* InfoSecurity.storyboard */,
+				91A2EC8B1CB350D200361952 /* Model */,
+				91A2EC8D1CB350D200361952 /* View */,
+			);
+			path = InfoSecurity;
+			sourceTree = "<group>";
+		};
+		91A2EC8B1CB350D200361952 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				91A2EC8C1CB350D200361952 /* AccountInfoSecurityCellViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		91A2EC8D1CB350D200361952 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				91A2EC8E1CB350D200361952 /* AccountInfoSecurityCell.swift */,
+				91A2EC8F1CB350D200361952 /* AccountInfoSecurityCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		91C3AE4C1C461E61006B67AF /* json */ = {
 			isa = PBXGroup;
 			children = (
@@ -645,8 +693,9 @@
 				91C3AE4F1C461EA0006B67AF /* SecurityCode_Ok.json */,
 				91A1E1DC1C7ACF140059E53B /* ForgotPasswd_Ok.json */,
 			);
-			path = json;
-			sourceTree = "<group>";
+			name = json;
+			path = CavyLifeBand2Tests/json;
+			sourceTree = SOURCE_ROOT;
 		};
 		91C3ED891C3BB685000A414D /* Localization */ = {
 			isa = PBXGroup;
@@ -820,19 +869,18 @@
 			path = WebApi;
 			sourceTree = "<group>";
 		};
-		91F036921C8EE433003E059A /* json */ = {
+		91EB795B1CAE075C00ED3E67 /* json */ = {
 			isa = PBXGroup;
 			children = (
-				91EB79591CAC04BE00ED3E67 /* SearchFrendListResult.json */,
-				91850E261CA8D75C00915C44 /* GetFrendListResult.json */,
-				91F036931C8EE433003E059A /* CommonResultOk.json */,
-				91F036941C8EE433003E059A /* ForgotPasswd_Ok.json */,
-				91F036951C8EE433003E059A /* Profile_Ok.json */,
-				91F036961C8EE433003E059A /* SecurityCode_Ok.json */,
-				91F036971C8EE433003E059A /* Sign_In_Error.json */,
-				91F036981C8EE433003E059A /* Sign_In_Ok.json */,
-				91F036991C8EE433003E059A /* Sign_Up_Ok.json */,
-				91F0369A1C8EE433003E059A /* UploadPicture_Ok.json */,
+				91EB795C1CAE075C00ED3E67 /* CommonResultOk.json */,
+				91EB795D1CAE075C00ED3E67 /* ForgotPasswd_Ok.json */,
+				91EB795E1CAE075C00ED3E67 /* GetFrendListResult.json */,
+				91EB795F1CAE075C00ED3E67 /* Profile_Ok.json */,
+				91EB79611CAE075C00ED3E67 /* SecurityCode_Ok.json */,
+				91EB79621CAE075C00ED3E67 /* Sign_In_Error.json */,
+				91EB79631CAE075C00ED3E67 /* Sign_In_Ok.json */,
+				91EB79641CAE075C00ED3E67 /* Sign_Up_Ok.json */,
+				91EB79651CAE075C00ED3E67 /* UploadPicture_Ok.json */,
 			);
 			name = json;
 			path = CavyLifeBand2Tests/json;
@@ -964,35 +1012,36 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91F0369E1C8EE433003E059A /* SecurityCode_Ok.json in Resources */,
-				91F0369F1C8EE433003E059A /* Sign_In_Error.json in Resources */,
-				91EB795A1CAC04BE00ED3E67 /* SearchFrendListResult.json in Resources */,
+				91EB79671CAE075C00ED3E67 /* ForgotPasswd_Ok.json in Resources */,
 				913D0BD91C3FA126006EE7F8 /* Weather.storyboard in Resources */,
-				91F0369C1C8EE433003E059A /* ForgotPasswd_Ok.json in Resources */,
 				91D192921C7DA87B00482019 /* colors.txt in Resources */,
 				91E1B4C21CA510BD008ADEE6 /* Contacts.storyboard in Resources */,
 				91C3ED841C3BB637000A414D /* Localizable.strings in Resources */,
+				91EB79681CAE075C00ED3E67 /* GetFrendListResult.json in Resources */,
 				9114D1EC1C97AB05008CB4CE /* Main.storyboard in Resources */,
-				91F036A21C8EE433003E059A /* UploadPicture_Ok.json in Resources */,
 				913D0BD81C3FA126006EE7F8 /* Camera.storyboard in Resources */,
 				9114D1BE1C97A1BB008CB4CE /* GuideLinking.gif in Resources */,
+				91EB796C1CAE075C00ED3E67 /* Sign_In_Error.json in Resources */,
 				917DA9761C3B8EB700FF675D /* LaunchScreen.storyboard in Resources */,
 				9114D2031C993166008CB4CE /* Home.storyboard in Resources */,
+				91EB796B1CAE075C00ED3E67 /* SecurityCode_Ok.json in Resources */,
+				91EB79691CAE075C00ED3E67 /* Profile_Ok.json in Resources */,
+				91A2EC941CB350D200361952 /* AccountInfoSecurityCell.xib in Resources */,
 				91EB79581CAC049700ED3E67 /* SearchFrendListResult.json in Resources */,
 				91E1B49D1CA50E0D008ADEE6 /* AccountInfo.storyboard in Resources */,
 				91E1B4EA1CA51F2C008ADEE6 /* ContactsAccountBadgeCell.xib in Resources */,
 				91E1B4D81CA510BD008ADEE6 /* ContactsAddFriendCell.xib in Resources */,
+				91A2EC911CB350D200361952 /* InfoSecurity.storyboard in Resources */,
 				91E1B4CC1CA510BD008ADEE6 /* ContactsFriendListCell.xib in Resources */,
+				91EB79661CAE075C00ED3E67 /* CommonResultOk.json in Resources */,
 				91E1B4CF1CA510BD008ADEE6 /* ContactsPersonInfoCell.xib in Resources */,
 				91D192941C7DB8DE00482019 /* Assets.xcassets in Resources */,
-				91F0369B1C8EE433003E059A /* CommonResultOk.json in Resources */,
-				91F036A11C8EE433003E059A /* Sign_Up_Ok.json in Resources */,
-				91F036A01C8EE433003E059A /* Sign_In_Ok.json in Resources */,
+				91EB796F1CAE075C00ED3E67 /* UploadPicture_Ok.json in Resources */,
+				91EB796E1CAE075C00ED3E67 /* Sign_Up_Ok.json in Resources */,
+				91EB796D1CAE075C00ED3E67 /* Sign_In_Ok.json in Resources */,
 				917DA99E1C3BA12E00FF675D /* InfoPlist.strings in Resources */,
 				91E1B4D11CA510BD008ADEE6 /* ContactsPersonInfoListCell.xib in Resources */,
 				91E1B4CA1CA510BD008ADEE6 /* ContactsLetterView.xib in Resources */,
-				91850E271CA8D75C00915C44 /* GetFrendListResult.json in Resources */,
-				91F0369D1C8EE433003E059A /* Profile_Ok.json in Resources */,
 				9114D1F81C97AB05008CB4CE /* GoalView.xib in Resources */,
 				91E1B4C81CA510BD008ADEE6 /* ContactsFriendQualityCell.xib in Resources */,
 				9114D1F31C97AB05008CB4CE /* Guide.storyboard in Resources */,
@@ -1172,6 +1221,7 @@
 				9122AB1A1C7D766C00E2C31E /* StoryboardDefine.swift in Sources */,
 				91E1B4C51CA510BD008ADEE6 /* ContactsBaseViewController.swift in Sources */,
 				91671C9A1C9AC5A10090BB3F /* HomeUserInfo.swift in Sources */,
+				9199E4881CAE4A7D00397883 /* AccountMangerProtocol.swift in Sources */,
 				91E1B4FB1CA6A475008ADEE6 /* FriendInfoListOper.swift in Sources */,
 				9114D1F71C97AB05008CB4CE /* GoalView.swift in Sources */,
 				9114D1F21C97AB05008CB4CE /* UserProtocolView.swift in Sources */,
@@ -1183,6 +1233,7 @@
 				91E1B4C11CA510BD008ADEE6 /* ContactsSortAndGroup.swift in Sources */,
 				9114D1F01C97AB05008CB4CE /* SendSafetyCodeButton.swift in Sources */,
 				91E1B4E81CA51E7F008ADEE6 /* ContactsAccountInfoVC.swift in Sources */,
+				91A2EC931CB350D200361952 /* AccountInfoSecurityCell.swift in Sources */,
 				91D274C91C8685A6004F1AA7 /* BaseViewController.swift in Sources */,
 				91E1B4DA1CA510BD008ADEE6 /* ContactsFriendListVC.swift in Sources */,
 				9114D1E61C97AB05008CB4CE /* UserInfoModelView.swift in Sources */,
@@ -1198,6 +1249,7 @@
 				9114D1F11C97AB05008CB4CE /* SignInViewController.swift in Sources */,
 				91E1B4F91CA69CAA008ADEE6 /* FriendInfoListRealm.swift in Sources */,
 				91E1B4EE1CA523B5008ADEE6 /* ContactsFriendListViewModel.swift in Sources */,
+				91A2EC901CB350D200361952 /* AccountInfoSecurityVC.swift in Sources */,
 				91E1B4DB1CA510BD008ADEE6 /* ContactRecommendFriendView.swift in Sources */,
 				91E1B4D71CA510BD008ADEE6 /* ContactsAddFriendCell.swift in Sources */,
 				9114D1E51C97AB05008CB4CE /* AccountModelView.swift in Sources */,
@@ -1213,6 +1265,7 @@
 				9114D1E71C97AB05008CB4CE /* AccountManagerBaseViewController.swift in Sources */,
 				91E1B4CD1CA510BD008ADEE6 /* ContactsNewFriendVC.swift in Sources */,
 				91E1B4CE1CA510BD008ADEE6 /* ContactsPersonInfoCell.swift in Sources */,
+				91A2EC921CB350D200361952 /* AccountInfoSecurityCellViewModel.swift in Sources */,
 				9114D2071C994C9D008CB4CE /* RootViewController.swift in Sources */,
 				918E26D31C88307900115C4E /* NSUserDefaultsExtension.swift in Sources */,
 				9114D1E91C97AB05008CB4CE /* AccountTextField.swift in Sources */,
@@ -1328,6 +1381,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1373,6 +1427,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1435,7 +1490,7 @@
 					"\"XLActionController\"",
 					"-ObjC",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"UITEST\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cavytech.CavyLifeBand2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -1473,7 +1528,7 @@
 					"\"XLActionController\"",
 					"-ObjC",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"UITEST\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cavytech.CavyLifeBand2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
