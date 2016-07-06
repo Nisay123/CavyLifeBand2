@@ -10,44 +10,51 @@ import UIKit
 import Log
 import RealmSwift
 import EZSwiftExtensions
+                                                               
+class AccountInfoSecurityVC: UIViewController, UITableViewDelegate, UITableViewDataSource, BaseViewControllerPresenter {
 
-class AccountInfoSecurityVC: ContactsBaseViewController, UITableViewDelegate, UITableViewDataSource {
-
+    @IBOutlet weak var bottomView: UIView!
+    
     @IBOutlet weak var tableView: UITableView!
     
+    var navTitle: String { return L10n.HomeLifeListTitleInfoOpen.string }
+    
     var realm: Realm = try! Realm()
-    var userId: String { return CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId}
+    var userId: String { return CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId }
     
     var dataSources = [AccountInfoSecurityListDataSource]()
     
+    var notificationToken: NotificationToken?
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = UIColor(named: .HomeViewMainColor)
-        
         self.navBar?.translucent = false
+        self.bottomView.layer.cornerRadius = CavyDefine.commonCornerRadius
         
-        loadFriendData()
+        addCellDataSource(AccountInfoSecurityHeightCellViewModel(realm: realm))
+        addCellDataSource(AccountInfoSecurityWeightCellViewModel(realm: realm))
+        addCellDataSource(AccountInfoSecurityBirthdayCellViewModel(realm: realm))
         
         addTableView()
+        
+        updateNavUI()
+        
         
     }
     
     /**
-     加载数据
+     添加数据源
+     
+     - parameter dataSource:
      */
-    func loadFriendData() {
-
-        let userInfoModel = UserInfoOperate().queryUserInfo(userId)
+    func addCellDataSource(dataSource: AccountInfoSecurityListDataSource) {
         
-        if userInfoModel != nil {
-            
-            self.dataSources = [AccountInfoSecurityCellViewModel(title: L10n.ContactsShowInfoHeight.string, isOpenOrNot: userInfoModel!.isOpenHeight), AccountInfoSecurityCellViewModel(title: L10n.ContactsShowInfoWeight.string, isOpenOrNot: userInfoModel!.isOpenWeight), AccountInfoSecurityCellViewModel(title: L10n.ContactsShowInfoBirth.string, isOpenOrNot: userInfoModel!.isOpenBirthday)]
-
-        }
-
+        dataSources.append(dataSource)
+        
     }
-
     
     /**
      添加TableView
@@ -60,35 +67,20 @@ class AccountInfoSecurityVC: ContactsBaseViewController, UITableViewDelegate, UI
         tableView.dataSource = self
         
     }
+    
+    /**
+     返回按钮处理
+     */
+    func onLeftBtnBack() {
+        
+        self.navigationController?.popViewControllerAnimated(false)
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.HomeLeftOnClickMenu.rawValue, object: nil)
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: - UITableViewDelegate
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
-        return 50
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-       
-        let cell = tableView.dequeueReusableCellWithIdentifier("infoSecurityIdentifier") as! AccountInfoSecurityCell
-
-        cell.configure(dataSources, index: indexPath.row)
-        
-        return cell
     }
 
     /*
@@ -101,4 +93,33 @@ class AccountInfoSecurityVC: ContactsBaseViewController, UITableViewDelegate, UI
     }
     */
 
+}
+
+extension AccountInfoSecurityVC {
+    
+    // MARK: - UITableViewDelegate
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSources.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        return 50
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("infoSecurityIdentifier") as! AccountInfoSecurityCell
+        
+        cell.configure(dataSources[indexPath.row])
+        
+        return cell
+    }
+    
 }

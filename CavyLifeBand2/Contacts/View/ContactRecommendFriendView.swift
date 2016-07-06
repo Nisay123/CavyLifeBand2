@@ -18,9 +18,15 @@ class ContactRecommendFriendView: UIView {
         super.init(frame: frame)
         
         // 添加 SearchController 和 TableView
-        tableView.frame = CGRectMake(0, 44, ez.screenWidth, ez.screenHeight)
+        tableView.frame = CGRectMake(0, 44, ez.screenWidth, frame.height - 44)
         addSubview(tableView)
         tableView.backgroundColor = UIColor(named: .HomeViewMainColor)
+        
+        tableView.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20)
+        tableView.separatorStyle = .SingleLine
+        tableView.separatorColor = UIColor(named: .LColor)
+        tableView.tableFooterView = UIView()
+        
         self.backgroundColor = UIColor(named: .HomeViewMainColor)
     }
     
@@ -32,7 +38,7 @@ class ContactRecommendFriendView: UIView {
     func addSearchBar(searchBar: UISearchBar) {
         
         addSubview(searchBar)
-        searchBar.snp_makeConstraints { (make) in
+        searchBar.snp_makeConstraints { make in
             make.top.left.right.equalTo(self)
         }
         

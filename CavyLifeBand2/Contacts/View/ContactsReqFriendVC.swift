@@ -10,8 +10,8 @@ import UIKit
 import MHRotaryKnob
 import Log
 
-class ContactsReqFriendVC: ContactsBaseViewController {
-
+class ContactsReqFriendVC: UIViewController, BaseViewControllerPresenter, UITextFieldDelegate {
+    
     enum RequestStyle {
         
         case AddFriend
@@ -20,74 +20,82 @@ class ContactsReqFriendVC: ContactsBaseViewController {
         
     }
     
+    /// 最大输入18个字符
+    let MAXCOUNT = 18
+    
+    var viewModel: ContactsReqFriendPortocols?
+    
+    @IBOutlet weak var textFieldView: UIView!
+    
     /// TextField
     @IBOutlet weak var requestTextField: UITextField!
     
     /// Button
-    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var sendButton: MainPageButton!
     
     var requestStyle: RequestStyle = .AddFriend
+    
+    var navTitle: String {
+        
+        return viewModel?.navTitle ?? ""
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(named: .HomeViewMainColor)
-
+        
+        requestTextField.delegate = self
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsReqFriendVC.textChange(_:)), name: UITextFieldTextDidChangeNotification, object: nil)
+        
+        updateNavUI()
+        
         requestViewLayout()
         
     }
     
+    
+    /**
+     点击发送按钮
+     
+     - parameter sender:
+     */
     @IBAction func sendRequest(sender: AnyObject) {
         
-        switch requestStyle {
-            
-        // 添加好友的回调
-        case .AddFriend:
-            Log.info("好友请求\(requestTextField.text)")
-            
-        // 修改备注的回调
-        case .ChangeNotesName:
-            Log.info("修改备注\(requestTextField.text)")
-            
-        // 修改自己的昵称
-        case .ChangeSelfName:
-            Log.info("修改昵称\(requestTextField.text)")
-            
-        }
-    
-        // 返回前页
-        self.popVC()
+        viewModel?.textFieldTitle = requestTextField.text ?? ""
+        viewModel?.onClickButton()
+        
     }
     
     
+    
+    /**
+     配置视图
+     
+     - parameter dataSource:
+     */
+    func viewConfig(model: ContactsReqFriendPortocols) {
+        
+        self.viewModel = model
+        
+    }
+    
+    /**
+     布局
+     */
     func requestViewLayout() {
         
-        sendButton.layer.cornerRadius = CavyDefine.commonCornerRadius
-        sendButton.setTitleColor(UIColor(named: .MainPageBtnText), forState: .Normal)
-        sendButton.snp_makeConstraints { (make) -> Void in
-            
-            make.top.equalTo(requestTextField).offset(requestTextField.frame.height)
-            
-        }
+        textFieldView.layer.cornerRadius = CavyDefine.commonCornerRadius
+        sendButton.layer.masksToBounds = true
+        sendButton.layer.cornerRadius = 3
         
-        switch requestStyle {
-
-            // 请求添加好友
-        case .AddFriend:
-                requestTextField.placeholder = "  \(L10n.ContactsRequestPlaceHolder.string)"
-                sendButton.setTitle(L10n.ContactsRequestSendButton.string, forState: .Normal)
-            
-            // 修改备注名字
-        case .ChangeNotesName:
-                requestTextField.placeholder = "  \(L10n.ContactsChangeNotesNamePlaceHolder.string)"
-                sendButton.setTitle(L10n.ContactsChangeNotesNameButton.string, forState: .Normal)
-            
-            // 修改自己的昵称
-        case .ChangeSelfName:
-            requestTextField.placeholder = "  \(L10n.ContactsChangeSelfNamePlaceHolder.string)"
-            sendButton.setTitle(L10n.ContactsChangeNotesNameButton.string, forState: .Normal)
-            
-        }
+        sendButton.setTitle(viewModel?.bottonTitle, forState: .Normal)
+        
+        requestTextField.placeholder = viewModel?.placeholderText
+        requestTextField.text = viewModel?.textFieldTitle
+        requestTextField.textColor = UIColor(named: .TextFieldTextColor)
         
     }
     
@@ -96,15 +104,63 @@ class ContactsReqFriendVC: ContactsBaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    
+    func textChange(noti: NSNotification) {
+        
+        if requestTextField.markedTextRange != nil {
+            
+            return
+        }
+        
+        let string = requestTextField.text
+        
+        
+        requestTextField.text = confineTextFiledText(string) as String
+        
     }
-    */
-
+    
+    
+    //MARK: UITextFieldDelegate
+    
+    /**
+     限制输入的字符长度为18
+     */
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        
+        
+        if string.length == 0 || textField.markedTextRange != nil {
+            
+            return true
+        }
+        
+        let text: NSString =  (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        
+        if text.length > MAXCOUNT {
+            
+            return false
+        }
+        
+        return true
+        
+    }
+    
+    
+    
+    func confineTextFiledText(text: NSString?) -> NSString {
+        
+        let length = text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        var newText = text
+        
+        if length > MAXCOUNT {
+            
+            newText  = confineTextFiledText(newText?.substringToIndex(newText!.length - 1))
+            
+        }
+        
+        return newText!
+        
+    }
+    
 }

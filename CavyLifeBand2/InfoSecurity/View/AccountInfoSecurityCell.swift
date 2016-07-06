@@ -31,17 +31,18 @@ class AccountInfoSecurityCell: UITableViewCell {
         
         super.awakeFromNib()
         
-        titleLabel.textColor = UIColor(named: .ContactsTitleColor)
+        titleLabel.textColor = UIColor(named: .EColor)
+        titleLabel.font = UIFont.mediumSystemFontOfSize(16.0)
         
     }
     
-    func configure(dataSource: [AccountInfoSecurityListDataSource], index: Int) {
+    func configure(dataSource: AccountInfoSecurityListDataSource) {
         
-        self.dataSource = dataSource[index]
+        self.dataSource = dataSource
         
-        infoSwitch.on = dataSource[index].isOpen
+        infoSwitch.on = dataSource.isOpen
         
-        titleLabel.text = dataSource[index].title
+        titleLabel.text = dataSource.title
         
     }
 

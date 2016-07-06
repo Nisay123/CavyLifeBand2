@@ -13,6 +13,9 @@ class HightView: UIView, RulerViewDelegate {
     var titleLab = UILabel()
     var heightLabel = UILabel()
     var heightRuler = RulerView()
+    var heightValue: Int {
+        return self.heightRuler.nowHeight
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,46 +36,45 @@ class HightView: UIView, RulerViewDelegate {
         self.addSubview(heightLabel)
         self.addSubview(heightRuler)
         
+        heightRuler.snp_makeConstraints { make -> Void in
+            make.size.equalTo(CGSizeMake(80, heightRulerHeight))
+            make.centerY.equalTo(self)
+            make.left.equalTo(self).offset(middleViewWidth - heightRulerWidth - horizontalInset / 2)
+        }
+        heightRuler.rulerDelegate = self
+        heightRuler.initHeightRuler(.HeightRuler)
+        heightLabel.text = heightRuler.rulerScroll.currentValue
+        
         titleLab.text = L10n.GuideHeight.string
-        titleLab.font = UIFont.systemFontOfSize(18)
-        titleLab.textColor = UIColor(named: .GuideColorCC)
+        titleLab.font = UIFont.mediumSystemFontOfSize(18)
+        titleLab.textColor = UIColor(named: .EColor)
         titleLab.textAlignment = .Center
-        titleLab.snp_makeConstraints { (make) -> Void in
+        titleLab.snp_makeConstraints { make -> Void in
             make.size.equalTo(CGSizeMake(CavyDefine.spacingWidth25 * 23, 18))
             make.centerX.equalTo(self)
             make.top.equalTo(self).offset(CavyDefine.spacingWidth25 * 2)
         }
         
         heightLabel.text = "160"
-        heightLabel.font = UIFont.systemFontOfSize(48)
-        heightLabel.textColor = UIColor(named: .GuideColorCC)
+        heightLabel.font = UIFont.mediumSystemFontOfSize(50)
+        heightLabel.textColor = UIColor(named: .EColor)
         heightLabel.textAlignment = NSTextAlignment.Center
-        heightLabel.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(CavyDefine.spacingWidth25 * 23, 48))
+        heightLabel.snp_makeConstraints { make -> Void in
+            make.size.equalTo(CGSizeMake(heightRulerHeight, 48))
             make.centerX.equalTo(self)
             make.top.equalTo(self).offset(CavyDefine.spacingWidth25 * 11 + 18)
         }
         
         CMLabel.text = "CM"
-        CMLabel.font = UIFont.systemFontOfSize(30)
-        CMLabel.textColor = UIColor(named: .GuideColorCC)
+        CMLabel.font = UIFont.mediumSystemFontOfSize(30)
+        CMLabel.textColor = UIColor(named: .EColor)
         CMLabel.textAlignment = NSTextAlignment.Center
-        CMLabel.snp_makeConstraints { (make) -> Void in
+        CMLabel.snp_makeConstraints { make -> Void in
             make.size.equalTo(CGSizeMake(80, 30))
             make.centerX.equalTo(self)
             make.top.equalTo(self).offset(CavyDefine.spacingWidth25 * 12 + 66)
         }
         
-        heightRuler.backgroundColor = UIColor.blackColor()
-
-        heightRuler.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(80, CavyDefine.spacingWidth25 * 28))
-            make.centerY.equalTo(self)
-            make.left.equalTo(self).offset(CavyDefine.spacingWidth25 * 17)
-        }
-        heightRuler.rulerDelegate = self
-        heightRuler.initHeightRuler(13, lineCount: 10, style: .HeightRuler)
-        heightLabel.text = heightRuler.rulerScroll.currentValue
     }
     
     // 时刻更新 身高 刻度尺的当前值

@@ -43,6 +43,29 @@ struct StoryboardScene {
       return StoryboardScene.AccountInfo.ContactsAccountInfoVCScene.viewController() as! ContactsAccountInfoVC
     }
   }
+  enum AlarmClock: String, StoryboardSceneType {
+    static let storyboardName = "AlarmClock"
+
+    case AddClockViewControllerScene = "AddClockViewController"
+    static func instantiateAddClockViewController() -> AddClockViewController {
+      return StoryboardScene.AlarmClock.AddClockViewControllerScene.viewController() as! AddClockViewController
+    }
+
+    case IntelligentClockViewControllerScene = "IntelligentClockViewController"
+    static func instantiateIntelligentClockViewController() -> IntelligentClockViewController {
+      return StoryboardScene.AlarmClock.IntelligentClockViewControllerScene.viewController() as! IntelligentClockViewController
+    }
+
+    case RemindersSettingViewControllerScene = "RemindersSettingViewController"
+    static func instantiateRemindersSettingViewController() -> RemindersSettingViewController {
+      return StoryboardScene.AlarmClock.RemindersSettingViewControllerScene.viewController() as! RemindersSettingViewController
+    }
+
+    case SafetySettingViewControllerScene = "SafetySettingViewController"
+    static func instantiateSafetySettingViewController() -> SafetySettingViewController {
+      return StoryboardScene.AlarmClock.SafetySettingViewControllerScene.viewController() as! SafetySettingViewController
+    }
+  }
   enum Camera: String, StoryboardSceneType {
     static let storyboardName = "Camera"
 
@@ -111,8 +134,13 @@ struct StoryboardScene {
     }
 
     case LeftViewScene = "LeftView"
-    static func instantiateLeftView() -> LeftViewController {
-      return StoryboardScene.Home.LeftViewScene.viewController() as! LeftViewController
+    static func instantiateLeftView() -> LeftMenViewController {
+      return StoryboardScene.Home.LeftViewScene.viewController() as! LeftMenViewController
+    }
+
+    case RightViewScene = "RightView"
+    static func instantiateRightView() -> RightViewController {
+      return StoryboardScene.Home.RightViewScene.viewController() as! RightViewController
     }
 
     case RootViewScene = "RootView"
@@ -144,18 +172,66 @@ struct StoryboardScene {
       return StoryboardScene.Main.MainPageViewScene.viewController() as! MainPageViewController
     }
 
-    case PageViewScene = "PageView"
-    static func instantiatePageView() -> PageViewController {
-      return StoryboardScene.Main.PageViewScene.viewController() as! PageViewController
-    }
-
     case SignInViewScene = "SignInView"
     static func instantiateSignInView() -> SignInViewController {
       return StoryboardScene.Main.SignInViewScene.viewController() as! SignInViewController
     }
   }
-  enum Weather: StoryboardSceneType {
-    static let storyboardName = "Weather"
+  enum PK: String, StoryboardSceneType {
+    static let storyboardName = "PK"
+
+    case PKIntroduceVCScene = "PKIntroduceVC"
+    static func instantiatePKIntroduceVC() -> PKIntroduceVC {
+      return StoryboardScene.PK.PKIntroduceVCScene.viewController() as! PKIntroduceVC
+    }
+
+    case PKInvitationVCScene = "PKInvitationVC"
+    static func instantiatePKInvitationVC() -> PKInvitationVC {
+      return StoryboardScene.PK.PKInvitationVCScene.viewController() as! PKInvitationVC
+    }
+
+    case PKListVCScene = "PKListVC"
+    static func instantiatePKListVC() -> PKListVC {
+      return StoryboardScene.PK.PKListVCScene.viewController() as! PKListVC
+    }
+
+    case PKRulesVCScene = "PKRulesVC"
+    static func instantiatePKRulesVC() -> PKRulesVC {
+      return StoryboardScene.PK.PKRulesVCScene.viewController() as! PKRulesVC
+    }
+
+    case PKSelectOppTVCScene = "PKSelectOppTVC"
+    static func instantiatePKSelectOppTVC() -> PKSelectOppTVC {
+      return StoryboardScene.PK.PKSelectOppTVCScene.viewController() as! PKSelectOppTVC
+    }
+  }
+  enum Relate: String, StoryboardSceneType {
+    static let storyboardName = "Relate"
+
+    case AboutVCScene = "AboutVC"
+    static func instantiateAboutVC() -> AboutVC {
+      return StoryboardScene.Relate.AboutVCScene.viewController() as! AboutVC
+    }
+
+    case FunctionIntroduceVCScene = "FunctionIntroduceVC"
+    static func instantiateFunctionIntroduceVC() -> FunctionIntroduceVC {
+      return StoryboardScene.Relate.FunctionIntroduceVCScene.viewController() as! FunctionIntroduceVC
+    }
+
+    case HelpAndFeedbackListVCScene = "HelpAndFeedbackListVC"
+    static func instantiateHelpAndFeedbackListVC() -> HelpAndFeedbackListVC {
+      return StoryboardScene.Relate.HelpAndFeedbackListVCScene.viewController() as! HelpAndFeedbackListVC
+    }
+
+    case HelpAndFeedbackVCScene = "HelpAndFeedbackVC"
+    static func instantiateHelpAndFeedbackVC() -> HelpAndFeedbackVC {
+      return StoryboardScene.Relate.HelpAndFeedbackVCScene.viewController() as! HelpAndFeedbackVC
+    }
+
+    case RelateAppVCScene = "RelateAppVC"
+    static func instantiateRelateAppVC() -> RelateAppVC {
+      return StoryboardScene.Relate.RelateAppVCScene.viewController() as! RelateAppVC
+    }
   }
 }
 

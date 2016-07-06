@@ -18,6 +18,7 @@ protocol FriendInfoListDelegate {
     
     func queryFriendList() -> FriendInfoListRealm?
     func saveFriendList(friendList: FriendInfoListRealm)
+    func queryFriendListByLetter(letter: String) -> Results<FriendInfoRealm>?
     func isExistFriendList() -> Bool
     
 }
@@ -30,8 +31,6 @@ extension FriendInfoListDelegate {
      - returns: 好友列表
      */
     func queryFriendList() -> FriendInfoListRealm? {
-        
-        Log.info("\(realm.path)")
         
         guard isExistFriendList() else {
             return nil
@@ -88,6 +87,22 @@ extension FriendInfoListDelegate {
         return true
     }
     
+    /**
+     通过首字母查询好友
+     
+     - parameter letter: 首字母
+     
+     - returns: 
+     */
+    func queryFriendListByLetter(letter: String) -> Results<FriendInfoRealm>? {
+        
+        guard let friendInfoList = queryFriendList() else {
+            return nil
+        }
+        
+        return friendInfoList.friendListInfo.filter("fullName BEGINSWITH '\(letter)'")
+    }
+    
 }
 
 /**
@@ -118,7 +133,7 @@ extension FollowFriendDelegate {
             return
         }
         
-        guard let friendInfo = friendList.friendListInfo.filter("friendId = \(friendId)").first else {
+        guard let friendInfo = friendList.friendListInfo.filter("friendId = '\(friendId)'").first else {
             return
         }
         

@@ -10,8 +10,9 @@ import UIKit
 import SnapKit
 import EZSwiftExtensions
 import Log
+import RealmSwift
 
-class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
+class SignInViewController: UIViewController, SignInDelegate, BaseViewControllerPresenter, UserInfoRealmOperateDelegate, QueryUserInfoRequestsDelegate, LifeBandBleDelegate {
 
     // 登入按钮
     @IBOutlet weak var signInBtn: MainPageButton!
@@ -28,6 +29,11 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
     // 忘记密码按钮
     @IBOutlet weak var forgetPasswdBtn: UIButton!
     
+    // textfield之间的分割线
+    @IBOutlet weak var separatorLine: UIView!
+    
+    var realm: Realm = try! Realm()
+    
     var userName: String {
         return userNameTextField.text!
     }
@@ -40,14 +46,36 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
         return self
     }
     
+    var navTitle: String {
+        return L10n.SignInTitle.string
+    }
+    
+    var leftBtn: UIButton? = {
+        
+        let leftItemBtn = UIButton(frame: CGRectMake(0, 0, 30, 30))
+        leftItemBtn.setBackgroundImage(UIImage(asset: .Backbtn), forState: .Normal)
+        return leftItemBtn
+        
+    }()
+    
+    var rightBtn: UIButton? = {
+        
+        let button = UIButton(type: .System)
+        button.setTitleColor(UIColor(named: .AColor), forState: .Normal)
+        button.titleLabel?.font = UIFont.mediumSystemFontOfSize(14)
+        button.frame = CGRectMake(0, 0, 60, 30)
+        button.setTitle(L10n.SignUpSignUpBtn.string, forState: .Normal)
+        return button
+        
+    }()
+    
+    override func viewWillAppear(animated: Bool) {
+        LifeBandBle.shareInterface.stopScaning()
+    }
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        
-
-        updateTextFieldViewUI(textFieldView)
-
-        updateNavigationItemUI(L10n.SignInTitle.string, rightBtnText: L10n.SignInSignUpItemBtn.string)
 
         // 定义视图布局
         defineSubViewLayer()
@@ -55,13 +83,23 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
         // 设置控件title
         setSubViewTitle()
         
+        separatorLine.backgroundColor = UIColor(named: .LColor)
+        
         userNameTextField.becomeFirstResponder()
         userNameTextField.backgroundColor = UIColor.whiteColor()
         passwdTextField.backgroundColor = UIColor.whiteColor()
         
+        textFieldView.backgroundColor = UIColor.whiteColor()
+        textFieldView.layer.cornerRadius = CavyDefine.commonCornerRadius
         
+        self.view.backgroundColor = UIColor(named: .HomeViewMainColor)
         
-        // Do any additional setup after loading the view.
+        updateNavUI()
+        
+    }
+    
+    deinit {
+        Log.info("deinit SignInViewController")
     }
     
     override func didReceiveMemoryWarning() {
@@ -78,7 +116,8 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
         passwdTextField.placeholder = L10n.SignInPasswdTextField.string
         
         forgetPasswdBtn.titleLabel?.text = L10n.SignInForgotPasswdBtn.string
-        forgetPasswdBtn.setTitleColor(UIColor(named: .SignInForgotPwdBtnText), forState: .Normal)
+        forgetPasswdBtn.setTitleColor(UIColor(named: .AColor), forState: .Normal)
+        forgetPasswdBtn.titleLabel?.font = UIFont.systemFontOfSize(14.0)
         
         signInBtn.titleLabel?.text = L10n.SignInPasswdTextField.string
         
@@ -100,12 +139,12 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
      */
     func defineViewLayer() {
         
-        textFieldView.snp_makeConstraints { (make) -> Void in
+        textFieldView.snp_makeConstraints { make -> Void in
             
             make.height.equalTo(CavyDefine.spacingWidth25 * 6 + 0.3)
-            make.left.equalTo(self.view).offset(CavyDefine.spacingWidth25 * 2)
-            make.right.equalTo(self.view).offset(-(CavyDefine.spacingWidth25 * 2))
-            make.top.equalTo(self.view).offset(CavyDefine.spacingWidth25 * 8)
+            make.left.equalTo(self.view).offset(30)
+            make.right.equalTo(self.view).offset(-30)
+            make.top.equalTo(self.view).offset(16)
         }
         
     }
@@ -115,14 +154,14 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
      */
     func defineTextFieldLayer() {
         
-        passwdTextField.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(textFieldView).offset(CavyDefine.spacingWidth25)
-            make.right.equalTo(textFieldView).offset(-CavyDefine.spacingWidth25)
+        passwdTextField.snp_makeConstraints { make -> Void in
+            make.left.equalTo(textFieldView).offset(20)
+            make.right.equalTo(textFieldView).offset(-20)
         }
         
-        userNameTextField.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(textFieldView).offset(CavyDefine.spacingWidth25)
-            make.right.equalTo(textFieldView).offset(-CavyDefine.spacingWidth25)
+        userNameTextField.snp_makeConstraints { make -> Void in
+            make.left.equalTo(textFieldView).offset(20)
+            make.right.equalTo(textFieldView).offset(-20)
         }
         
     }
@@ -132,14 +171,14 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
      */
     func defineButtonLayer() {
         
-        signInBtn.snp_makeConstraints { (make) -> Void in
+        signInBtn.snp_makeConstraints { make -> Void in
             
-            make.left.equalTo(self.view).offset(CavyDefine.spacingWidth25 * 2)
-            make.right.equalTo(self.view).offset(-(CavyDefine.spacingWidth25 * 2))
+            make.left.equalTo(self.view).offset(30)
+            make.right.equalTo(self.view).offset(-30)
             make.height.equalTo(CavyDefine.spacingWidth25 * 3)
         }
         
-        forgetPasswdBtn.snp_makeConstraints { (make) -> Void in
+        forgetPasswdBtn.snp_makeConstraints { make -> Void in
             make.height.equalTo(CavyDefine.spacingWidth25 * 3)
         }
         
@@ -150,10 +189,14 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
      
      - parameter sender:
      */
-    override func onClickRight(sender: AnyObject) {
+     func onRightBtn() {
 
+        // 注册绑定场景
+        BindBandCtrl.bindScene = .SignUpBind
+        
         let guideVC = StoryboardScene.Guide.instantiateGuideView()
-        guideVC.viewStyle = .BandBluetooth
+        let guideVM = GuideBandBluetooth()
+        guideVC.configView(guideVM, delegate: guideVM)
         self.pushVC(guideVC)
 
     }
@@ -172,6 +215,20 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
         self.pushVC(forgotVC)
 
     }
+    
+    /**
+     手环绑定流程
+     */
+    func gotoBinding() {
+        
+        let guideVC = StoryboardScene.Guide.instantiateGuideView()
+        
+        let guideVM = GuideBandBluetooth()
+        guideVC.configView(guideVM, delegate: guideVM)
+        
+        self.pushVC(guideVC)
+        
+    }
 
     /**
      点击登录
@@ -180,8 +237,106 @@ class SignInViewController: AccountManagerBaseViewController, SignInDelegate {
      */
     @IBAction func onClickSignIn(sender: AnyObject) {
 
-        signIn()
+        signIn {
+//<<<<<<< HEAD
+//
+//            // 登录绑定场景
+//            BindBandCtrl.bindScene = .SignInBind
+//            
+//            let guideVC = StoryboardScene.Guide.instantiateGuideView()
+//            
+//            let bindBandKey = "CavyAppMAC_" + CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId
+//            
+//            // 查询不到用户信息，走绑定流程
+//            guard let bindBandValue = CavyDefine.bindBandInfos.bindBandInfo.userBindBand[bindBandKey] else {
+//                
+//                //用户未绑定，走绑定流程
+//                self.gotoBinding()
+//                return
+//  
+//            }
+//            
+//            // 手环已绑定，记录手环信息，root 页面中会根据此属性设置绑定的手环
+//            //                GuideUserInfo.userInfo.bandName = bindBandValue
+//            BindBandCtrl.bandMacAddress = bindBandValue
+//            
+//            // 通过查询用户信息判断是否是老的豚鼠用户
+//            self.queryUserInfoByNet(CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId, vc: self) {
+//                
+//                guard let userProfile = $0 else {
+//                    return
+//                }
+//                
+//                // 老用户进入引导页
+//                if userProfile.sleepTime.isEmpty {
+//                    
+//                    let guideVM = GuideGenderViewModel()
+//                    guideVC.configView(guideVM, delegate: guideVM)
+//                    self.pushVC(guideVC)
+//                    
+//                    
+//                } else {
+//                    
+//                    // 登录绑定
+//                    
+//                   self.saveMacAddress()
+//=======
             
+            // 登录绑定场景
+            BindBandCtrl.bindScene = .SignInBind
+            
+            let guideVC = StoryboardScene.Guide.instantiateGuideView()
+            
+            let bindBandKey = "CavyAppMAC_" + CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId
+            
+            // 查询不到用户信息，走绑定流程
+            guard let bindBandValue = CavyDefine.bindBandInfos.bindBandInfo.userBindBand[bindBandKey] else {
+                
+                //用户未绑定，走绑定流程
+                self.gotoBinding()
+                return
+  
+            }
+            
+            // 手环已绑定，记录手环信息，root 页面中会根据此属性设置绑定的手环
+            //                GuideUserInfo.userInfo.bandName = bindBandValue
+            BindBandCtrl.bandMacAddress = bindBandValue
+            
+            // 通过查询用户信息判断是否是老的豚鼠用户
+            self.queryUserInfoByNet(self) {
+                
+                guard let userProfile = $0 else {
+                    return
+                }
+                
+                // 老用户进入引导页
+                if userProfile.sleepGoal == 0 {
+                    
+                    let guideVM = GuideGenderViewModel()
+                    guideVC.configView(guideVM, delegate: guideVM)
+                    self.pushVC(guideVC)
+                    
+                    
+                } else {
+                    
+                    // 登录绑定
+                    
+                   self.saveMacAddress()
+//>>>>>>> 12ce660b830ba3c00ff13182d1fbd93bd3cba4c4
+                    UIApplication.sharedApplication().keyWindow?.setRootViewController(StoryboardScene.Home.instantiateRootView(), transition: CATransition())
+                    
+                }
+                
+            }
+
+        }
+        
+    }
+    
+    func onLeftBtnBack() {
+        
+        self.dismissVC(completion: nil)
+        
     }
     
 

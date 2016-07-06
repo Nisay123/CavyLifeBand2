@@ -1,18 +1,20 @@
+TextFieldTextColor : #000000CC
+
 MainPageBtn : #FFD954
 MainPageSelectedBtn : #ECBC46
 MainPageBtnText : #B46E00
-SignInBackground : #1dbcff
+SignInBackground : #48d299
 SignInNavigationBar : #1dbcff
 SignInMainTextColor : #00000080
 PageIndicatorTintColor : #00000033
 SignInForgotPwdBtnText : #00000066
 SignInPlaceholderText : #00000066
-SignInTextFieldText : #000000CC
 SignInSplitLine : #00000033
 SignUpProtocolBtn : #125fae
 GuideSetInfoColor : #1dbcff
 GuideSetPermission : #48d299
 GuideBandBluetoothColor : #38e797
+GuideBirthRulerLineColor : #00000080
 GuideColor33 : #00000033
 GuideColor99 : #00000099
 GuideColor66 : #00000066
@@ -25,23 +27,116 @@ HomeViewMainColor : #48d299
 HomeViewMaskColor : #00000066
 HomeViewLeftHeaderLine : #ffffff80
 HomeViewLeftSelected : #0000001A
-HomeViewUserName: #000000B3
-HomeViewAccount: #00000080
+HomeViewUserName : #000000B3
+HomeViewAccount : #00000080
+HomeSleepRingColor : #36f3ff
+HomeStepRingColor : #fff956
+HomeRingViewBackground : #309a6e
+HomeTimeLineLineColor :#e5e5e5
+HomeTimeLinePKCellTextColor : #ff8259
+ChartBackground : #e5e5e5
+ChartSubTimeBucketViewBg : #72e4b5
+ChartSubTimeBucketTint : #cef4e3
+ChartSubTimeBucketTintMore : #b3efd5
+ChartSleepDegreeText : #ff5757
+ChartDeselectText : #00000066
+ChartSleepDegreeDeep : #2db6cf
+ChartSleepDegreeLight : #36f3ff
+ChartViewBackground : #4d4d4d
+ChartViewTextColor : #ffffff4D
+ChartGirdColor : #ffffff1A
+ChartStepPillarColor : #fff956
 ContactsTitleColor : #000000B3
 ContactsName : #000000
-ContactsIntrouduce: #0000004D
+ContactsIntrouduce : #0000004D
 ContactsCellLine : #cccccc
 ContactsCellSelect : #0000000D
-ContactsSectionColor: #f2f2f2
+ContactsSectionColor : #f2f2f2
 ContactsFindFriendDark : #ffffff
 ContactsFindFriendLight : #00000080
 ContactsDeleteBtnColor : #D9D9D9
 ContactsCareBtnColor : #FF5656
 ContactsUndoCareBtnColor : #929292
-ContactsLetterColor: #0000004D
-ContactsSearchBarColor: #e6e6e6
-ContactsPKBtnColor: #FF9F22
+ContactsLetterColor : #0000004D
+ContactsSearchBarColor : #e6e6e6
+ContactsPKBtnColor : #FF9F22
 ContactsSearchFlagViewBg : #ffffff66
 ContactsAddFriendButtonColor : #ff9138
 ContactsAgreeButtonColor : #0dcf7f
+ContactsAccountLogoutButton : #ff6749
 ContactsAccountLogoutButton : #ff6d01
+ContactsTableEmptyTextColor : #cccccc
+AlarmClockDateBtnBGNormalColor : #f2f2f2
+AlarmClockDateBtnBGSelectedColor : #ff993f
+AlarmClockDateBtnTextNormalColor : #858585
+AlarmClockDateBtnTextSelectedColor : #ffffff
+AlarmClockTableCellTitleColor : #000000B3
+AlarmClockTableCellDescriptionColor : #0000004D
+AlarmClockDeleteBtnBGColor : #dbdbdb
+AlarmClockSettingTitleColor : #000000B3
+AlarmClockSettingDescriptionColor : #00000080
+AlarmClockSettingDescription2Color : #0000004D
+AlarmClockEmptyLabelColor : #2b7e5c
+SettingSeparatorColor : #cccccc
+SettingTableCellTitleColor : #000000B3
+SettingTableCellInfoGrayColor : #0000004D
+SettingTableCellInfoYellowColor : #ff9138
+SettingTableFooterInfoColor : #ffffff
+EmergencyContactCellAddBtnTitleColor : #b8b8b8
+EmergencyContactCellCancelBtnTitleColor : #dddddd
+EmergencyContactCellInfoLabelColor : #48d299
+
+PKRulesViewTitleColor : #000000B3
+PKRulesViewInfoColor : #00000080
+PKIntroduceVCLabelColor : #00000080
+PKInvitationVCSeeStateBtnNormalColor : #0000004D
+PKInvitationVCSeeStateBtnSelectedColor : #000000B3
+PKInvitationVCLabelColor : #000000B3
+PKTimePickerSeparatorColor : #e5e5e5
+PKChallengeViewNormalTitleColor : #000000B3
+PKChallengeViewRulesTitleColor : #ff7200
+PKChallengeViewTopViewBGColor : #ff7200
+PKInfoOrResultViewWinnerTextColor : #ff7200
+PKInfoOrResultViewNormalTextColor : #000000B3
+PKRecordsCellAcceptBtnBGColor : #0dcf7f
+PKRecordsCellUndoBtnBGColor : #dbdbdb
+PKRecordsCellPKAgainBtnBGColor : #ff9138
+PKRecordsCellDeleteBtnBGColor : #dbdbdb
+
+RelateAboutCellTitleColor : #585858
+RelateAboutCellInfoColor : #333333
+RelateAboutUseAndPrivateColor : #2b7e5c
+RelateAboutCopyrightColor : #91e4c2
+RalateHelpFeedbackCellTitleColor : #585858
+RalateHelpFeedbackTextViewPlaceHolderColor : #b8b8b8
+RalateHelpFeedbackSendBtnBGColor : #ffd954
+RalateHelpFeedbackSendBtnTitleColor : #b46e00
+RalateAppCellTitleColor : #585858
+RalateAppCellInfoColor : #b8b8b8
+RalateAppCellSizeColor : #8d8d8d
+RalateAppCellImageBorderColor : #8d8d8d
+RalateAppTableBGColor : #f4f4f4
+
+UpdateProgressViewTextColor: #000000
+UpdateProgressViewProgressColor: #48d299
+
+
+AColor: #ffffff
+BColor: #91e4c2
+CColor: #2b7e5c
+DColor: #3aa87a
+EColor: #585858
+FColor: #8d8d8d
+GColor: #b8b8b8
+HColor: #cccccc
+IColor: #ff7200
+JColor: #ff9138
+KColor: #48d299
+LColor: #e0e0e0
+MColor: #f2f2f2
+NColor: #dddddd
+OColor: #ffd46c
+PColor: #b46e00
+QColor: #ff6749
+RColor: #odcf7f
+SColor: #ff5656

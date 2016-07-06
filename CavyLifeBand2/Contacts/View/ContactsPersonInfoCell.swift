@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Log
 
 /**
  联系人关系
@@ -31,27 +30,66 @@ class ContactsPersonInfoCell: UITableViewCell {
     @IBOutlet weak var headView: UIImageView!
     
     /// 上面的Lable
-    @IBOutlet weak var upsideLabel: UILabel!
+    @IBOutlet weak var titleLab: UILabel!
     
-    @IBOutlet weak var editButton: UIButton!
+    // 编辑图标
+    @IBOutlet weak var editImage: UIImageView!
+    
     /// 徽章
     @IBOutlet weak var badgeView: UIImageView!
     
     /// 下面的Label
-    @IBOutlet weak var belowLabel: UILabel!
+    @IBOutlet weak var subTitleLab: UILabel!
     
     /// 分割线
     @IBOutlet weak var lineView: UIView!
+    
+    weak var delegate: ContactsPersonInfoCellDelegate?
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
 
         headView.roundSquareImage()
-        upsideLabel.textColor = UIColor(named: .ContactsName)
-        belowLabel.textColor = UIColor(named: .ContactsIntrouduce)
-        lineView.backgroundColor = UIColor(named: .ContactsCellLine)
+        titleLab.textColor = UIColor(named: .EColor)
+        subTitleLab.textColor = UIColor(named: .FColor)
+        
+        titleLab.font = UIFont.mediumSystemFontOfSize(18.0)
+        subTitleLab.font = UIFont.mediumSystemFontOfSize(12.0)
+        
+        lineView.backgroundColor = UIColor(named: .LColor)
         self.selectionStyle = .None
+        
+        headView.addTapGesture {[unowned self] _ in
+            
+            self.delegate?.onClickHeadView()
+            
+        }
+        
+    }
+    
+    func configCell(datasource: ContactsPersonInfoCellPresenter, delegate: ContactsPersonInfoCellDelegate) {
+        
+        headView.af_setCircleImageWithURL(NSURL(string: datasource.avatarUrl)!, placeholderImage: UIImage(asset: .DefaultHead_small))
+        
+        /**
+         如果备注名称为空字符串则主标题显示用户昵称，副标题为空字符串；
+         反之主标题显示备注，副标题显示用户昵称
+         */
+        if datasource.title == "" {
+            titleLab.text = datasource.subTitle
+            
+            subTitleLab.text = ""
+        } else {
+            titleLab.text = datasource.title
+            
+            subTitleLab.text = datasource.subTitle
+        }
+                
+        personRealtion(datasource.relation)
+        
+        self.delegate = delegate
+        
     }
 
     /**
@@ -62,25 +100,28 @@ class ContactsPersonInfoCell: UITableViewCell {
         switch relation {
             
         case .OwnRelation:
+            
             // 自己的账户信息
-            editButton.hidden = false
+            editImage.hidden = false
             badgeView.hidden = true
             
-            belowLabel.snp_makeConstraints(closure: { (make) -> Void in
+            subTitleLab.snp_makeConstraints(closure: { make -> Void in
                 make.left.equalTo(badgeView)
             })
             
         case .FriendRelation:
+            
             // 朋友的信息
-            belowLabel.snp_makeConstraints(closure: { (make) -> Void in
+            subTitleLab.snp_makeConstraints(closure: { make -> Void in
                 make.left.equalTo(badgeView).offset(24)
             })
             
             
         case .StrangerRelation:
+            
             // 陌生人的信息
-            belowLabel.hidden = true
-            belowLabel.snp_makeConstraints(closure: { (make) -> Void in
+            subTitleLab.hidden = true
+            subTitleLab.snp_makeConstraints(closure: { make -> Void in
                 make.left.equalTo(badgeView).offset(24)
             })
             
@@ -101,8 +142,8 @@ class ContactsPersonInfoCell: UITableViewCell {
     func addPersonData(headImage: UIImage, badgeOrNot: Bool, notesName: String, nickName: String) {
         
         headView.image = headImage
-        upsideLabel.text = notesName
-        belowLabel.text = nickName
+        titleLab.text = notesName
+        subTitleLab.text = nickName
         
         if badgeOrNot {
             badgeView.image = UIImage(asset: .GuidePairSeccuss)
@@ -121,8 +162,8 @@ class ContactsPersonInfoCell: UITableViewCell {
      */
     func addAccountData(nickName: String, accountName: String) {
         
-        upsideLabel.text = nickName
-        belowLabel.text = accountName
+        titleLab.text = nickName
+        subTitleLab.text = accountName
    
     }
     
@@ -144,3 +185,46 @@ class ContactsPersonInfoCell: UITableViewCell {
     }
     
 }
+
+struct ContactsFriendInfoCellDS: ContactsPersonInfoCellPresenter {
+    
+    var title: String
+    
+    var subTitle: String
+    
+    var avatarUrl: String
+    
+    var relation: PersonRelation = .FriendRelation
+    
+    init(model: ContactPsersonInfoResponse? = nil, nickName: String) {
+        
+        title = model?.remark ?? ""
+        
+        avatarUrl = model?.avatarUrl ?? ""
+        
+        subTitle = nickName
+        
+    }
+    
+}
+
+struct ContactsStrangerInfoCellDS: ContactsPersonInfoCellPresenter {
+    
+    var title: String
+    
+    var subTitle: String = ""
+    
+    var avatarUrl: String
+    
+    var relation: PersonRelation = .FriendRelation
+    
+    init(model: ContactPsersonInfoResponse? = nil, nickName: String) {
+        
+        title = nickName
+        
+        avatarUrl = model?.avatarUrl ?? ""
+        
+    }
+    
+}
+

@@ -38,7 +38,7 @@ struct ContactsFriendCellModelView: ContactsFriendListDataSource {
     }
     
     func setHeadImageView(headImage: UIImageView) {
-        headImage.af_setImageWithURL(NSURL(string: headImagUrl)!, runImageTransitionIfCached: true)
+        headImage.af_setCircleImageWithURL(NSURL(string: headImagUrl)!, placeholderImage: UIImage(asset: .DefaultHead_small))
     }
     
     /**
@@ -65,7 +65,7 @@ struct ContactsAddFriendViewModel: ContactsFriendListDataSource {
     var friendId: String { return "" }
     
     // 头像
-    var headImage: UIImageView { return UIImageView(image: UIImage(asset: .ContactsListAdd)) }
+    var headImage: UIImageView { return UIImageView(image: UIImage(asset: .PKInvitationAddBtnOld)) }
     
     // 是否隐藏关注图标
     var hiddenCare: Bool = true
@@ -82,7 +82,7 @@ struct ContactsAddFriendViewModel: ContactsFriendListDataSource {
     }
     
     func setHeadImageView(headImage: UIImageView) {
-        headImage.image = UIImage(asset: .ContactsListAdd)
+        headImage.image = UIImage(asset: .PKInvitationAddBtnOld)
     }
     
 }
@@ -145,6 +145,50 @@ struct ContactsCavyModelView: ContactsFriendListDataSource {
     
     func setHeadImageView(headImage: UIImageView) {
         headImage.image = UIImage(asset: .ContactsListCavy)
+    }
+    
+}
+
+struct ContactsTableListModelView: ContactsAddFriendDataSync, ContactsTableViewSectionDataSource {
+    
+    typealias ItemType = ContactsFriendCellModelView
+    
+    var items: [ItemType]
+    var sectionTitle: String
+    
+    var rowCount: Int {
+        return items.count
+    }
+    
+    init(items: [ItemType], sectionTitle: String) {
+        
+        self.items = items
+        self.sectionTitle = sectionTitle
+        
+    }
+    
+    func loadData() { Log.warning("不做任何处理") }
+    
+    func createCell(tableView: UITableView, index: NSIndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("ContactsFriendListCell", forIndexPath: index) as? ContactsFriendListCell else {
+            fatalError()
+        }
+        
+        cell.configure(items[index.row])
+        
+        return cell
+        
+    }
+    
+    func createSectionView() -> UIView? {
+        
+        let letterView = NSBundle.mainBundle().loadNibNamed("ContactsLetterView", owner: nil, options: nil).first as? ContactsLetterView
+        
+        letterView?.title.text = sectionTitle
+        
+        return letterView
+        
     }
     
 }

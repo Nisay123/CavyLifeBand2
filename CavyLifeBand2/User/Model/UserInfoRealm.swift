@@ -18,21 +18,26 @@ class UserInfoModel: Object {
 //    return []
 //  }
     
-    dynamic var userId = ""
-    dynamic var sex = 0
-    dynamic var height = ""
-    dynamic var weight = ""
-    dynamic var birthday = ""
-    dynamic var avatarUrl = ""
-    dynamic var address = ""
-    dynamic var nickname = ""
-    dynamic var stepNum = 0
-    dynamic var sleepTime = ""
-    dynamic var isNotification = true
-    dynamic var isLocalShare = true
-    dynamic var isOpenBirthday = true
-    dynamic var isOpenHeight = true
-    dynamic var isOpenWeight = true
+    dynamic var coins              = 0.0
+    dynamic var phone              = ""
+    dynamic var userId             = ""
+    dynamic var sex                = 0
+    dynamic var height             = 0.0
+    dynamic var weight             = 0.0
+    dynamic var birthday           = ""
+    dynamic var avatarUrl          = ""
+    dynamic var address            = ""
+    dynamic var nickname           = ""
+    dynamic var stepGoal: Int      = 0
+    dynamic var sleepGoal: Int     = 0
+    dynamic var isNotification     = true
+    dynamic var isLocalShare       = true
+    dynamic var isOpenBirthday     = true
+    dynamic var isOpenHeight       = true
+    dynamic var isOpenWeight       = true
+    dynamic var isSync             = false
+    dynamic var signUpDate: NSDate = NSDate()
+    var awards = List<UserAwardsModel>()
 
     override class func primaryKey() -> String? {
         return "userId"
@@ -40,10 +45,45 @@ class UserInfoModel: Object {
 
 }
 
+extension UserInfoModel {
+    
+    func translateAwards() -> [Int] {
+        guard self.awards.count > 0 else {
+            return []
+        }
+        
+        let awardArr = self.awards.map { (award) -> Int in
+            return award.number.toInt() ?? 1
+        }
+        
+        return awardArr
+        
+    }
 
-class UserInfoOperate {
+}
 
-    let userInfoRealm = try! Realm()
+class UserAwardsModel: Object {
+    
+    dynamic var date: NSDate = NSDate()
+    dynamic var number: String = ""
+    
+    let owners = LinkingObjects(fromType: UserInfoModel.self, property: "awards")
+    
+}
+
+protocol UserInfoRealmOperateDelegate {
+    
+    var realm: Realm { get }
+    
+    func queryUserInfo(userId: String) -> UserInfoModel?
+    func queryUserInfo(userId: String) -> Results<UserInfoModel>
+    func addUserInfo(userInfo: UserInfoModel) -> Bool
+    func updateUserInfo(userInfo: UserInfoModel) -> Bool
+    func updateUserInfo(userId: String, updateCall: ((UserInfoModel) -> UserInfoModel)) -> Bool
+    
+}
+
+extension UserInfoRealmOperateDelegate {
 
     /**
      查询用户信息
@@ -54,11 +94,8 @@ class UserInfoOperate {
      */
     func queryUserInfo(userId: String) -> UserInfoModel? {
         
-        if userInfoRealm.objects(UserInfoModel).count == 0 {
-            return nil
-        }
         
-        let userInfo = userInfoRealm.objects(UserInfoModel).filter("userId == '\(userId)'")
+        let userInfo: Results<UserInfoModel> = queryUserInfo(userId)
 
         if userInfo.count == 0 {
             return nil
@@ -66,6 +103,12 @@ class UserInfoOperate {
 
         return userInfo[0]
             
+    }
+    
+    func queryUserInfo(userId: String) -> Results<UserInfoModel> {
+        
+        return realm.objects(UserInfoModel).filter("userId == '\(userId)'")
+        
     }
 
     /**
@@ -79,8 +122,8 @@ class UserInfoOperate {
 
         do {
 
-            try userInfoRealm.write {
-                userInfoRealm.add(userInfo, update: false)
+            try realm.write {
+                realm.add(userInfo, update: false)
             }
 
         } catch {
@@ -94,6 +137,33 @@ class UserInfoOperate {
         return true
 
     }
+    
+    /**
+     更新用户信息
+     
+     - parameter userInfo: 用户信息
+     
+     - returns:
+     */
+    func updateUserInfo(userInfo: UserInfoModel) -> Bool {
+        
+        do {
+            
+            try realm.write {
+                realm.add(userInfo, update: true)
+            }
+            
+        } catch {
+            
+            Log.error("Update user info error [\(userInfo)]")
+            return false
+            
+        }
+        
+        Log.info("Update user info success")
+        return true
+        
+    }
 
     /**
      更新用户信息
@@ -102,40 +172,32 @@ class UserInfoOperate {
      
      - returns: 成功：true，失败：false
      */
-    func updateUserInfo(userInfo: UserInfoModel) -> Bool {
+    func updateUserInfo(userId: String, updateCall: ((UserInfoModel) -> UserInfoModel)) -> Bool {
 
-        let userInfoModel = queryUserInfo(userInfo.userId)
-
-        if userInfoModel == nil {
-            Log.error("User info is exist [\(userInfo)]")
+        guard var userInfoModel: UserInfoModel = queryUserInfo(userId) else {
+            Log.error("User info not exist [\(userId)]")
             return false
         }
 
         do {
+            
+            realm .beginWrite()
+            
+            userInfoModel = updateCall(userInfoModel)
 
-            try userInfoRealm.write {
-                userInfoRealm.add(userInfo, update: true)
-            }
+            realm.add(userInfoModel, update: true)
+            
+            try realm.commitWrite()
 
         } catch {
 
-            Log.error("Update user info error [\(userInfo)]")
+            Log.error("Update user info error [\(userId)]")
             return false
 
         }
 
-        Log.info("Update user info success [\(userInfo)]")
+        Log.info("Update user info success [\(userId)]")
         return true
-
-    }
-
-    func isUserExist(userId: String) -> Bool {
-
-        if let _ = queryUserInfo(userId) {
-            return true
-        }
-
-        return false
 
     }
 

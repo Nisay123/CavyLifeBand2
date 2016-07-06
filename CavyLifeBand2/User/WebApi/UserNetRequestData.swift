@@ -21,99 +21,65 @@ import CryptoSwift
  - ParamErr:  参数错误
  */
 enum UserRequestErrorType: ErrorType {
-    case NetErr, NetAPIErr, ParaNil, ParaErr, EmailErr, EmailNil, PhoneErr, PhoneNil, PassWdErr, PassWdNil, SecurityCodeErr, SecurityCodeNil, UserNameErr, UserNameNil, UserIdNil, SearchTypeNil, LBSNil, PhoneNumListNil
+    case NetErr, NetAPIErr, ParaNil, ParaErr, EmailErr, EmailNil, PhoneErr, PhoneNil, PassWdErr, PassWdNil, SecurityCodeErr, SecurityCodeNil, UserNameErr, UserNameNil, UserIdNil, SearchTypeNil, LBSNil, PhoneNumListNil, FriendIdNil, UnknownError
 }
 
-/**
- web api参数
- 
- - PhoneNum:     手机号
- - Email:        邮箱
- - Passwd:       密码
- - SecurityCode: 验证码
- - UserName:     用户名
- - UserID:       用户ID
- - Avater:       头像
- - StepNum:      步数
- - SleepTime:    睡眠时间
- - FriendID:     好友ID
- - Flag:         标识
- - Local:        坐标
- - FriendIdList: 好友列表
- - Operate:      操作
- - NickName:     昵称
- - Sex:          性别
- - Height:       身高
- - Weight:       体重
- - Birthday:     生日
- - Address:      地址
- - StepNum:      步数
- - SleepTime:    睡眠时间
- */
-enum UserNetRequsetKey: String {
+extension UserRequestErrorType: CustomStringConvertible {
     
-    case Cmd = "cmd"
-    case PhoneNum = "phoneNum"
-    case Passwd = "pwd"
-    case SecurityCode = "authCode"
-    case UserName = "user"
-    case UserID = "userId"
-    case Avater = "imgFile"
-    case FriendID = "freiendId"
-    case Flag = "flag"
-    case Local = "lbs"
-    case FriendIdList = "friendIds"
-    case Operate = "operate"
-    case NickName = "nickname"
-    case Sex = "sex"
-    case Height = "height"
-    case Weight = "weight"
-    case Birthday = "birthday"
-    case Address = "address"
-    case StepNum = "stepNum"
-    case SleepTime = "sleepTime"
+    var description: String {
+        
+        switch self {
+        case .NetErr:
+            return L10n.UserModuleErrorCodeNetError.string
+        case .NetAPIErr:
+            return L10n.UserModuleErrorCodeNetAPIError.string
+        case .ParaNil:
+            return L10n.UserModuleErrorCodeParaNil.string
+        case .ParaErr:
+            return L10n.UserModuleErrorCodeParaError.string
+        case .EmailErr:
+            return L10n.UserModuleErrorCodeEmailError.string
+        case.EmailNil:
+            return L10n.UserModuleErrorCodeEmailNil.string
+        case .PhoneErr:
+            return L10n.UserModuleErrorCodePhoneError.string
+        case .PhoneNil:
+            return L10n.UserModuleErrorCodePhoneNil.string
+        case .PassWdErr:
+            return L10n.UserModuleErrorCodePasswdError.string
+        case .PassWdNil:
+            return L10n.UserModuleErrorCodePasswdNil.string
+        case .SecurityCodeErr:
+            return L10n.UserModuleErrorCodeSecurityError.string
+        case .SecurityCodeNil:
+            return L10n.UserModuleErrorCodeSecurityNil.string
+        case .UserNameErr:
+            return L10n.UserModuleErrorCodeUserNameError.string
+        case .UserNameNil:
+            return L10n.UserModuleErrorCodeUserNameNil.string
+        case .UserIdNil:
+            return L10n.UserModuleErrorCodeUserIdNil.string
+        case .SearchTypeNil:
+            return L10n.UserModuleErrorCodeSearchTypeNil.string
+        case .LBSNil:
+            return L10n.UserModuleErrorCodeLBSNil.string
+        case .PhoneNumListNil:
+            return L10n.UserModuleErrorCodePhoneNumListNil.string
+        case .FriendIdNil:
+            return L10n.UserModuleErrorCodeFriendIdNil.string
+        case .UnknownError:
+            return L10n.UserModuleErrorCodeUnknownError.string
+        }
+
+    }
 
 }
-
-let userNetReq = UserNetRequestData()
-
 
 
 class UserNetRequestData: NetRequestAdapter {
    
+    static var shareApi = UserNetRequestData()
     
-    
-    /**
-    网络请求API
-    
-    - SendSecurityCode: 发送验证码
-    - SignUp:           注册
-    - SignIn:           登录
-    - UpdateAvatar:     上传头像
-    - ForgotPwd:        找回密码
-    - UserProfile:      查询个人信息
-    - SetUserProfile:   设置个人信息
-    - SearchFriends:    搜索好友
-    - AddFriends:       添加好友
-    - DelFriends:       删除好友
-    - FriendsList:      查询好友列表
-    - FriendsReqList:   查询请求添加好友列表
-    - WatchFriend:      关注好友
-    - ReportLocation:   上报坐标
-    - SetTargetValue:   设置目标值
-    - TargetValue:      查询目标值
-    */
-    enum UserNetRequestMethod: String {
-        
-        case SendSecurityCode = "sendAuthCode"
-        case SignUp = "userReg"
-        case SignIn = "userLogin"
-        case UpdateAvatar
-        case ForgotPwd = "resetPsw"
-        case UserProfile = "getUserInfo"
-        case SetUserProfile = "setUserInfo"
-    }
-
     /**
      注册
      
@@ -192,28 +158,18 @@ class UserNetRequestData: NetRequestAdapter {
      - parameter parameters:        UserId
      - parameter completionHandler: 回调
      */
-    func queryProfile(parameters: [String: AnyObject]?, completionHandler: CompletionHandlernType?) {
-
-        if parameters == nil {
-
-            completionHandler?(.Failure(.ParaNil))
-            Log.error("Parameters is nil")
-            return
-
-        }
-
-        guard let _ = parameters![UserNetRequsetKey.UserID.rawValue] else {
-
+    func queryProfile(userId: String, completionHandler: CompletionHandlernType?) {
+        
+        if userId.isEmpty {
             completionHandler?(.Failure(.UserIdNil))
             Log.error("User id is nil")
             return
-
         }
+        
+        let parameter = [UserNetRequsetKey.Cmd.rawValue: UserNetRequestMethod.UserProfile.rawValue,
+                         UserNetRequsetKey.UserID.rawValue: userId]
 
-        var para = parameters
-        para![UserNetRequsetKey.Cmd.rawValue] = UserNetRequestMethod.UserProfile.rawValue
-
-        netPostRequestAdapter(CavyDefine.webApiAddr, para: para, completionHandler: completionHandler)
+        netPostRequestAdapter(CavyDefine.webApiAddr, para: parameter, completionHandler: completionHandler)
 
     }
 
@@ -246,7 +202,16 @@ class UserNetRequestData: NetRequestAdapter {
             parameters!.keys.contains(UserNetRequsetKey.Height.rawValue) ||
             parameters!.keys.contains(UserNetRequsetKey.Weight.rawValue) ||
             parameters!.keys.contains(UserNetRequsetKey.Birthday.rawValue) ||
-            parameters!.keys.contains(UserNetRequsetKey.Address.rawValue)) {
+            parameters!.keys.contains(UserNetRequsetKey.Address.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.UserID.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.Address.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.StepNum.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.SleepTime.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.IsNotification.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.IsLocalShare.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.IsOpenBirthday.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.IsOpenHeight.rawValue) ||
+            parameters!.keys.contains(UserNetRequsetKey.IsOpenWeight.rawValue)) {
 
             completionHandler?(.Failure(.ParaErr))
             Log.error("Parameters error")
@@ -406,30 +371,40 @@ class UserNetRequestData: NetRequestAdapter {
      - parameter parameter:  UserID，Avater
      - parameter completion: 回调
      */
-    func uploadPicture(parameter: [String: AnyObject]?, completionHandler: CompletionHandlernType?) {
+    func uploadPicture(userId: String, filePath: String, completionHandler: CompletionHandlernType?) {
         
-        guard var para = parameter else {
-            Log.error("Parameter is nil")
-            completionHandler?(.Failure(.ParaNil))
-            return
+        Alamofire.upload(.POST, NSURL(string: CavyDefine.updateImgAddr)!, multipartFormData: { multipartFormData in
+            
+            multipartFormData.appendBodyPart(fileURL: NSURL(string: filePath)!, name: UserNetRequsetKey.Avater.rawValue)
+            multipartFormData.appendBodyPart(data: userId.dataUsingEncoding(NSUTF8StringEncoding)!, name: UserNetRequsetKey.UserID.rawValue)
+            
+            }) { encodingResult in
+                
+                switch encodingResult {
+                    
+                case .Success(request: let upload, streamingFromDisk: _, streamFileURL: _):
+                    upload.responseJSON {
+                        if $0.result.isFailure {
+                            completionHandler?(.Failure(.NetErr))
+                            Log.error("Network error")
+                            return
+                        }
+                        
+                        guard let responseResult = $0.result.value else {
+                            completionHandler?(.Failure(.NetErr))
+                            Log.error("Network error")
+                            return
+                        }
+                        
+                        completionHandler?(.Success(responseResult))
+                    }
+                    
+                case .Failure(let error):
+                    CavyLifeBandAlertView.sharedIntance.showViewTitle(message: error.toString)
+                    
+                }
+                
         }
-        
-        guard let image = para[UserNetRequsetKey.Avater.rawValue] as? UIImage else {
-            Log.error("Avater is nil")
-            completionHandler?(.Failure(.ParaErr))
-            return
-        }
-        
-        guard let _ = para[UserNetRequsetKey.UserID.rawValue] else {
-            Log.error("User ID is nil")
-            completionHandler?(.Failure(.ParaErr))
-            return
-        }
-        
-        para[UserNetRequsetKey.Avater.rawValue] = UIImagePNGRepresentation(image)
-        para[UserNetRequsetKey.Cmd.rawValue] = UserNetRequestMethod.UpdateAvatar.rawValue
-        
-        netPostRequestAdapter(CavyDefine.webApiAddr, para: para, completionHandler: completionHandler)
         
     }
 

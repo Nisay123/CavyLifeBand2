@@ -8,11 +8,11 @@
 
 import Foundation
 import UIKit
+import EZSwiftExtensions
 
 class CavyLifeBandAlertView {
 
     static let sharedIntance = CavyLifeBandAlertView()
-
 
     /**
      显示信息提示
@@ -20,16 +20,31 @@ class CavyLifeBandAlertView {
      - parameter title:   <#title description#>
      - parameter message: <#message description#>
      */
-   func showViewTitle(viewController: UIViewController?, title: String = "", message: String) {
+    func showViewTitle(viewController: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, title: String = "", message: String) {
 
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .Alert)
 
         let defaultAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
 
         alertView.addAction(defaultAction)
+    
+        viewController?.presentViewController(alertView, animated: true, completion: nil)
 
-       viewController?.presentViewController(alertView, animated: true, completion: nil)
-
+    }
+    
+    /**
+     显示信息提示 不带操作按钮
+     
+     - parameter viewController:
+     - parameter title:
+     - parameter message:
+     */
+    func showViewTitleWithoutAction(viewController: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, title: String = "", message: String) -> UIAlertController {
+        let alertView = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        viewController?.presentViewController(alertView, animated: true, completion: nil)
+        
+        return alertView
     }
 
     /**
@@ -37,23 +52,25 @@ class CavyLifeBandAlertView {
      
      - parameter userErrorCode:
      */
-    func showViewTitle(viewController: UIViewController?, userErrorCode: UserRequestErrorType) {
-
-        let errorMessage = [UserRequestErrorType.EmailErr: L10n.UserModuleErrorCodeEmailError.string,
-        UserRequestErrorType.EmailNil: L10n.UserModuleErrorCodeEmailNil.string,
-        UserRequestErrorType.NetAPIErr: L10n.UserModuleErrorCodeNetAPIError.string,
-        UserRequestErrorType.NetErr: L10n.UserModuleErrorCodeNetAPIError.string,
-        UserRequestErrorType.PassWdErr: L10n.UserModuleErrorCodePasswdError.string,
-        UserRequestErrorType.PassWdNil: L10n.UserModuleErrorCodePasswdNil.string,
-        UserRequestErrorType.PhoneNil: L10n.UserModuleErrorCodePhoneNil.string,
-        UserRequestErrorType.PhoneErr: L10n.UserModuleErrorCodePhoneError.string,
-        UserRequestErrorType.SecurityCodeErr: L10n.UserModuleErrorCodeSecurityError.string,
-        UserRequestErrorType.SecurityCodeNil: L10n.UserModuleErrorCodeSecurityNil.string,
-        UserRequestErrorType.UserNameErr: L10n.UserModuleErrorCodeUserNameError.string,
-        UserRequestErrorType.UserNameNil: L10n.UserModuleErrorCodeUserNameNil.string]
-
-        showViewTitle(viewController, title: "", message: errorMessage[userErrorCode]!)
-
+    func showViewTitle(viewController: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, userErrorCode: UserRequestErrorType?) {
+        
+        let userError = userErrorCode ?? UserRequestErrorType.UnknownError
+        
+        showViewTitle(viewController, message: userError.description)
+        
+    }
+    
+    /**
+     通过用户错误码提示错误信息 不带操作按钮
+     
+     - parameter userErrorCode:
+     */
+    func showViewTitleWithoutAction(viewController: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, userErrorCode: UserRequestErrorType?) -> UIAlertController {
+        
+        let userError = userErrorCode ?? UserRequestErrorType.UnknownError
+        
+        return showViewTitleWithoutAction(viewController, message: userError.description)
+        
     }
 
     /**
@@ -61,29 +78,43 @@ class CavyLifeBandAlertView {
      
      - parameter webApiErrorCode:
      */
-    func showViewTitle(viewController: UIViewController?, webApiErrorCode: String) {
+    func showViewTitle(viewController: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, webApiErrorCode: String) {
 
-        let errorMessage = [WebApiCode.ParaError.rawValue: L10n.WebErrorCode1000.string,
-        WebApiCode.UserPasswdError.rawValue: L10n.WebErrorCode1001.string,
-        WebApiCode.PhoneNumError.rawValue: L10n.WebErrorCode1002.string,
-        WebApiCode.SecurityCodeError.rawValue: L10n.WebErrorCode1003.string,
-        WebApiCode.MobifyUserError.rawValue: L10n.WebErrorCode1004.string,
-        WebApiCode.UserExisted.rawValue: L10n.WebErrorCode1005.string,
-        WebApiCode.UserNotExisted.rawValue: L10n.WebErrorCode1006.string,
-        WebApiCode.SendSecutityCodeError.rawValue: L10n.WebErrorCode1007.string]
-
-        if let message = errorMessage[webApiErrorCode] {
-
-            showViewTitle(viewController, title: "", message: message)
-
-        } else {
-
-            showViewTitle(viewController, title: "", message: L10n.UserModuleErrorCodeNetAPIError.string)
-
-        }
+        showViewTitle(viewController, message: WebApiCode(apiCode: webApiErrorCode).description)
 
     }
     
-
+    /**
+     通过web返回错误码提示错误信息 不带操作按钮
+     
+     - parameter webApiErrorCode:
+     */
+    func showViewTitleWithoutAction(viewController: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, webApiErrorCode: String) -> UIAlertController {
+        
+        return showViewTitleWithoutAction(viewController, message: WebApiCode(apiCode: webApiErrorCode).description)
+        
+    }
+    
+    /**
+     通过web返回错误码提示错误信息:Get方法的API
+     
+     - parameter webGetApiErrorCode: 
+     */
+    func showViewTitle(viewController: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, webGetApiErrorCode: String) {
+        
+        showViewTitle(viewController, message: WebGetApiCode(apiCode: webGetApiErrorCode).description)
+        
+    }
+    
+    /**
+     通过web返回错误码提示错误信息:Get方法的API 不带操作按钮
+     
+     - parameter webGetApiErrorCode:
+     */
+    func showViewTitleWithoutAction(viewController: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, webGetApiErrorCode: String) -> UIAlertController {
+        
+        return showViewTitleWithoutAction(viewController, message: WebGetApiCode(apiCode: webGetApiErrorCode).description)
+        
+    }
 
 }

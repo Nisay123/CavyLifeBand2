@@ -47,6 +47,22 @@ enum L10n {
   case UserModuleErrorCodeSecurityNil
   /// 用户名不能为空
   case UserModuleErrorCodeUserNameNil
+  /// 用户Id不能为空
+  case UserModuleErrorCodeUserIdNil
+  /// 未知错误
+  case UserModuleErrorCodeUnknownError
+  /// 好友Id不能为空
+  case UserModuleErrorCodeFriendIdNil
+  /// 搜索类型不能为空
+  case UserModuleErrorCodeSearchTypeNil
+  /// 参数有误
+  case UserModuleErrorCodeParaNil
+  /// 参数有误
+  case UserModuleErrorCodeParaError
+  /// LBS不能为空
+  case UserModuleErrorCodeLBSNil
+  /// 电话号码列表不能为空
+  case UserModuleErrorCodePhoneNumListNil
   /// 登入
   case MainPageSignInBtn
   /// 加入豚鼠
@@ -85,6 +101,10 @@ enum L10n {
   case SignUpSignUpBtn
   /// 请先阅读《豚鼠科技服务协议》
   case SignUpReadProcotol
+  /// 重新注册
+  case SignUpReSignUp
+  /// 直接登录
+  case SignUpDirectSinIn
   /// 我的信息
   case GuideMyInfo
   /// 我是
@@ -97,7 +117,7 @@ enum L10n {
   case GuideWeight
   /// 目标
   case GuideGoal
-  /// 运动步数
+  /// 计步
   case GuideGoalStep
   /// 睡眠
   case GuideGoalSleep
@@ -107,8 +127,12 @@ enum L10n {
   case GuideAverage
   /// 推荐
   case GuideRecommend
-  /// 可以更好地帮助健康统计哦
+  /// 可以更好的帮助健康统计哦！
   case GuideIntroduce
+  /// 分钟
+  case GuideMinute
+  /// 小时
+  case GuideHour
   /// 设置
   case GuideSetting
   /// 跳过
@@ -143,6 +167,22 @@ enum L10n {
   case GuidePairFail
   /// 确保手环有电，并且位于手机的连接范围
   case GuidePairFailInfo
+  /// 来电提醒
+  case GuidePhoneRemindTitle
+  /// 来电振动提醒，不漏接一个重要来电
+  case GuidePhoneRemindInfo
+  /// 计步PK
+  case GuidePKTitle
+  /// 实时查看与好友计步PK详情\n让走路成为一种乐趣
+  case GuidePKInfo
+  /// 安全服务
+  case GuideSafetyServiceTitle
+  /// 遇到紧急情况，连按4下按钮\n立即向联系人发送求救信息
+  case GuideSafetyServiceInfo
+  /// 豚鼠手环
+  case GuideLifeBandTitle
+  /// 开启我的豚鼠生活
+  case GuideLifeBandInfo
   /// 忘记密码了?
   case ForgotTitle
   /// 新密码
@@ -157,6 +197,48 @@ enum L10n {
   case CameraVideo
   /// 取消
   case CameraBack
+  /// 已完成
+  case HomeSleepRingPercerntText
+  /// 小时
+  case HomeSleepRingUnitHour
+  /// 分钟
+  case HomeSleepRingUnitMinute
+  /// 已完成目标的
+  case HomeStepRingPercerntText
+  /// 空气
+  case HomeWeatherAir
+  /// 优
+  case HomeWeatherAirConditionBest
+  /// 良
+  case HomeWeatherAirConditionGood
+  /// 轻度污染
+  case HomeWeatherAirPollutionMild
+  /// 中度污染
+  case HomeWeatherAirPollutionMiddle
+  /// 重度污染
+  case HomeWeatherAirPollutionBad
+  /// 睡眠
+  case HomeTimeLineCellSleep
+  /// 计步
+  case HomeTimeLineCellStep
+  /// PK
+  case HomeTimeLineCellPK
+  /// 成就
+  case HomeTimeLineCellAchive
+  /// 健康
+  case HomeTimeLineCellHealthiy
+  /// 累计
+  case HomeTimeLineAchiveBadge
+  /// 领先
+  case HomeTimeLinePKLead
+  /// 落后
+  case HomeTimeLinePKBack
+  /// 胜利了!
+  case HomeTimeLinePKWin
+  /// 失败了!
+  case HomeTimeLinePKLose
+  /// 需要关怀
+  case HomeTimeLineHealthyCare
   /// 目标
   case HomeLifeListTitleTarget
   /// 信息公开
@@ -169,8 +251,66 @@ enum L10n {
   case HomeLifeListTitleAbout
   /// 帮助与反馈
   case HomeLifeListTitleHelp
-  /// 相关APP
+  /// APP推荐
   case HomeLifeListTitleRelated
+  /// 遥控相机
+  case HomeRightListTitleCamera
+  /// 提醒
+  case HomeRightListTitleNotification
+  /// 智能闹钟
+  case HomeRightListTitleAlarmClock
+  /// 安全
+  case HomeRightListTitleSecurity
+  /// 固件升级
+  case HomeRightListTitleFirmwareUpgrade
+  /// 绑定新的CavyBand
+  case HomeRightListTitleBindingBand
+  /// 我的CavyBand
+  case BandTitle
+  /// 固件版本: 
+  case BandFWVersion
+  /// 手环未连接
+  case BandDisconnectTitle
+  /// 开启蓝牙，按下手环
+  case BandDisconnectFWVersionTitle
+  /// 按钮自动连接
+  case BandDisconnectBandNameTitle
+  /// 睡眠
+  case ChartSleep
+  /// 计步
+  case ChartStep
+  /// 日
+  case ChartTimeBucketDay
+  /// 周
+  case ChartTimeBucketWeek
+  /// 月
+  case ChartTimeBucketMonth
+  /// 目标完成度
+  case ChartTargetPercent
+  /// 步数
+  case ChartStepTodayStep
+  /// 路程
+  case ChartStepKilometer
+  /// 用时
+  case ChartStepTimeUsed
+  /// 周总步数
+  case ChartStepWeekStep
+  /// 日均步数
+  case ChartStepAverageStep
+  /// 月总步数
+  case ChartStepMonthStep
+  /// 深睡
+  case ChartSleepDeep
+  /// 浅睡
+  case ChartSleepLight
+  /// 深度
+  case ChartSleepDegreeDeep
+  /// 浅度
+  case ChartSleepDegreeLight
+  /// 日均睡眠
+  case ChartSleepAverage
+  /// 分享到
+  case ShareTo
   /// 生活豚鼠
   case ContactsListCellCavy
   /// 搜索
@@ -233,6 +373,8 @@ enum L10n {
   case ContactsShowInfoBirth
   /// PK
   case ContactsShowInfoPK
+  /// 点击查看
+  case ContactsShowInfoPKSubInfo
   /// 计步
   case ContactsShowInfoStep
   /// 睡眠
@@ -247,6 +389,258 @@ enum L10n {
   case ContactsChangeNotesNameButton
   /// 更改的昵称
   case ContactsChangeSelfNamePlaceHolder
+  /// 哈喽，我是
+  case ContactsRequestVerifyMsg
+  /// 修改备注
+  case ContactsNavTitleRemark
+  /// 账户信息
+  case ContactsNavTitleAccountInfo
+  /// 确定
+  case ContactsRequestSureButton
+  /// 附近暂时未搜索到
+  case ContactsEmptyViewNearbyInfo
+  /// 手机通讯录中的好友中\n还没加入豚鼠
+  case ContactsEmptyViewAddressBookInfo
+  /// 账户信息
+  case AccountInfoTitle
+  /// 退出登录
+  case AccountInfoLoginoutButtonTitle
+  /// 从手机相册中选择
+  case AccountInfoPhoto
+  /// 拍照
+  case AccountInfoCamera
+  /// 输入昵称
+  case AccountInfoChangeNicknamePlaceholder
+  /// 输入地址
+  case AccountInfoChangeAddressPlaceholder
+  /// 您已累计行走
+  case AccountInfoAchieveViewNumPrefix
+  /// 手环振动提醒 取消传统声音唤醒体系
+  case AlarmClockIntelligentClockTableFooterInfo
+  /// 智能闹钟
+  case AlarmClockTitle
+  /// 智能唤醒
+  case AlarmClockAwakeTitle
+  /// 允许你闹钟在目标唤醒时间之前30分钟内将我从浅度睡眠中唤醒，让我更轻松的起床。
+  case AlarmClockAwakeDescription
+  /// 闹钟周期
+  case AlarmClockAlarmCircleTitle
+  /// 小提示
+  case AlarmClockAlarmCircleSubTitle
+  /// 闹钟振动过程中，按一下手环按钮即可停止振动。手环检测到你已起床，即会停止振动。
+  case AlarmClockAlarmCircleDescription
+  /// 删除
+  case AlarmClockDeleteBtnTitle
+  /// 请选择闹钟周期
+  case AlarmClockAlarmCircleAlertTitle
+  /// 未设置闹钟
+  case AlarmClockEmptyViewTitle
+  /// 手环震动唤醒，远离传统闹铃噪声
+  case AlarmClockEmptyViewInfo
+  /// 提醒一次
+  case AlarmClockNoCircleInfo
+  /// 每天
+  case AlarmClockCircleEverydayInfo
+  /// 工作日
+  case AlarmClockCircleWeekdayInfo
+  /// 双休日
+  case AlarmClockCircleWeekendInfo
+  /// 手环最多只能添加2个闹钟
+  case AlarmClockAlarmClockCountError
+  /// 安全
+  case SettingSafetyTitle
+  /// 点击添加
+  case SettingSafetyTableCellContactButton
+  /// 紧急联系人
+  case SettingSafetyTableCellContactTitle
+  /// 手机号格式错误，无法发送短信
+  case SettingSafetyPhoneNumberError
+  /// 取消
+  case SettingSafetyPhoneNumberCancel
+  /// GPS定位
+  case SettingSafetyTableCellGPSTitle
+  /// 紧急报警
+  case SettingSafetyTableFooterTitle
+  /// 紧急情况下，连续按4下按钮，紧急联系人即可收到豚鼠为您发送的请求信息及GPS定位消息。
+  case SettingSafetyTableFooterInfo
+  /// 取消
+  case SettingSafetyTableEmergencyContactCancelBtn
+  /// 紧急联系人上限3人
+  case SettingSafetyTableEmergencyAlertMsg
+  /// 来电提醒
+  case SettingReminderPhoneCallTitle
+  /// 秒未接提醒
+  case SettingReminderPhoneCallDescription
+  /// 短信提醒
+  case SettingReminderMessageTitle
+  /// 振动一次通知提醒
+  case SettingReminderMessageDescription
+  /// 断线手环自动重连
+  case SettingReminderReconnectTitle
+  /// 3
+  case SettingReminderReconnectType
+  /// 2
+  case SettingReminderMessageType
+  /// 1
+  case SettingReminderPhoneType
+  /// 怎么PK？
+  case PKRulesViewHowPKTitle
+  /// PK是与好友比拼步数，只需点击“+”选择比赛时长即开始PK
+  case PKRulesViewHowPKInfo
+  /// 怎么取胜？
+  case PKRulesViewHowWinTitle
+  /// 比赛规定时间内，比对手行走更多步数即可取胜
+  case PKRulesViewHowWinInfo
+  /// 别人是否能看到我的步数？
+  case PKRulesViewHowSeeTitle
+  /// 在创建对决时选择公开PK时况，则所有好友能看到你的PK时况，选择关闭表示仅对决双方可见
+  case PKRulesViewHowSeeInfo
+  /// 让我们比一比吧
+  case PKIntroduceVCInfoTitle
+  /// 选择好友、选定时长
+  case PKIntroduceVCSelectInfo
+  /// PK
+  case PKPKTitle
+  /// 对决邀请
+  case PKInvitationVCTitle
+  /// 选择对手
+  case PKInvitationVCSelectFriend
+  /// 选择时长
+  case PKInvitationVCSelectTime
+  /// 天
+  case PKInvitationVCTimeUnit
+  /// PK时况
+  case PKInvitationVCPKState
+  /// 所有好友可见
+  case PKInvitationVCPKOtherSeeAble
+  /// 对决双方可见
+  case PKInvitationVCPKOtherSeeUnable
+  /// PK时长
+  case PKChallengeViewPKTimeTitle
+  /// 如不接受，三天后失效
+  case PKChallengeViewPKRules
+  /// PK时长
+  case PKInfoOrResultViewPKEndTimeTitle
+  /// 余剩时间
+  case PKInfoOrResultViewPKNotEndTimeTitle
+  /// 天
+  case PKInfoOrResultViewDayUnit
+  /// 小时
+  case PKInfoOrResultViewHourUnit
+  /// 分钟
+  case PKInfoOrResultViewMinUnit
+  /// 我
+  case PKCustomViewUserName
+  /// 胜利了
+  case PKCustomViewWinState
+  /// 天步数对决
+  case PKRecordsCellDurationDescription
+  /// 你赢了
+  case PKRecordsCellYouWin
+  /// 赢了
+  case PKRecordsCellWin
+  /// 再战
+  case PKRecordsCellPKAgainBtnTitle
+  /// 接受
+  case PKRecordsCellAcceptBtnTitle
+  /// 撤销
+  case PKRecordsCellUndoBtnTitle
+  /// 删除
+  case PKRecordsCellDeleteBtnTitle
+  /// 待回应
+  case PKRecordsVCWaitSectionTitle
+  /// 进行中
+  case PKRecordsVCDueSectionTitle
+  /// 已完成
+  case PKRecordsVCFinishSectionTitle
+  /// 发起PK
+  case PKRecordsVCLaunchPkTitle
+  /// 晴
+  case HomeWeatherSun
+  /// 多云
+  case HomeWeatherCloudy
+  /// 阴
+  case HomeWeatherOvercast
+  /// 阵雨
+  case HomeWeatherRainOccasional
+  /// 雷阵雨
+  case HomeWeatherRainThundery
+  /// 小雨
+  case HomeWeatherRainLight
+  /// 中雨
+  case HomeWeatherRainMiddle
+  /// 大雨
+  case HomeWeatherRainHeavy
+  /// 小雪
+  case HomeWeatherSnowLight
+  /// 中雪
+  case HomeWeatherSnowMiddle
+  /// 大雪
+  case HomeWeatherSnowHeavy
+  /// 关于豚鼠
+  case RelateAboutNavTitle
+  /// 当前版本
+  case RelateAboutCurrentVersion
+  /// 功能介绍
+  case RelateAboutFunctionIntroduce
+  /// 进入官网
+  case RelateAboutGoOfficialWebsite
+  /// 官网
+  case RelateAboutOfficialWebsiteNavTitle
+  /// 豚鼠科技 版权所有\nCopyright © 2014-2016 CavyTech\nAll Right Reserved
+  case RelateAboutCopyrightInfo
+  /// 版权信息
+  case RelateAboutCopyrightNavTitle
+  /// 使用条款和隐私政策
+  case RelateAboutUseAndPrivate
+  /// 帮助与反馈
+  case RelateHelpAndFeedbackNavTitle
+  /// 意见反馈
+  case RelateHelpAndFeedbackNavRightBtnTitle
+  /// 发送
+  case RelateHelpAndFeedbackSendBtnTitle
+  /// 请描述你的问题或意见
+  case RelateHelpAndFeedbackTextViewPlaceHolder
+  /// 发送成功
+  case RelateHelpAndFeedbackSendSuccessAlertMsg
+  /// APP推荐
+  case RelateRelateAppNavTitle
+  /// 下载
+  case RelateRelateAppCellDownloadBtnTitle
+  /// 一
+  case AlarmDayMonday
+  /// 二
+  case AlarmDayTuesday
+  /// 三
+  case AlarmDayWednesday
+  /// 四
+  case AlarmDayThursday
+  /// 五
+  case AlarmDayFriday
+  /// 六
+  case AlarmDaySaturday
+  /// 日
+  case AlarmDaySunday
+  /// 请勿退出应用或关闭手环
+  case UpdateProgressInfo
+  /// 手环正在升级
+  case UpdateProgressTitle
+  /// 请先连接手环
+  case UpdateFirmwareBandDisconnectAlertMsg
+  /// 固件版本已最新版本
+  case UpdateFirmwareIsNewVersionAlertMsg
+  /// 下拉同步数据...
+  case HomeRefreshIdle
+  /// 松开同步数据...
+  case HomeRefreshPulling
+  ///   正在同步数据...
+  case HomeRefreshRefreshing
+  /// 确认
+  case AlertSureActionTitle
+  /// 取消
+  case AlertCancelActionTitle
+  /// 确认撤销此次PK？
+  case AlertUndoPKWaitRecordMsg
 }
 
 extension L10n: CustomStringConvertible {
@@ -298,6 +692,22 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("UserModuleErrorCode.SecurityNil")
       case .UserModuleErrorCodeUserNameNil:
         return L10n.tr("UserModuleErrorCode.UserNameNil")
+      case .UserModuleErrorCodeUserIdNil:
+        return L10n.tr("UserModuleErrorCode.UserIdNil")
+      case .UserModuleErrorCodeUnknownError:
+        return L10n.tr("UserModuleErrorCode.UnknownError")
+      case .UserModuleErrorCodeFriendIdNil:
+        return L10n.tr("UserModuleErrorCode.FriendIdNil")
+      case .UserModuleErrorCodeSearchTypeNil:
+        return L10n.tr("UserModuleErrorCode.SearchTypeNil")
+      case .UserModuleErrorCodeParaNil:
+        return L10n.tr("UserModuleErrorCode.ParaNil")
+      case .UserModuleErrorCodeParaError:
+        return L10n.tr("UserModuleErrorCode.ParaError")
+      case .UserModuleErrorCodeLBSNil:
+        return L10n.tr("UserModuleErrorCode.LBSNil")
+      case .UserModuleErrorCodePhoneNumListNil:
+        return L10n.tr("UserModuleErrorCode.PhoneNumListNil")
       case .MainPageSignInBtn:
         return L10n.tr("MainPage.SignInBtn")
       case .MainPageSignUpBtn:
@@ -336,6 +746,10 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("SignUp.SignUpBtn")
       case .SignUpReadProcotol:
         return L10n.tr("SignUp.ReadProcotol")
+      case .SignUpReSignUp:
+        return L10n.tr("SignUp.ReSignUp")
+      case .SignUpDirectSinIn:
+        return L10n.tr("SignUp.DirectSinIn")
       case .GuideMyInfo:
         return L10n.tr("Guide.MyInfo")
       case .GuideMine:
@@ -360,6 +774,10 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Guide.Recommend")
       case .GuideIntroduce:
         return L10n.tr("Guide.Introduce")
+      case .GuideMinute:
+        return L10n.tr("Guide.Minute")
+      case .GuideHour:
+        return L10n.tr("Guide.Hour")
       case .GuideSetting:
         return L10n.tr("Guide.Setting")
       case .GuidePassButton:
@@ -394,6 +812,22 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Guide.PairFail")
       case .GuidePairFailInfo:
         return L10n.tr("Guide.PairFailInfo")
+      case .GuidePhoneRemindTitle:
+        return L10n.tr("Guide.PhoneRemind.Title")
+      case .GuidePhoneRemindInfo:
+        return L10n.tr("Guide.PhoneRemind.Info")
+      case .GuidePKTitle:
+        return L10n.tr("Guide.PK.Title")
+      case .GuidePKInfo:
+        return L10n.tr("Guide.PK.Info")
+      case .GuideSafetyServiceTitle:
+        return L10n.tr("Guide.SafetyService.Title")
+      case .GuideSafetyServiceInfo:
+        return L10n.tr("Guide.SafetyService.Info")
+      case .GuideLifeBandTitle:
+        return L10n.tr("Guide.LifeBand.Title")
+      case .GuideLifeBandInfo:
+        return L10n.tr("Guide.LifeBand.Info")
       case .ForgotTitle:
         return L10n.tr("Forgot.Title")
       case .ForgotPasswdTextField:
@@ -408,6 +842,48 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Camera.Video")
       case .CameraBack:
         return L10n.tr("Camera.Back")
+      case .HomeSleepRingPercerntText:
+        return L10n.tr("Home.SleepRing.PercerntText")
+      case .HomeSleepRingUnitHour:
+        return L10n.tr("Home.SleepRing.Unit.Hour")
+      case .HomeSleepRingUnitMinute:
+        return L10n.tr("Home.SleepRing.Unit.Minute")
+      case .HomeStepRingPercerntText:
+        return L10n.tr("Home.StepRing.PercerntText")
+      case .HomeWeatherAir:
+        return L10n.tr("Home.Weather.Air")
+      case .HomeWeatherAirConditionBest:
+        return L10n.tr("Home.Weather.AirCondition.Best")
+      case .HomeWeatherAirConditionGood:
+        return L10n.tr("Home.Weather.AirCondition.Good")
+      case .HomeWeatherAirPollutionMild:
+        return L10n.tr("Home.Weather.AirPollution.Mild")
+      case .HomeWeatherAirPollutionMiddle:
+        return L10n.tr("Home.Weather.AirPollution.Middle")
+      case .HomeWeatherAirPollutionBad:
+        return L10n.tr("Home.Weather.AirPollution.Bad")
+      case .HomeTimeLineCellSleep:
+        return L10n.tr("Home.TimeLine.Cell.Sleep")
+      case .HomeTimeLineCellStep:
+        return L10n.tr("Home.TimeLine.Cell.Step")
+      case .HomeTimeLineCellPK:
+        return L10n.tr("Home.TimeLine.Cell.PK")
+      case .HomeTimeLineCellAchive:
+        return L10n.tr("Home.TimeLine.Cell.Achive")
+      case .HomeTimeLineCellHealthiy:
+        return L10n.tr("Home.TimeLine.Cell.Healthiy")
+      case .HomeTimeLineAchiveBadge:
+        return L10n.tr("Home.TimeLine.Achive.Badge")
+      case .HomeTimeLinePKLead:
+        return L10n.tr("Home.TimeLine.PK.Lead")
+      case .HomeTimeLinePKBack:
+        return L10n.tr("Home.TimeLine.PK.Back")
+      case .HomeTimeLinePKWin:
+        return L10n.tr("Home.TimeLine.PK.Win")
+      case .HomeTimeLinePKLose:
+        return L10n.tr("Home.TimeLine.PK.Lose")
+      case .HomeTimeLineHealthyCare:
+        return L10n.tr("Home.TimeLine.Healthy.Care")
       case .HomeLifeListTitleTarget:
         return L10n.tr("Home.LifeList.Title.Target")
       case .HomeLifeListTitleInfoOpen:
@@ -422,6 +898,64 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Home.LifeList.Title.Help")
       case .HomeLifeListTitleRelated:
         return L10n.tr("Home.LifeList.Title.Related")
+      case .HomeRightListTitleCamera:
+        return L10n.tr("Home.RightList.Title.Camera")
+      case .HomeRightListTitleNotification:
+        return L10n.tr("Home.RightList.Title.Notification")
+      case .HomeRightListTitleAlarmClock:
+        return L10n.tr("Home.RightList.Title.AlarmClock")
+      case .HomeRightListTitleSecurity:
+        return L10n.tr("Home.RightList.Title.Security")
+      case .HomeRightListTitleFirmwareUpgrade:
+        return L10n.tr("Home.RightList.Title.FirmwareUpgrade")
+      case .HomeRightListTitleBindingBand:
+        return L10n.tr("Home.RightList.Title.BindingBand")
+      case .BandTitle:
+        return L10n.tr("Band.Title")
+      case .BandFWVersion:
+        return L10n.tr("Band.FWVersion")
+      case .BandDisconnectTitle:
+        return L10n.tr("Band.Disconnect.Title")
+      case .BandDisconnectFWVersionTitle:
+        return L10n.tr("Band.Disconnect.FWVersion.Title")
+      case .BandDisconnectBandNameTitle:
+        return L10n.tr("Band.Disconnect.BandName.Title")
+      case .ChartSleep:
+        return L10n.tr("Chart.Sleep")
+      case .ChartStep:
+        return L10n.tr("Chart.Step")
+      case .ChartTimeBucketDay:
+        return L10n.tr("Chart.TimeBucket.Day")
+      case .ChartTimeBucketWeek:
+        return L10n.tr("Chart.TimeBucket.Week")
+      case .ChartTimeBucketMonth:
+        return L10n.tr("Chart.TimeBucket.Month")
+      case .ChartTargetPercent:
+        return L10n.tr("Chart.Target.Percent")
+      case .ChartStepTodayStep:
+        return L10n.tr("Chart.Step.Today.Step")
+      case .ChartStepKilometer:
+        return L10n.tr("Chart.Step.Kilometer")
+      case .ChartStepTimeUsed:
+        return L10n.tr("Chart.Step.TimeUsed")
+      case .ChartStepWeekStep:
+        return L10n.tr("Chart.Step.Week.Step")
+      case .ChartStepAverageStep:
+        return L10n.tr("Chart.Step.Average.Step")
+      case .ChartStepMonthStep:
+        return L10n.tr("Chart.Step.Month.Step")
+      case .ChartSleepDeep:
+        return L10n.tr("Chart.Sleep.Deep")
+      case .ChartSleepLight:
+        return L10n.tr("Chart.Sleep.Light")
+      case .ChartSleepDegreeDeep:
+        return L10n.tr("Chart.Sleep.Degree.Deep")
+      case .ChartSleepDegreeLight:
+        return L10n.tr("Chart.Sleep.Degree.Light")
+      case .ChartSleepAverage:
+        return L10n.tr("Chart.Sleep.Average.")
+      case .ShareTo:
+        return L10n.tr("Share.To")
       case .ContactsListCellCavy:
         return L10n.tr("Contacts.ListCell.Cavy")
       case .ContactsSearchBarSearch:
@@ -484,6 +1018,8 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Contacts.ShowInfo.Birth")
       case .ContactsShowInfoPK:
         return L10n.tr("Contacts.ShowInfo.PK")
+      case .ContactsShowInfoPKSubInfo:
+        return L10n.tr("Contacts.ShowInfo.PKSubInfo")
       case .ContactsShowInfoStep:
         return L10n.tr("Contacts.ShowInfo.Step")
       case .ContactsShowInfoSleep:
@@ -498,12 +1034,264 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Contacts.ChangeNotesName.Button")
       case .ContactsChangeSelfNamePlaceHolder:
         return L10n.tr("Contacts.ChangeSelfName.PlaceHolder")
+      case .ContactsRequestVerifyMsg:
+        return L10n.tr("Contacts.Request.VerifyMsg")
+      case .ContactsNavTitleRemark:
+        return L10n.tr("Contacts.NavTitle.Remark")
+      case .ContactsNavTitleAccountInfo:
+        return L10n.tr("Contacts.NavTitle.AccountInfo")
+      case .ContactsRequestSureButton:
+        return L10n.tr("Contacts.Request.SureButton")
+      case .ContactsEmptyViewNearbyInfo:
+        return L10n.tr("Contacts.EmptyView.NearbyInfo")
+      case .ContactsEmptyViewAddressBookInfo:
+        return L10n.tr("Contacts.EmptyView.AddressBookInfo")
+      case .AccountInfoTitle:
+        return L10n.tr("AccountInfo.Title")
+      case .AccountInfoLoginoutButtonTitle:
+        return L10n.tr("AccountInfo.LoginoutButton.Title")
+      case .AccountInfoPhoto:
+        return L10n.tr("AccountInfo.Photo")
+      case .AccountInfoCamera:
+        return L10n.tr("AccountInfo.Camera")
+      case .AccountInfoChangeNicknamePlaceholder:
+        return L10n.tr("AccountInfo.ChangeNickname.Placeholder")
+      case .AccountInfoChangeAddressPlaceholder:
+        return L10n.tr("AccountInfo.ChangeAddress.Placeholder")
+      case .AccountInfoAchieveViewNumPrefix:
+        return L10n.tr("AccountInfo.AchieveView.NumPrefix")
+      case .AlarmClockIntelligentClockTableFooterInfo:
+        return L10n.tr("AlarmClock.IntelligentClockTableFooter.Info")
+      case .AlarmClockTitle:
+        return L10n.tr("AlarmClock.Title")
+      case .AlarmClockAwakeTitle:
+        return L10n.tr("AlarmClock.Awake.Title")
+      case .AlarmClockAwakeDescription:
+        return L10n.tr("AlarmClock.Awake.Description")
+      case .AlarmClockAlarmCircleTitle:
+        return L10n.tr("AlarmClock.AlarmCircle.Title")
+      case .AlarmClockAlarmCircleSubTitle:
+        return L10n.tr("AlarmClock.AlarmCircle.SubTitle")
+      case .AlarmClockAlarmCircleDescription:
+        return L10n.tr("AlarmClock.AlarmCircle.Description")
+      case .AlarmClockDeleteBtnTitle:
+        return L10n.tr("AlarmClock.DeleteBtn.Title")
+      case .AlarmClockAlarmCircleAlertTitle:
+        return L10n.tr("AlarmClock.AlarmCircle.AlertTitle")
+      case .AlarmClockEmptyViewTitle:
+        return L10n.tr("AlarmClock.EmptyView.Title")
+      case .AlarmClockEmptyViewInfo:
+        return L10n.tr("AlarmClock.EmptyView.Info")
+      case .AlarmClockNoCircleInfo:
+        return L10n.tr("AlarmClock.NoCircle.Info")
+      case .AlarmClockCircleEverydayInfo:
+        return L10n.tr("AlarmClock.CircleEveryday.Info")
+      case .AlarmClockCircleWeekdayInfo:
+        return L10n.tr("AlarmClock.CircleWeekday.Info")
+      case .AlarmClockCircleWeekendInfo:
+        return L10n.tr("AlarmClock.CircleWeekend.Info")
+      case .AlarmClockAlarmClockCountError:
+        return L10n.tr("AlarmClock.AlarmClockCountError")
+      case .SettingSafetyTitle:
+        return L10n.tr("Setting.Safety.Title")
+      case .SettingSafetyTableCellContactButton:
+        return L10n.tr("Setting.SafetyTableCell.ContactButton")
+      case .SettingSafetyTableCellContactTitle:
+        return L10n.tr("Setting.SafetyTableCell.ContactTitle")
+      case .SettingSafetyPhoneNumberError:
+        return L10n.tr("Setting.SafetyPhoneNumberError")
+      case .SettingSafetyPhoneNumberCancel:
+        return L10n.tr("Setting.SafetyPhoneNumberCancel")
+      case .SettingSafetyTableCellGPSTitle:
+        return L10n.tr("Setting.SafetyTableCell.GPSTitle")
+      case .SettingSafetyTableFooterTitle:
+        return L10n.tr("Setting.SafetyTableFooter.Title")
+      case .SettingSafetyTableFooterInfo:
+        return L10n.tr("Setting.SafetyTableFooter.Info")
+      case .SettingSafetyTableEmergencyContactCancelBtn:
+        return L10n.tr("Setting.SafetyTableEmergencyContact.CancelBtn")
+      case .SettingSafetyTableEmergencyAlertMsg:
+        return L10n.tr("Setting.SafetyTableEmergency.AlertMsg")
+      case .SettingReminderPhoneCallTitle:
+        return L10n.tr("Setting.ReminderPhoneCall.Title")
+      case .SettingReminderPhoneCallDescription:
+        return L10n.tr("Setting.ReminderPhoneCall.Description")
+      case .SettingReminderMessageTitle:
+        return L10n.tr("Setting.ReminderMessage.Title")
+      case .SettingReminderMessageDescription:
+        return L10n.tr("Setting.ReminderMessage.Description")
+      case .SettingReminderReconnectTitle:
+        return L10n.tr("Setting.ReminderReconnect.Title")
+      case .SettingReminderReconnectType:
+        return L10n.tr("Setting.ReminderReconnect.Type")
+      case .SettingReminderMessageType:
+        return L10n.tr("Setting.ReminderMessage.Type")
+      case .SettingReminderPhoneType:
+        return L10n.tr("Setting.ReminderPhone.Type")
+      case .PKRulesViewHowPKTitle:
+        return L10n.tr("PK.RulesView.HowPKTitle")
+      case .PKRulesViewHowPKInfo:
+        return L10n.tr("PK.RulesView.HowPKInfo")
+      case .PKRulesViewHowWinTitle:
+        return L10n.tr("PK.RulesView.HowWinTitle")
+      case .PKRulesViewHowWinInfo:
+        return L10n.tr("PK.RulesView.HowWinInfo")
+      case .PKRulesViewHowSeeTitle:
+        return L10n.tr("PK.RulesView.HowSeeTitle")
+      case .PKRulesViewHowSeeInfo:
+        return L10n.tr("PK.RulesView.HowSeeInfo")
+      case .PKIntroduceVCInfoTitle:
+        return L10n.tr("PK.IntroduceVC.InfoTitle")
+      case .PKIntroduceVCSelectInfo:
+        return L10n.tr("PK.IntroduceVC.SelectInfo")
+      case .PKPKTitle:
+        return L10n.tr("PK.PK.Title")
+      case .PKInvitationVCTitle:
+        return L10n.tr("PK.InvitationVC.Title")
+      case .PKInvitationVCSelectFriend:
+        return L10n.tr("PK.InvitationVC.SelectFriend")
+      case .PKInvitationVCSelectTime:
+        return L10n.tr("PK.InvitationVC.SelectTime")
+      case .PKInvitationVCTimeUnit:
+        return L10n.tr("PK.InvitationVC.TimeUnit")
+      case .PKInvitationVCPKState:
+        return L10n.tr("PK.InvitationVC.PKState")
+      case .PKInvitationVCPKOtherSeeAble:
+        return L10n.tr("PK.InvitationVC.PKOtherSeeAble")
+      case .PKInvitationVCPKOtherSeeUnable:
+        return L10n.tr("PK.InvitationVC.PKOtherSeeUnable")
+      case .PKChallengeViewPKTimeTitle:
+        return L10n.tr("PK.ChallengeView.PKTimeTitle")
+      case .PKChallengeViewPKRules:
+        return L10n.tr("PK.ChallengeView.PKRules")
+      case .PKInfoOrResultViewPKEndTimeTitle:
+        return L10n.tr("PK.InfoOrResultView.PKEndTimeTitle")
+      case .PKInfoOrResultViewPKNotEndTimeTitle:
+        return L10n.tr("PK.InfoOrResultView.PKNotEndTimeTitle")
+      case .PKInfoOrResultViewDayUnit:
+        return L10n.tr("PK.InfoOrResultView.DayUnit")
+      case .PKInfoOrResultViewHourUnit:
+        return L10n.tr("PK.InfoOrResultView.HourUnit")
+      case .PKInfoOrResultViewMinUnit:
+        return L10n.tr("PK.InfoOrResultView.MinUnit")
+      case .PKCustomViewUserName:
+        return L10n.tr("PK.CustomView.UserName")
+      case .PKCustomViewWinState:
+        return L10n.tr("PK.CustomView.WinState")
+      case .PKRecordsCellDurationDescription:
+        return L10n.tr("PK.RecordsCell.DurationDescription")
+      case .PKRecordsCellYouWin:
+        return L10n.tr("PK.RecordsCell.YouWin")
+      case .PKRecordsCellWin:
+        return L10n.tr("PK.RecordsCell.Win")
+      case .PKRecordsCellPKAgainBtnTitle:
+        return L10n.tr("PK.RecordsCell.PKAgainBtnTitle")
+      case .PKRecordsCellAcceptBtnTitle:
+        return L10n.tr("PK.RecordsCell.AcceptBtnTitle")
+      case .PKRecordsCellUndoBtnTitle:
+        return L10n.tr("PK.RecordsCell.UndoBtnTitle")
+      case .PKRecordsCellDeleteBtnTitle:
+        return L10n.tr("PK.RecordsCell.DeleteBtnTitle")
+      case .PKRecordsVCWaitSectionTitle:
+        return L10n.tr("PK.RecordsVC.WaitSectionTitle")
+      case .PKRecordsVCDueSectionTitle:
+        return L10n.tr("PK.RecordsVC.DueSectionTitle")
+      case .PKRecordsVCFinishSectionTitle:
+        return L10n.tr("PK.RecordsVC.FinishSectionTitle")
+      case .PKRecordsVCLaunchPkTitle:
+        return L10n.tr("PK.RecordsVC.LaunchPkTitle")
+      case .HomeWeatherSun:
+        return L10n.tr("Home.Weather.Sun")
+      case .HomeWeatherCloudy:
+        return L10n.tr("Home.Weather.Cloudy")
+      case .HomeWeatherOvercast:
+        return L10n.tr("Home.Weather.Overcast")
+      case .HomeWeatherRainOccasional:
+        return L10n.tr("Home.Weather.Rain.Occasional")
+      case .HomeWeatherRainThundery:
+        return L10n.tr("Home.Weather.Rain.Thundery")
+      case .HomeWeatherRainLight:
+        return L10n.tr("Home.Weather.Rain.Light")
+      case .HomeWeatherRainMiddle:
+        return L10n.tr("Home.Weather.Rain.Middle")
+      case .HomeWeatherRainHeavy:
+        return L10n.tr("Home.Weather.Rain.Heavy")
+      case .HomeWeatherSnowLight:
+        return L10n.tr("Home.Weather.Snow.Light")
+      case .HomeWeatherSnowMiddle:
+        return L10n.tr("Home.Weather.Snow.Middle")
+      case .HomeWeatherSnowHeavy:
+        return L10n.tr("Home.Weather.Snow.Heavy")
+      case .RelateAboutNavTitle:
+        return L10n.tr("Relate.About.NavTitle")
+      case .RelateAboutCurrentVersion:
+        return L10n.tr("Relate.About.CurrentVersion")
+      case .RelateAboutFunctionIntroduce:
+        return L10n.tr("Relate.About.FunctionIntroduce")
+      case .RelateAboutGoOfficialWebsite:
+        return L10n.tr("Relate.About.GoOfficialWebsite")
+      case .RelateAboutOfficialWebsiteNavTitle:
+        return L10n.tr("Relate.About.OfficialWebsiteNavTitle")
+      case .RelateAboutCopyrightInfo:
+        return L10n.tr("Relate.About.CopyrightInfo")
+      case .RelateAboutCopyrightNavTitle:
+        return L10n.tr("Relate.About.CopyrightNavTitle")
+      case .RelateAboutUseAndPrivate:
+        return L10n.tr("Relate.About.UseAndPrivate")
+      case .RelateHelpAndFeedbackNavTitle:
+        return L10n.tr("Relate.HelpAndFeedback.NavTitle")
+      case .RelateHelpAndFeedbackNavRightBtnTitle:
+        return L10n.tr("Relate.HelpAndFeedback.NavRightBtnTitle")
+      case .RelateHelpAndFeedbackSendBtnTitle:
+        return L10n.tr("Relate.HelpAndFeedback.SendBtnTitle")
+      case .RelateHelpAndFeedbackTextViewPlaceHolder:
+        return L10n.tr("Relate.HelpAndFeedback.TextViewPlaceHolder")
+      case .RelateHelpAndFeedbackSendSuccessAlertMsg:
+        return L10n.tr("Relate.HelpAndFeedback.SendSuccessAlertMsg")
+      case .RelateRelateAppNavTitle:
+        return L10n.tr("Relate.RelateApp.NavTitle")
+      case .RelateRelateAppCellDownloadBtnTitle:
+        return L10n.tr("Relate.RelateAppCell.DownloadBtnTitle")
+      case .AlarmDayMonday:
+        return L10n.tr("AlarmDay.Monday")
+      case .AlarmDayTuesday:
+        return L10n.tr("AlarmDay.Tuesday")
+      case .AlarmDayWednesday:
+        return L10n.tr("AlarmDay.Wednesday")
+      case .AlarmDayThursday:
+        return L10n.tr("AlarmDay.Thursday")
+      case .AlarmDayFriday:
+        return L10n.tr("AlarmDay.Friday")
+      case .AlarmDaySaturday:
+        return L10n.tr("AlarmDay.Saturday")
+      case .AlarmDaySunday:
+        return L10n.tr("AlarmDay.Sunday")
+      case .UpdateProgressInfo:
+        return L10n.tr("UpdateProgress.Info")
+      case .UpdateProgressTitle:
+        return L10n.tr("UpdateProgress.title")
+      case .UpdateFirmwareBandDisconnectAlertMsg:
+        return L10n.tr("UpdateFirmware.BandDisconnect.AlertMsg")
+      case .UpdateFirmwareIsNewVersionAlertMsg:
+        return L10n.tr("UpdateFirmware.IsNewVersion.AlertMsg")
+      case .HomeRefreshIdle:
+        return L10n.tr("Home.Refresh.Idle")
+      case .HomeRefreshPulling:
+        return L10n.tr("Home.Refresh.Pulling")
+      case .HomeRefreshRefreshing:
+        return L10n.tr("Home.Refresh.Refreshing")
+      case .AlertSureActionTitle:
+        return L10n.tr("Alert.SureAction.Title")
+      case .AlertCancelActionTitle:
+        return L10n.tr("Alert.CancelAction.Title")
+      case .AlertUndoPKWaitRecordMsg:
+        return L10n.tr("Alert.UndoPKWaitRecord.Msg")
     }
   }
 
   private static func tr(key: String, _ args: CVarArgType...) -> String {
     let format = NSLocalizedString(key, comment: "")
-    return String(format: format, arguments: args)
+    return String(format: format, locale: NSLocale.currentLocale(), arguments: args)
   }
 }
 

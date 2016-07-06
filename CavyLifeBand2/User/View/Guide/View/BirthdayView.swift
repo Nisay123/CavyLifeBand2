@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EZSwiftExtensions
 
 class BirthdayView: UIView, RulerViewDelegate {
     
@@ -15,6 +16,11 @@ class BirthdayView: UIView, RulerViewDelegate {
     var yymmRuler = RulerView()
     var dayLabel = UILabel()
     var dayRuler = RulerView()
+    
+    let beginYear = 1901
+    var birthdayString: String {
+        return "\(self.yymmRuler.nowYear + beginYear)-\(self.yymmRuler.nowMonth)-\(self.dayRuler.nowDay)"
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,56 +42,62 @@ class BirthdayView: UIView, RulerViewDelegate {
         self.addSubview(titleLab)
         
         titleLab.text = L10n.GuideBirthday.string
-        titleLab.font = UIFont.systemFontOfSize(18)
-        titleLab.textColor = UIColor(named: .GuideColorCC)
+        titleLab.font = UIFont.mediumSystemFontOfSize(18)
+        titleLab.textColor = UIColor(named: .EColor)
         titleLab.textAlignment = .Center
-        titleLab.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(CavyDefine.spacingWidth25 * 23, 18))
+        titleLab.snp_makeConstraints { make -> Void in
+            make.size.equalTo(CGSizeMake(birthRulerWidth, 18))
             make.centerX.equalTo(self)
             make.top.equalTo(self).offset(CavyDefine.spacingWidth25 * 2)
         }
-        yyMMLabel.font = UIFont.systemFontOfSize(45)
-        yyMMLabel.textColor = UIColor(named: .GuideColorCC)
+        
+        yyMMLabel.font = UIFont.mediumSystemFontOfSize(42)
+        yyMMLabel.textColor = UIColor(named: .EColor)
         yyMMLabel.textAlignment = NSTextAlignment.Center
-        yyMMLabel.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(CavyDefine.spacingWidth25 * 23, 45))
+        yyMMLabel.snp_makeConstraints { make -> Void in
+            make.size.equalTo(CGSizeMake(birthRulerWidth, 40))
             make.centerX.equalTo(self)
-            make.top.equalTo(titleLab).offset(CavyDefine.spacingWidth25 * 2 + 18)
+            make.top.equalTo(self).offset(middleViewHeight / 2 - birthRulerViewHeight - rulerBetweenSpace / 2)
         }
-        yymmRuler.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(CavyDefine.spacingWidth25 * 23, 60))
+        
+        yymmRuler.snp_makeConstraints { make -> Void in
+            make.height.equalTo(birthRulerHeight)
+            make.leading.equalTo(self).offset(10)
+            make.trailing.equalTo(self).offset(-10)
             make.centerX.equalTo(self)
-            make.top.equalTo(yyMMLabel).offset(CavyDefine.spacingWidth25 + 45)
+            make.top.equalTo(self).offset(middleViewHeight / 2 - birthRulerHeight - rulerBetweenSpace / 2)
         }
         yymmRuler.rulerDelegate = self
         
         // 获取当前时间
-        let dateFormatter = NSDateFormatter() // = NSDate()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy/MM"
         let dateString = dateFormatter.stringFromDate(NSDate())
         var dates = dateString.componentsSeparatedByString("/")
         let currentYear = dates[0].toInt()
         let currentMonth = dates[1].toInt()
         
-        yymmRuler.initYearMonthRuler(currentYear!, monthValue: currentMonth!, lineSpace: 13, lineCount: 12, style: .YearMonthRuler)
+        yymmRuler.initYearMonthRuler(currentYear!, monthValue: currentMonth!, style: .YearMonthRuler)
         yyMMLabel.text = yymmRuler.rulerScroll.currentValue
         
-        dayLabel.font = UIFont.systemFontOfSize(45)
-        dayLabel.textColor = UIColor(named: .GuideColorCC)
+        dayLabel.font = UIFont.mediumSystemFontOfSize(42)
+        dayLabel.textColor = UIColor(named: .EColor)
         dayLabel.textAlignment = NSTextAlignment.Center
-        dayLabel.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(CavyDefine.spacingWidth25 * 23, 45))
+        dayLabel.snp_makeConstraints { make -> Void in
+            make.size.equalTo(CGSizeMake(birthRulerWidth, 40))
             make.centerX.equalTo(self)
-            make.top.equalTo(yymmRuler).offset(CavyDefine.spacingWidth25 * 2 + 60)
+            make.top.equalTo(self).offset(middleViewHeight / 2 + rulerBetweenSpace)
         }
         
-        dayRuler.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(CavyDefine.spacingWidth25 * 23, 60))
+        dayRuler.snp_makeConstraints { make -> Void in
+            make.height.equalTo(60)
+            make.leading.equalTo(self).offset(10)
+            make.trailing.equalTo(self).offset(-10)
             make.centerX.equalTo(self)
-            make.top.equalTo(dayLabel).offset(CavyDefine.spacingWidth25 + 45)
+            make.top.equalTo(self).offset(middleViewHeight / 2 + rulerBetweenSpace + birthRulerHeight)
         }
         dayRuler.rulerDelegate = self
-        dayRuler.initDayRuler(31, lineSpace: 26, lineCount: 5, style: .DayRuler)
+        dayRuler.initDayRuler(31, style: .DayRuler)
         dayLabel.text = dayRuler.rulerScroll.currentValue
         
     }
@@ -105,26 +117,12 @@ class BirthdayView: UIView, RulerViewDelegate {
     // 更改刻度尺状态
     func changeCountStatusForDayRuler(scrollRuler: RulerScroller) {
         // 通过年月日来判断 下面刻度尺的日期天数
-        let days = daysCount(yymmRuler.nowYear, month: yymmRuler.nowMonth)
+        let days = NSDate().daysCount(yymmRuler.nowYear, month: yymmRuler.nowMonth)
         
-        dayRuler.initDayRuler(days, lineSpace: 26, lineCount: 5, style: .DayRuler)
+        dayRuler.initDayRuler(days, style: .DayRuler)
         
     }
     
-    // 计算当前月份的天数
-    func daysCount(year: Int, month: Int) -> Int {
-        
-        var daysArray = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        
-        if year % 400 == 0 || year % 100 != 0 && year % 4 == 0 {
-            
-            daysArray[2] += 1
-            
-        }
-        
-        return daysArray[month]
-        
-    }
     
     /*
     // Only override drawRect: if you perform custom drawing.

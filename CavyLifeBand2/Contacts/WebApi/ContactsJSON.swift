@@ -16,15 +16,14 @@ import JSONJoy
 struct ContactsFriendListMsg: JSONJoy {
     
     //通用消息头
-    var commonMsg: CommenMsg?
+    var commonMsg: CommenMsg
     
     //好友信息
-    var friendInfos: [ContactsFriendInfo]?
+    var friendInfos: [ContactsFriendInfo] = []
     
     init(_ decoder: JSONDecoder) throws {
         
         commonMsg = try CommenMsg(decoder)
-        friendInfos = [ContactsFriendInfo]()
         
         guard let friendInfoArray =  decoder["friendInfos"].array else {
             friendInfos = [ContactsFriendInfo]()
@@ -33,7 +32,7 @@ struct ContactsFriendListMsg: JSONJoy {
         
         for friendInfo in friendInfoArray {
             
-            friendInfos?.append(try ContactsFriendInfo(friendInfo))
+            friendInfos.append(try ContactsFriendInfo(friendInfo))
             
         }
         
@@ -58,9 +57,13 @@ struct ContactsSearchFriendMsg: JSONJoy {
         
         commonMsg = try CommenMsg(decoder)
         friendInfos = [ContactsSearchFriendInfo]()
-        for friendInfo in decoder["friendInfos"].array! {
+        guard let friendInfoArray = decoder["friendInfos"].array else {
+            return
+        }
+        
+        for friendInfo in friendInfoArray {
             
-            friendInfos?.append(try ContactsSearchFriendInfo(friendInfo))
+            friendInfos!.append(try ContactsSearchFriendInfo(friendInfo))
             
         }
         
@@ -76,19 +79,19 @@ struct ContactsSearchFriendMsg: JSONJoy {
 struct ContactsFriendInfo: JSONJoy {
     
     //用户ID
-    var userId: String?
+    var userId: String
     
     //昵称
-    var nickName: String?
+    var nickName: String
     
     //头像
-    var avatarUrl: String?
+    var avatarUrl: String
     
     //是否关注
-    var isFoolow: Bool?
+    var isFoolow: Bool
     
     //计步数
-    var stepNum: Int?
+    var stepNum: Int
     
     //睡眠时间
     var sleepTime: String?
@@ -115,16 +118,18 @@ struct ContactsFriendInfo: JSONJoy {
 struct ContactsSearchFriendInfo: JSONJoy {
     
     //用户ID
-    var userId: String?
+    var userId: String
     
     //匿名
-    var nickName: String?
+    var nickName: String
     
     //头像
-    var avatarUrl: String?
+    var avatarUrl: String
     
     //距离
-    var distance: String?
+    var distance: String
+   
+    var phoneNum: String
     
     init(_ decoder: JSONDecoder) throws {
         
@@ -132,6 +137,7 @@ struct ContactsSearchFriendInfo: JSONJoy {
         do { nickName = try decoder["nickname"].getString() } catch { nickName = "" }
         do { avatarUrl = try decoder["avatarUrl"].getString() } catch { avatarUrl = "" }
         do { distance = try decoder["distance"].getString() } catch { distance = "" }
+        do { phoneNum = try decoder["phoneNum"].getString() } catch { phoneNum = "" }
         
     }
     
@@ -147,21 +153,39 @@ struct ContactsFriendReqMsg: JSONJoy {
     //通用消息头
     var commendMsg: CommenMsg?
     
-    //用户ID
-    var userId: String?
-    
-    //匿名
-    var nickName: String?
-    
-    //头像
-    var avatarUrl: String?
-    
-    //验证消息
-    var verifyMsg: String?
+    var userInfos: [ContactsFriendReqInfo] = []
     
     init(_ decoder: JSONDecoder) throws {
         
         commendMsg = try CommenMsg(decoder)
+        
+        guard let userInfoArray = decoder["userInfos"].array else {
+            return
+        }
+        
+        for userInfo in userInfoArray {
+            userInfos.append(try! ContactsFriendReqInfo(userInfo))
+        }
+        
+    }
+    
+}
+
+struct ContactsFriendReqInfo {
+    
+    //用户ID
+    var userId: String
+    
+    //匿名
+    var nickName: String
+    
+    //头像
+    var avatarUrl: String
+    
+    //验证消息
+    var verifyMsg: String
+    
+    init(_ decoder: JSONDecoder) throws {
         
         do { userId = try decoder["userId"].getString() } catch { userId = "" }
         do { nickName = try decoder["nickname"].getString() } catch { nickName = "" }
@@ -169,5 +193,41 @@ struct ContactsFriendReqMsg: JSONJoy {
         do { verifyMsg = try decoder["verifyMsg"].getString() } catch { verifyMsg = "" }
         
     }
+}
+
+/**
+ *  好友详细信息
+ */
+struct ContactPsersonInfoResponse: JSONJoy {
     
+    var commendMsg: CommenMsg
+    var avatarUrl: String
+    var isHonour: Bool
+    var remark: String
+    var sex: String
+    var height: String
+    var weight: String
+    var birthday: String
+    var stepNum: Int
+    var sleepTime: String
+    var address: String
+    
+    init(_ decoder: JSONDecoder) throws {
+        
+        commendMsg = try CommenMsg(decoder)
+        
+        isHonour = decoder["isHonour"].bool
+        
+        do { avatarUrl = try decoder["avatarUrl"].getString() } catch { avatarUrl = "" }
+        do { remark = try decoder["remark"].getString() } catch { remark = "" }
+        do { sex = try decoder["sex"].getString() } catch { sex = "" }
+        do { height = try decoder["height"].getString() } catch { height = "" }
+        do { weight = try decoder["weight"].getString() } catch { weight = "" }
+        do { birthday = try decoder["birthday"].getString() } catch { birthday = "" }
+        do { stepNum = try decoder["stepNum"].getInt() } catch { stepNum = 0 }
+        do { sleepTime = try decoder["sleepTime"].getString() } catch { sleepTime = "" }
+        do { address = try decoder["address"].getString() } catch { address = "" }
+
+    }
+
 }

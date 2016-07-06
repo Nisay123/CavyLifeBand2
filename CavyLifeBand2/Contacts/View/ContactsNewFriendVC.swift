@@ -8,15 +8,42 @@
 
 import UIKit
 
-class ContactsNewFriendVC: ContactsBaseViewController {
+extension ContactsNewFriendData: ContactsTableViewSectionDataSource {
+    
+    var rowCount: Int { return items.count }
+    
+    func createCell(tableView: UITableView, index: NSIndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("ContactsAddFriendCell", forIndexPath: index) as? ContactsAddFriendCell else {
+            fatalError()
+        }
+        
+        cell.configure(items[index.row], delegate: items[index.row])
+        
+        return cell
+        
+    }
+    
+}
+
+class ContactsNewFriendVC: UIViewController, BaseViewControllerPresenter {
+    
+    var navTitle: String { return L10n.ContactsTitle.string }
 
     @IBOutlet weak var newFriendTableView: UITableView!
+    
+    var newFriendData: ContactsNewFriendData!
     
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        self.updateNavUI()
 
         newFriendTableView.registerNib(UINib(nibName: "ContactsAddFriendCell", bundle: nil), forCellReuseIdentifier: "ContactsAddFriendCell")
+        
+        newFriendData = ContactsNewFriendData(viewController: self, tableView: newFriendTableView)
+        
+        newFriendData.loadData()
 
     }
 
@@ -42,21 +69,14 @@ extension ContactsNewFriendVC {
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        guard let contactsCell = tableView.dequeueReusableCellWithIdentifier("ContactsAddFriendCell", forIndexPath: indexPath) as? ContactsAddFriendCell else {
-            return tableView.dequeueReusableCellWithIdentifier("ContactsAddFriendCell", forIndexPath: indexPath)
-        }
 
-        let viewModel = ContactsNewFriendCellViewModel()
-
-        contactsCell.configure(viewModel, delegate: viewModel)
-        
-        return contactsCell
+        return newFriendData.createCell(tableView, index: indexPath)
 
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return 5
+        return newFriendData?.rowCount ?? 0
 
     }
 
@@ -69,6 +89,11 @@ extension ContactsNewFriendVC {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        
+        let requestVC = StoryboardScene.Contacts.instantiateContactsPersonInfoVC()
+        requestVC.friendId = newFriendData.items[indexPath.row].friendId
+        requestVC.friendNickName = newFriendData.items[indexPath.row].name
+        self.pushVC(requestVC)
 
     }
 

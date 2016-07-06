@@ -7,14 +7,19 @@
 //
 
 import UIKit
-import KSCrash
 import Log
-//#if UITEST
+import EZSwiftExtensions
+import RealmSwift
+#if UITEST
 import OHHTTPStubs
-//#endif
+#endif
+
+var realm: Realm = try! Realm()
+let PGYAPPID = "9bb10b86bf5f62f10ec4f83d1c9847e7"
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate {
 
     var window: UIWindow?
 
@@ -25,29 +30,166 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             uiTestStub()
             
         #endif
-
-        let installation = KSCrashInstallationStandard.sharedInstance()
         
-        installation.url = NSURL(string: CavyDefine.bugHDKey)
-
-        installation.install()
-        installation.sendAllReportsWithCompletion(nil)
+        #if RELEASE
+            Log.enabled = false
+           
+        #endif
         
-        if CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId != "" {
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+        /**
+         5适配
+         */
+        appFitWithDevice()
+        
+        realmConfig()
+        
+        pgyUpdateConfig()
+        
+        registerShareSdk()
+        
+        setRootViewController()
+        crashConfig()
+        
+        return true
+
+    }
+    
+    /**
+     5,5c,5s适配
+     */
+    func appFitWithDevice() {
+        
+        if UIDevice.isPhone5() {
             
-            self.window?.rootViewController = StoryboardScene.Home.instantiateRootView()
+            timeButtonHeight = 40
+            subTimeButtonHeight = 40
+            chartTopHeigh = 20
+            chartBottomHeigh = 20
+            chartViewHight = 230
+            listcellHight = 44
             
         }
         
-//        stub(isMethodPOST()) { _ in
-//            let stubPath = OHPathForFile("SearchFrendListResult.json", self.dynamicType)
-//            return fixture(stubPath!, headers: ["Content-Type": "application/json"])
-//        }
-//        
+    }
+    
+    /**
+     首页设置
+     
+     - author: sim cai
+     - date: 2016-06-01
+     */
+    func setRootViewController() {
+        if CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId.isEmpty {
+            return
+        }
         
+        
+        let bindBandKey = "CavyAppMAC_" + CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId
+        BindBandCtrl.bandMacAddress = CavyDefine.bindBandInfos.bindBandInfo.userBindBand[bindBandKey] ?? NSData()
+        
+        window?.rootViewController = StoryboardScene.Home.instantiateRootView()
+        
+    }
+    
+    /**
+     蒲公英升级
+     
+     - author: sim cai
+     - date: 2016-06-01
+     */
+    func pgyUpdateConfig() {
+    
+        PgyUpdateManager.sharedPgyManager().startManagerWithAppId(PGYAPPID)
+        PgyUpdateManager.sharedPgyManager().updateLocalBuildNumber()
+        PgyUpdateManager.sharedPgyManager().checkUpdateWithDelegete(self, selector: #selector(AppDelegate.updateMethod))
+        
+    }
+    
+    /**
+     自动异常上报
+     
+     - author: sim cai
+     - date: 2016-06-01
+     */
+    func crashConfig() {
+        
+       PgyManager.sharedPgyManager().startManagerWithAppId(PGYAPPID)
+        
+    }
+    
+    /**
+     分享SDK
+     
+     - author: sim cai
+     - date: 2016-06-01
+     */
+    func registerShareSdk() {
+        
+        ShareSDK.registerApp(CavyDefine.shareSDKAppKey)
+        
+        // 新浪微博
+        ShareSDK.connectSinaWeiboWithAppKey(CavyDefine.sinaShareAppKey, appSecret: CavyDefine.sinaShareAppSecret, redirectUri: CavyDefine.sinaShareAppRedirectUri, weiboSDKCls: WeiboSDK.classForCoder())
+        
+        // QQ
+        ShareSDK.connectQQWithAppId(CavyDefine.qqShareAppKey, qqApiCls: QQApiInterface.classForCoder())
+        
+        // Wechat
+        ShareSDK.connectWeChatTimelineWithAppId(CavyDefine.wechatShareAppKey, appSecret: CavyDefine.wechatShareAppSecret, wechatCls: WXApi.classForCoder())
+        ShareSDK.connectWeChatSessionWithAppId(CavyDefine.wechatShareAppKey, appSecret: CavyDefine.wechatShareAppSecret, wechatCls: WXApi.classForCoder())
+        
+    }
+    
 
-        return true
-
+    
+    /**
+     realm 数据合并配置
+     
+     - author: sim cai
+     - date: 2016-06-01
+     */
+    func realmConfig() {
+        
+        Realm.Configuration.defaultConfiguration = Realm.Configuration(schemaVersion: UInt64(ez.appBuild!)!, migrationBlock: { migration, oldSchemaVersion in
+            
+            if oldSchemaVersion > 6 {
+                return
+            }
+            
+            migration.enumerate(FriendInfoRealm.className()) { (oldObject, newObject) in
+                
+                let nikeName = oldObject!["nikeName"] as! String
+                newObject!["fullName"] = nikeName.chineseToSpell() + nikeName
+                
+            }
+            
+        })
+        
+    }
+    
+    /**
+     蒲公英更新检查
+     
+     - author: sim cai
+     - date: 2016-06-01
+     
+     - parameter updateMethodWithDictionary: 
+     */
+    func updateMethod(updateMethodWithDictionary: [String: AnyObject]?) {
+        
+        guard let updateDictionary = updateMethodWithDictionary else {
+            return
+        }
+        
+        let localBuild = ez.appBuild?.toInt() ?? 0
+        let newBuild = (updateDictionary["versionCode"] as? String ?? "").toInt() ?? 0
+        
+        guard localBuild < newBuild else {
+            return
+        }
+        
+        PgyUpdateManager.sharedPgyManager().checkUpdate()
+        
     }
 
 #if UITEST
@@ -58,6 +200,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            let stubPath = OHPathForFile("GetFrendListResult.json", self.dynamicType)
 //            return fixture(stubPath!, headers: ["Content-Type": "application/json"])
 //        }
+        
+        if NSProcessInfo.processInfo().arguments.contains("AccountPageSwitchUITests") {
+            
+            CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = ""
+            
+        }
+        
+        if NSProcessInfo.processInfo().arguments.contains("ContactsAccountInfoUItests") {
+            CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = "56d6ea3bd34635186c60492b"
+        }
 
     
         if NSProcessInfo.processInfo().arguments.contains("STUB_HTTP_SIGN_IN") {
@@ -93,11 +245,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = ""
         }
+        
+        if NSProcessInfo.processInfo().arguments.contains("AccountInfoSecurityUITest") {
+            
+            CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = "56d6ea3bd34635186c60492b"
+            
+        }
+        
+        if NSProcessInfo.processInfo().arguments.contains("AlarmClockUITest") {
+            
+            CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = "56d6ea3bd34635186c60492b"
+            
+        }
     
     }
     
 #endif
-
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -111,6 +274,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
+        // 只有 打开蓝牙并且连接手环 自动刷新的处理
+        if LifeBandBle.shareInterface.centraManager?.state == .PoweredOn && LifeBandBle.shareInterface.getConnectState() == .Connected {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(RefreshStatus.AddAutoRefresh.rawValue, object: nil)
+            
+        }
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -121,5 +291,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // MARK: - 如果使用SSO（可以简单理解成跳客户端授权），以下方法是必要的
+    
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        
+        return ShareSDK.handleOpenURL(url, wxDelegate: self)
+        
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        
+        return ShareSDK.handleOpenURL(url, sourceApplication: sourceApplication, annotation: annotation, wxDelegate: self)
+        
+    }
 
 }

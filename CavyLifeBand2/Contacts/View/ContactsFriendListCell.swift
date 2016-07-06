@@ -37,9 +37,15 @@ class ContactsFriendListCell: UITableViewCell {
         super.awakeFromNib()
 
         headView.roundSquareImage()
+        headView.layer.borderWidth = 1
+        headView.layer.borderColor = UIColor.whiteColor().CGColor
 
-        nameLabel.textColor = UIColor(named: .ContactsName)
-        nameLabel.font = UIFont.systemFontOfSize(16)
+        nameLabel.textColor = UIColor(named: .EColor)
+        nameLabel.font = UIFont.mediumSystemFontOfSize(16)
+        
+        topLine.backgroundColor = UIColor(named: .LColor)
+        bottomLine.backgroundColor = UIColor(named: .LColor)
+        
         let cellBgView = UIView()
         cellBgView.backgroundColor = UIColor(named: .ContactsCellSelect)
         self.selectedBackgroundView = cellBgView
@@ -52,22 +58,14 @@ class ContactsFriendListCell: UITableViewCell {
 
         nameLabel.text = dataSource.name
         hiddenCare = dataSource.hiddenCare
+        
         dataSource.setHeadImageView(self.headView)
 
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-
         // Configure the view for the selected state
-    }
-    
-    func showEditing(show: Bool) {
-       
-        topLine.hidden = !show
-        bottomLine.hidden = !show
-        
     }
 
 }

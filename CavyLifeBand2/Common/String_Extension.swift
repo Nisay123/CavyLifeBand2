@@ -23,6 +23,28 @@ extension String {
         return false
     }
     
+    func chineseToSpell() -> String {
+        
+        let str = CFStringCreateMutableCopy(nil, 0, self)
+        
+        var returnStr = ""
+        
+        if CFStringTransform(str, nil, kCFStringTransformToLatin, false) {
+            
+            if CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false) {
+                
+                let string = String(str)
+                returnStr = string.capitalizedString
+                
+            }
+        }
+        
+        returnStr = returnStr.trimmed()
+        
+        return returnStr
+        
+    }
+    
     /**
      返回第一个字母
      
@@ -32,25 +54,32 @@ extension String {
      */
     func firstCharactor(name: String) -> String {
         
-        let str = CFStringCreateMutableCopy(nil, 0, name)
+        var returnStr = ""
         
-        var returnStr = String()
+        let spellString = name.chineseToSpell()
         
-        if CFStringTransform(str, nil, kCFStringTransformToLatin, false) {
-            
-            if CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false) {
-                
-                // 转换类型
-                let string = String(str)
-                string.capitalizedString
-                let character = string[string.startIndex]
-                
-                returnStr = String(character)
-            }
-            
-        }
+        let beginChar = spellString[spellString.startIndex]
+        
+        returnStr = String(beginChar)
         
         return returnStr.uppercaseString
     }
     
+    /**
+     数字转格式化字符 千位分隔格式 ep:50000 -> 50,000
+     
+     - parameter num: 需转换数字
+     
+     - returns: 转换后的字符串
+     */
+    static func  numberDecimalFormatter(num: Int = 0) -> String {
+    
+        let numberFormatter = NSNumberFormatter()
+        numberFormatter.numberStyle = .DecimalStyle
+        let string = numberFormatter.stringFromNumber(NSNumber(integer: num))
+        
+        return string!
+    }
+ 
+       
 }

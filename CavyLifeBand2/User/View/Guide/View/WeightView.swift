@@ -19,6 +19,9 @@ class WeightView: UIView {
     var rotaryView: MHRotaryKnob?
     let minValue: CGFloat = 0
     let maxValue: CGFloat = 180
+    var weightString: String {
+        return self.valueLabel.text ?? ""
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,16 +43,16 @@ class WeightView: UIView {
         rotaryView!.addSubview(KGLabel)
         
         titleLab.text = L10n.GuideWeight.string
-        titleLab.font = UIFont.systemFontOfSize(18)
-        titleLab.textColor = UIColor(named: .GuideColorCC)
+        titleLab.font = UIFont.mediumSystemFontOfSize(18)
+        titleLab.textColor = UIColor(named: .EColor)
         titleLab.textAlignment = .Center
-        titleLab.snp_makeConstraints { (make) -> Void in
+        titleLab.snp_makeConstraints { make -> Void in
             make.size.equalTo(CGSizeMake(CavyDefine.spacingWidth25 * 23, 18))
             make.centerX.equalTo(self)
             make.top.equalTo(self).offset(CavyDefine.spacingWidth25 * 2)
         }
         
-        rotaryView!.snp_makeConstraints { (make) -> Void in
+        rotaryView!.snp_makeConstraints { make -> Void in
             make.center.equalTo(self)
             make.size.equalTo(CGSizeMake(ez.screenWidth * 0.72, ez.screenWidth * 0.72))
         }
@@ -68,30 +71,36 @@ class WeightView: UIView {
         // 当前值
         valueLabel.text = "60.0"
         valueLabel.textAlignment = .Center
-        valueLabel.textColor = UIColor(named: .GuideColorCC)
-        valueLabel.font = UIFont.systemFontOfSize(45)
-        valueLabel.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(ez.screenWidth * 0.72, 45))
+        valueLabel.textColor = UIColor(named: .EColor)
+        valueLabel.font = UIFont.mediumSystemFontOfSize(42)
+        valueLabel.snp_makeConstraints { make -> Void in
             make.centerX.equalTo(self)
-            make.top.equalTo(self).offset(ez.screenWidth * 0.72)
+            make.centerY.equalTo(self.rotaryView!.snp_bottom)
         }
         
         // kg 标签
         KGLabel.text = "kg"
         KGLabel.textAlignment = .Center
-        KGLabel.textColor = UIColor(named: .GuideColorCC)
-        KGLabel.font = UIFont.systemFontOfSize(30)
-        KGLabel.snp_makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSizeMake(ez.screenWidth * 0.72, 40))
-            make.centerX.equalTo(self)
-            make.top.equalTo(valueLabel).offset(ez.screenWidth * 0.04 + 30)
+        KGLabel.textColor = UIColor(named: .EColor)
+        KGLabel.font = UIFont.mediumSystemFontOfSize(30)
+        KGLabel.snp_makeConstraints { make -> Void in
+            make.centerY.equalTo(valueLabel).offset(3)
+            make.left.equalTo(valueLabel.snp_right)
         }
         
     }
     
     func rotaryKnobDidChange(){
-
-        valueLabel.text = String(format: "%.1f", rotaryView!.value)
+        
+        var weight = rotaryView?.value ?? 0.0
+        
+        let decimals = weight % 1
+        
+        // floor 向下取整
+        if decimals < 0.5 { weight = floor(weight) }
+        else { weight = floor(weight) + 0.5 }
+        
+        valueLabel.text = String(format: "%.1f", weight)
 
     }
     

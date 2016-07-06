@@ -22,20 +22,16 @@ class UserProtocolView: UIView {
     override func drawRect(rect: CGRect) {
 
         desText.text = L10n.SignUpProcotolViewTitle.string
-        desText.textColor = UIColor.whiteColor()
+        desText.textColor = UIColor(named: .AColor)
         desText.font = UIFont.systemFontOfSize(14)
 
         protocolBtn.setTitle(L10n.SignUpProcotolViewBtn.string, forState: .Normal)
-        protocolBtn.setTitleColor(UIColor(named: .SignUpProtocolBtn), forState: .Normal)
+        protocolBtn.setTitleColor(UIColor(named: .CColor), forState: .Normal)
         protocolBtn.titleLabel!.font = UIFont.systemFontOfSize(14)
         
         defineViewLayout()
 
     }
-
-
-
-
 
     /**
      视图布局
@@ -48,17 +44,17 @@ class UserProtocolView: UIView {
         
         checkboxBtn.frame.size = CGSizeMake(15, 15)
 
-        checkboxBtn.snp_makeConstraints { (make) -> Void in
+        checkboxBtn.snp_makeConstraints { make -> Void in
             make.left.equalTo(self)
             make.centerY.equalTo(self)
         }
 
-        desText.snp_makeConstraints { (make) -> Void in
+        desText.snp_makeConstraints { make -> Void in
             make.left.equalTo(checkboxBtn.snp_right).offset(10)
             make.centerY.equalTo(self)
         }
 
-        protocolBtn.snp_makeConstraints { (make) -> Void in
+        protocolBtn.snp_makeConstraints { make -> Void in
 
             make.left.equalTo(desText.snp_right)
             make.centerY.equalTo(self)

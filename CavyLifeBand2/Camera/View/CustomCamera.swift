@@ -55,19 +55,23 @@ class CustomCamera: UIViewController {
         getLastPhoto()         // show lastImage
         
         camera.start()         // start Camera
+        
+        self.navigationController?.navigationBarHidden = true
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CustomCamera.photoAndVideo), name: LifeBandCtrlNotificationName.BandButtonEvenClick1.rawValue, object: nil)
+        
     }
     
-    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         UIApplication.sharedApplication().idleTimerDisabled = true
         
         cameraAllViewLayout()
         
-        
     }
-    
+
     // 全部控件布局
     func cameraAllViewLayout() {
         
@@ -116,6 +120,7 @@ class CustomCamera: UIViewController {
     
     // 重写LLSimpleCamera 的 block -- setOnError
     func cameraError(camera: LLSimpleCamera?, error: NSError?) {
+        
         Log.error("Camera error:\(error)")
         
         if error?.domain == LLSimpleCameraErrorDomain {
@@ -154,6 +159,7 @@ class CustomCamera: UIViewController {
     
     // 获取系统相册最后一张图片
     func getLastPhoto(){
+        
         Log.info("系统最后一张图片")
         
         // 查看是否有访问权限
@@ -170,9 +176,11 @@ class CustomCamera: UIViewController {
         let fetchOptions = PHFetchOptions()
         let fetchResults = PHAsset.fetchAssetsWithOptions(fetchOptions)
         
-        if fetchResults.countOfAssetsWithMediaType(.Image) > 0 {
-            Log.info(fetchResults.count)
+        guard fetchResults.countOfAssetsWithMediaType(.Image) > 0 else {
+            return
         }
+        
+        Log.info(fetchResults.count)
         
         // 最后一张
         let lastAsset = fetchResults.lastObject as! PHAsset
@@ -208,39 +216,10 @@ class CustomCamera: UIViewController {
         // start recording
         let outputURL = self.applicationDocumentsDirectory().URLByAppendingPathComponent("cavy").URLByAppendingPathExtension("mov")
         
-        self.camera.startRecordingWithOutputUrl(outputURL)
-        
-    }
-    
-    // 停止摄影
-    func stopVideo(){
-        
-        Log.info("停止录像")
-        
-        self.camera.recording = false
-        
-        // 停止计时器 时间归零
-        timer.invalidate()
-        timerCount = 0
-        
-        self.flashSwitch.hidden = false
-        self.shotCutSwitch.hidden = false
-        self.changeToPhoto.hidden = false
-        self.changeToVideo.hidden = false
-        self.lastImage.hidden = false
-        self.videRecordTime.hidden = true
-        
-        self.shutterPhoto.setImage(UIImage(asset: .CamerVideoWait), forState: .Normal)
-        
-        // 保存录像
-        self.camera.stopRecording { (camera, outputFileURL, error) -> Void in
+        self.camera.startRecordingWithOutputUrl(outputURL) { (camera, outputFileUrl, error) in
             
-            // Viedo in outputURL cache
-            
-            Log.info("保存视频:outputFileURL: \(outputFileURL)")
-
             // 保存视频
-            self.library.writeVideoAtPathToSavedPhotosAlbum(outputFileURL) { (assetUrl, error) -> Void in
+            self.library.writeVideoAtPathToSavedPhotosAlbum(outputFileUrl) { (assetUrl, error) -> Void in
                 if error != nil {
                     Log.error("Save video fail:%@", error)
                 } else {
@@ -254,14 +233,11 @@ class CustomCamera: UIViewController {
         }
         
     }
-
-    // 取消录像
-    func stopVideoNoSave() {
-        Log.info("取消录像")
+    
+    // 停止摄影
+    func stopVideo(){
         
-        // 停止计时器 时间归零
-        timer.invalidate()
-        timerCount = 0
+        Log.info("停止录像")
         
         self.flashSwitch.hidden = false
         self.shotCutSwitch.hidden = false
@@ -270,9 +246,41 @@ class CustomCamera: UIViewController {
         self.lastImage.hidden = false
         self.videRecordTime.hidden = true
         
-        self.shutterPhoto.setImage(UIImage(asset: .CamerVideoWait), forState: .Normal)
+        // 停止计时器 时间归零
+        timerCount = 0
+        timer.invalidate()
+        
+        self.camera.recording = false
+        
+        
+        self.shutterPhoto.setImage(UIImage(asset: .CameraVideoWait), forState: .Normal)
+        
         // 保存录像
-        self.camera.stopRecording { (camera, outputFileURL, error) -> Void in}
+        self.camera.stopRecording()
+        
+    }
+
+    // 取消录像
+    func stopVideoNoSave() {
+        
+        Log.info("取消录像")
+        
+        // 停止计时器 时间归零
+        timer.invalidate()
+        timerCount = 0
+        
+        timerRun()
+        
+        self.flashSwitch.hidden = false
+        self.shotCutSwitch.hidden = false
+        self.changeToPhoto.hidden = false
+        self.changeToVideo.hidden = false
+        self.lastImage.hidden = false
+        self.videRecordTime.hidden = true
+        
+        self.shutterPhoto.setImage(UIImage(asset: .CameraVideoWait), forState: .Normal)
+        // 保存录像
+        self.camera.stopRecording()
 
     }
     
@@ -280,20 +288,34 @@ class CustomCamera: UIViewController {
     func videoBeginRunTimer() {
         
         Log.info("录像开始计时")
+        timer.invalidate()
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(CustomCamera.timerRun(_:)), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(CustomCamera.timerRun), userInfo: nil, repeats: true)
         
     }
     
-    func timerRun(timer: NSTimer) {
+    func timerRun() {
+        
+        // 如果当前是非录像状态
+        if self.camera.recording == false {
+            
+            self.flashSwitch.hidden = false
+            self.shotCutSwitch.hidden = false
+            self.changeToPhoto.hidden = false
+            self.changeToVideo.hidden = false
+            self.lastImage.hidden = false
+            self.videRecordTime.hidden = true
+            
+            return
+        }
         
         timerCount += 1
         Log.info(timerCount)
         
 
-        let hour = timerCount / 3600
+        let hour    = timerCount / 3600
         let minutes = timerCount / 60
-        let second = timerCount - hour * 3600 - minutes * 60
+        let second  = timerCount - hour * 3600 - minutes * 60
         
         if hour < 10 && minutes < 10 && second < 10 {
             
@@ -325,11 +347,11 @@ class CustomCamera: UIViewController {
             self.camera.updateFlashMode(LLCameraFlashOff)
             self.flashSwitch.setImage(self.falshOffImg.image, forState: UIControlState.Normal)
             
-        }else if camera.flash == LLCameraFlashOff {
+        } else if camera.flash == LLCameraFlashOff {
             self.camera.updateFlashMode(LLCameraFlashAuto)
             self.flashSwitch.setImage(self.falshAtuoImg.image, forState: UIControlState.Normal)
             
-        }else if camera.flash == LLCameraFlashAuto {
+        } else if camera.flash == LLCameraFlashAuto {
             self.camera.updateFlashMode(LLCameraFlashOn)
             self.flashSwitch.setImage(self.falshOnImge.image, forState: UIControlState.Normal)
         }
@@ -346,38 +368,49 @@ class CustomCamera: UIViewController {
     // 返回上一页
     @IBAction func backHome(sender: AnyObject) {
         
-        if isPhotoOrVideo {
-            
-            Log.info("返回主界面")
-            UIApplication.sharedApplication().idleTimerDisabled = false
-            
-        } else {
-            
-            stopVideoNoSave()
-        }
+        UIApplication.sharedApplication().idleTimerDisabled = false
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.popViewControllerAnimated(false)
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.HomeRightOnClickMenu.rawValue, object: nil)
+        stopVideoNoSave()
         
     }
     
     // 照相和摄影
     @IBAction func takePhotoAndVideo(sender: AnyObject) {
+        photoAndVideo()
+    }
+    
+    /**
+     照相或摄影
+     
+     - author: sim cai
+     - date: 2016-05-31
+     */
+    func photoAndVideo() {
         
-        // isPhotoOrVideo = true 照相
         if isPhotoOrVideo {
+            
             Log.info("照相")
-            self.camera.capture { (camera, image, metadata, error) -> Void in
+            
+            self.camera.capture ({ (camera, image, metadata, error) -> Void in
                 if error != nil{
                     return
                 }
-            
+                
                 self.camera.start()
                 self.lastImage.setImage(image, forState: UIControlState.Normal)
                 
-                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                let newimage: UIImage = image.imageRotateNormal()
                 
-                }
-        
+                UIImageWriteToSavedPhotosAlbum(newimage, nil, nil, nil)
+
+            }, exactSeenImage: true)
+            
         }else{
-            // isPhotoOrVideo = false 摄影
+
             if self.camera.recording == false {
                 
                 // start recording
@@ -389,6 +422,7 @@ class CustomCamera: UIViewController {
                 self.stopVideo()
             }
         }
+        
     }
     
     // 打开相册
@@ -402,7 +436,7 @@ class CustomCamera: UIViewController {
 
         photoVC.totalCount = fetchResults.count
         photoVC.currentCount = fetchResults.count
-        photoVC.loadIndex = fetchResults.count - 10
+        photoVC.loadIndex = fetchResults.count - 10 < 0 ? 0 : fetchResults.count - 10
         
         self.presentVC(photoVC)
 
@@ -423,7 +457,7 @@ class CustomCamera: UIViewController {
     // 更改到录像模式
     @IBAction func chooseVideoAction(sender: AnyObject) {
         isPhotoOrVideo = false
-        self.shutterPhoto.setImage(UIImage(asset: .CamerVideoWait), forState: .Normal)
+        self.shutterPhoto.setImage(UIImage(asset: .CameraVideoWait), forState: .Normal)
         self.changeToPhoto.setTitleColor(UIColor(named: .CameraNoChoose), forState: UIControlState.Normal)
         self.changeToVideo.setTitleColor(UIColor(named: .CameraChoose), forState: UIControlState.Normal)
     }
@@ -436,6 +470,5 @@ class CustomCamera: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
-}
+    
+ }

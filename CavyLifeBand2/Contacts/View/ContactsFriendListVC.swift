@@ -15,7 +15,7 @@ import RealmSwift
 import Log
 
 
-class ContactsFriendListVC: ContactsBaseViewController, UISearchResultsUpdating, FriendInfoListDelegate, FollowFriendDelegate, DeleteFriendDelegate {
+class ContactsFriendListVC: UIViewController, BaseViewControllerPresenter, UISearchResultsUpdating, FriendInfoListDelegate, FollowFriendDelegate, DeleteFriendDelegate {
 
     let defulatDataSource: [ContactsFriendListDataSource] = [ContactsAddFriendViewModel(), ContactsNewFriendCellModelView(), ContactsCavyModelView()]
 
@@ -25,20 +25,26 @@ class ContactsFriendListVC: ContactsBaseViewController, UISearchResultsUpdating,
     var notificationToken: NotificationToken?
 
     @IBOutlet weak var searchCtrlView: UITableView!
+    
     // 搜索控件
     var searchCtrl  = ContactsSearchController(searchResultsController: StoryboardScene.Contacts.instantiateSearchResultView())
     
     // 搜索页面视图
-    
     var dataSource: [ContactsFriendListDataSource] = [ContactsFriendListDataSource]()
+    
     var dataGroup: ContactsSortAndGroup?
     
     var realm: Realm = try! Realm()
+    
     var userId: String { return CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId }
+    
+    var navTitle: String = L10n.ContactsTitle.string
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        self.updateNavUI()
 
         self.view.backgroundColor = UIColor(named: .HomeViewMainColor)
         
@@ -46,12 +52,26 @@ class ContactsFriendListVC: ContactsBaseViewController, UISearchResultsUpdating,
         
         loadFirendListData()
         
+        setTableView()
+        
         notificationToken = realm.addNotificationBlock { _, _ in
             
             self.loadFirendListData()
             
         }
         
+    }
+    
+    func setTableView() {
+        contactsTable.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20)
+        contactsTable.separatorStyle = .SingleLine
+        contactsTable.separatorColor = UIColor(named: .LColor)
+        contactsTable.tableFooterView = UIView()
+        
+        searchCtrlView.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20)
+        searchCtrlView.separatorStyle = .SingleLine
+        searchCtrlView.separatorColor = UIColor(named: .LColor)
+        searchCtrlView.tableFooterView = UIView()
     }
     
     /**
@@ -79,6 +99,7 @@ class ContactsFriendListVC: ContactsBaseViewController, UISearchResultsUpdating,
             }
             
         }
+        
     }
     
     /**
@@ -86,8 +107,8 @@ class ContactsFriendListVC: ContactsBaseViewController, UISearchResultsUpdating,
      */
     func parserFriendListData(result: ContactsFriendListMsg) {
         
-        guard result.commonMsg?.code == WebApiCode.Success.rawValue else {
-            Log.error("Query friend list error \(result.commonMsg?.code)")
+        guard result.commonMsg.code == WebApiCode.Success.rawValue else {
+            Log.error("Query friend list error \(result.commonMsg.code)")
             return
         }
         
@@ -95,14 +116,15 @@ class ContactsFriendListVC: ContactsBaseViewController, UISearchResultsUpdating,
         
         friendList.userId = userId
         
-        for friendInfo in result.friendInfos! {
+        for friendInfo in result.friendInfos {
             
             let friendInfoRealm = FriendInfoRealm()
             
-            friendInfoRealm.headImage = friendInfo.avatarUrl!
-            friendInfoRealm.friendId = friendInfo.userId!
-            friendInfoRealm.nikeName = friendInfo.nickName!
-            friendInfoRealm.isFollow = friendInfo.isFoolow!
+            friendInfoRealm.headImage = friendInfo.avatarUrl
+            friendInfoRealm.friendId = friendInfo.userId
+            friendInfoRealm.nikeName = friendInfo.nickName
+            friendInfoRealm.isFollow = friendInfo.isFoolow
+            friendInfoRealm.fullName = friendInfo.nickName.chineseToSpell() + friendInfo.nickName
             
             friendList.friendListInfo.append(friendInfoRealm)
             
@@ -224,14 +246,14 @@ class ContactsFriendListVC: ContactsBaseViewController, UISearchResultsUpdating,
         ContactsWebApi.shareApi.followFriend(userId, friendId: friendId, follow: follow) { result in
             
             guard result.isSuccess else {
-                CavyLifeBandAlertView.sharedIntance.showViewTitle(self, userErrorCode: result.error!)
+                CavyLifeBandAlertView.sharedIntance.showViewTitle(userErrorCode: result.error!)
                 return
             }
             
             let resultMsg = try! CommenMsg(JSONDecoder(result.value!))
             
             guard resultMsg.code == WebApiCode.Success.rawValue else {
-                CavyLifeBandAlertView.sharedIntance.showViewTitle(self, webApiErrorCode: resultMsg.code!)
+                CavyLifeBandAlertView.sharedIntance.showViewTitle(webApiErrorCode: resultMsg.code)
                 return
             }
             
@@ -240,33 +262,13 @@ class ContactsFriendListVC: ContactsBaseViewController, UISearchResultsUpdating,
         }
         
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
-extension ContactsFriendListVC {
+extension ContactsFriendListVC: UITableViewDataSource, UITableViewDelegate {
     
-    /**
-     cell 编辑结束
-     
-     - parameter tableView:
-     - parameter indexPath:
-     */
-    func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as? ContactsFriendListCell
-        cell?.showEditing(false)
-        
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
     }
     
     /**
@@ -284,7 +286,7 @@ extension ContactsFriendListVC {
         }
         
         let concernAction = createFollowAction(indexPath)
-        let pkRowAction = createPkAction()
+        let pkRowAction = createPkAction(indexPath)
         let deleteRowAction = createDelAction(indexPath)
        
         return [deleteRowAction, concernAction, pkRowAction]
@@ -305,14 +307,14 @@ extension ContactsFriendListVC {
         let deleteFriendNetDataParse: (Result<AnyObject, UserRequestErrorType>) -> Void = { reslut in
             
             guard reslut.isSuccess else {
-                CavyLifeBandAlertView.sharedIntance.showViewTitle(self, userErrorCode: reslut.error!)
+                CavyLifeBandAlertView.sharedIntance.showViewTitle(userErrorCode: reslut.error!)
                 return
             }
         
             let reslutMsg = try! CommenMsg(JSONDecoder(reslut.value!))
         
             guard reslutMsg.code == WebApiCode.Success.rawValue else {
-                CavyLifeBandAlertView.sharedIntance.showViewTitle(self, webApiErrorCode: reslutMsg.code!)
+                CavyLifeBandAlertView.sharedIntance.showViewTitle(webApiErrorCode: reslutMsg.code)
                 return
             }
             
@@ -330,7 +332,8 @@ extension ContactsFriendListVC {
         let deleteRowAction = UITableViewRowAction(style: .Default, title: L10n.ContactsListCellDelete.string, handler: deleteActionProc)
         
         
-        deleteRowAction.backgroundColor = UIColor(named: .ContactsDeleteBtnColor)
+        deleteRowAction.backgroundColor = UIColor(named: .NColor)
+        
         
         return deleteRowAction
         
@@ -340,15 +343,29 @@ extension ContactsFriendListVC {
     /**
      创建PK按钮
      */
-    func createPkAction() -> UITableViewRowAction {
+    func createPkAction(indexPath: NSIndexPath) -> UITableViewRowAction {
         
-        let pkRowAction = UITableViewRowAction(style: .Default, title: " PK ") {_, _ in
+        let pkRowAction = UITableViewRowAction(style: .Default, title: " PK ") {[unowned self] _, _ in
             
             self.contactsTable.editing = false
             
+            var friendList = self.dataGroup!.contactsGroupList![indexPath.section].1
+            
+            let friendVM = friendList[indexPath.row] as! ContactsFriendCellModelView
+            
+            let targetVC = StoryboardScene.PK.instantiatePKInvitationVC()
+            
+            let dataSource = PKInvitationVCViewModel(realm: self.realm)
+            
+            dataSource.setPKWaitCompetitorInfo(friendVM.friendId, nickName: friendVM.name, avatarUrl: friendVM.headImagUrl)
+            
+            targetVC.dataSource = dataSource
+            
+            self.pushVC(targetVC)
+                        
         }
         
-        pkRowAction.backgroundColor = UIColor(named: .ContactsPKBtnColor)
+        pkRowAction.backgroundColor = UIColor(named: .JColor)
 
         return pkRowAction
 
@@ -364,7 +381,7 @@ extension ContactsFriendListVC {
         var names = self.dataGroup!.contactsGroupList![indexPath.section].1
         
         let concernActionTitle = cell!.hiddenCare ? L10n.ContactsListCellCare.string : L10n.ContactsListCellUndoCare.string
-        let concernActionColor = cell!.hiddenCare ? UIColor(named: .ContactsCareBtnColor) : UIColor(named: .ContactsUndoCareBtnColor)
+        let concernActionColor = cell!.hiddenCare ? UIColor(named: .SColor) : UIColor(named: .FColor)
         
         let concernAction = UITableViewRowAction(style: .Default, title: concernActionTitle) {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
@@ -398,11 +415,14 @@ extension ContactsFriendListVC {
             return .None
         }
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as? ContactsFriendListCell
-        
-        cell?.showEditing(true)
-        
         return .Delete
+        
+    }
+    
+    /**
+     ！！！这个方法必须实现，不然左滑无效果
+     */
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
     }
     
@@ -505,6 +525,13 @@ extension ContactsFriendListVC {
         
         let names = dataGroup?.contactsGroupList![indexPath.section].1
         names![indexPath.row].onClickCell(self)
+        
+        if indexPath.section != 0 {
+            let requestVC = StoryboardScene.Contacts.instantiateContactsFriendInfoVC()
+            requestVC.friendId = names![indexPath.row].friendId
+            requestVC.friendNickName = names![indexPath.row].name
+            self.pushVC(requestVC)
+        }
         
     }
     
