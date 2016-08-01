@@ -99,46 +99,9 @@ extension NetRequest {
     
     func netPostRequest<T: JSONJoy where T: CommenResponseProtocol>(urlString: String, para: [String: AnyObject]? = nil, modelObject: T.Type, successHandler: ((T) -> Void)? = nil, failureHandler: FailureHandler? = nil) {
         
-        var parameters: [String: AnyObject] = ["phoneType": "ios", "language": UIDevice.deviceLanguage()]
-        
-        //发送API请求
-        if para != nil {
-            parameters = parameters.union(para!)
-        }
-        
-        Log.netRequestFormater(urlString, para: para)
-        
-        requestByAlamofire(.POST, urlString: urlString, parameters: parameters) { (result) in
+        requestByAlamofire(.POST, urlString: urlString, parameters: para) { (result) in
             
-            guard result.isSuccess else {
-                
-                let commonMsg = try! CommenResponse(JSONDecoder(["msg": RequestApiCode.NetError.description, "code": RequestApiCode.NetError.rawValue, "time": NSDate().timeIntervalSince1970]))
-                
-                failureHandler?(commonMsg)
-                
-                return
-                
-            }
-            
-                
-            do {
-                
-                let response = try CommenMsgResponse (JSONDecoder(result.value ?? ""))
-                
-                guard response.commonMsg.code == RequestApiCode.Success.rawValue else {
-                    failureHandler?(response.commonMsg)
-                    return
-                }
-                
-                successHandler?(try T(JSONDecoder(result.value ?? "")))
-                
-            } catch {
-                
-                let commonMsg = try! CommenResponse(JSONDecoder(["msg": RequestApiCode.NetError.description, "code": RequestApiCode.NetError.rawValue, "time": NSDate().timeIntervalSince1970]))
-                
-                failureHandler?(commonMsg)
-                
-            }
+            self.requestHanlder(result, url:urlString, successHandler: successHandler, failureHandler: failureHandler)
             
         }
         
@@ -146,46 +109,9 @@ extension NetRequest {
     
     func netGetRequest<T: JSONJoy where T: CommenResponseProtocol>(urlString: String, para: [String: AnyObject]? = nil, modelObject: T.Type, successHandler: ((T) -> Void)? = nil, failureHandler: FailureHandler? = nil) {
         
-        var parameters: [String: AnyObject] = ["phoneType": "ios", "language": UIDevice.deviceLanguage()]
-        
-        //发送API请求
-        if para != nil {
-            parameters = parameters.union(para!)
-        }
-        
-        Log.netRequestFormater(urlString, para: parameters)
-        
-        requestByAlamofire(.GET, urlString: urlString, parameters: parameters) { (result) in
+        requestByAlamofire(.GET, urlString: urlString, parameters: para) { (result) in
             
-            guard result.isSuccess else {
-                
-                let commonMsg = try! CommenResponse(JSONDecoder(["msg": RequestApiCode.NetError.description, "code": RequestApiCode.NetError.rawValue, "time": NSDate().timeIntervalSince1970]))
-                
-                failureHandler?(commonMsg)
-                
-                return
-                
-            }
-            
-            do {
-                
-                let response = try CommenMsgResponse (JSONDecoder(result.value ?? ""))
-                Log.info("\(result.value)")
-                guard response.commonMsg.code == RequestApiCode.Success.rawValue else {
-                    failureHandler?(response.commonMsg)
-                    return
-                }
-                
-                successHandler?(try T(JSONDecoder(result.value ?? "")))
-                
-            } catch {
-                
-                let commonMsg = try! CommenResponse(JSONDecoder(["msg": RequestApiCode.NetError.description, "code": RequestApiCode.NetError.rawValue, "time": NSDate().timeIntervalSince1970]))
-                
-                failureHandler?(commonMsg)
-                
-            }
-            
+            self.requestHanlder(result, url: urlString, successHandler: successHandler, failureHandler: failureHandler)
             
         }
         
@@ -196,7 +122,11 @@ extension NetRequest {
         
         let authToken: String = CavyDefine.loginUserBaseInfo.loginUserInfo.loginAuthToken ?? ""
         
-        let request = Alamofire.request(method, urlString, encoding: method == .POST ? .JSON : .URL, parameters: parameters, headers: [UserNetRequsetKey.AuthToken.rawValue: authToken]).responseJSON { response -> Void in
+        let headers: [String: String] = [NetRequestKey.PhoneType.rawValue: "ios",
+                                            NetRequestKey.Language.rawValue: UIDevice.deviceLanguage(),
+                                            NetRequestKey.AuthToken.rawValue: authToken]
+        
+        let request = Alamofire.request(method, urlString, encoding: method == .POST ? .JSON : .URL, parameters: parameters, headers: headers).responseJSON { response -> Void in
             
             if response.result.isFailure {
                 completionHandler?(.Failure(.NetErr))
@@ -222,7 +152,87 @@ extension NetRequest {
         
     }
     
+    
+    /**
+     token 失效 重新登录
+     */
+    
+    func requesInvalidToken() {
+        
+        
+        //清空登录信息
+        UIImage.deleteCacheImageWithName()
+        CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = ""
+        CavyDefine.loginUserBaseInfo.loginUserInfo.loginUsername = ""
+        CavyDefine.loginUserBaseInfo.loginUserInfo.loginAuthToken = ""
+        LifeBandBle.shareInterface.bleDisconnect()
+        
+        
+        let alertView = UIAlertController(title: L10n.AlertTipsMsg.string, message: L10n.AlertReloginTitle.string, preferredStyle: .Alert)
+        
+        let defaultAction = UIAlertAction(title: L10n.AlertSureActionTitle.string, style: .Default, handler: {
+    
+            _ in
+            
+          let accountVC =  UINavigationController(rootViewController: StoryboardScene.Main.instantiateSignInView())
+            
+             UIApplication.sharedApplication().keyWindow?.setRootViewController(accountVC, transition: CATransition())
+        })
+        
+        alertView.addAction(defaultAction)
+        
+        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alertView, animated: true, completion: nil)
+
+   
+    }
+    
+    func requestHanlder<T: JSONJoy where T: CommenResponseProtocol>(result: Result<AnyObject, RequestError>, url: String, successHandler: ((T) -> Void)? = nil, failureHandler: FailureHandler? = nil) {
+        
+        guard result.isSuccess else {
+            
+            let commonMsg = try! CommenResponse(JSONDecoder(["msg": RequestApiCode.NetError.description, "code": RequestApiCode.NetError.rawValue, "time": NSDate().timeIntervalSince1970]))
+            
+            failureHandler?(commonMsg)
+            
+            return
+            
+        }
+        
+        do {
+            
+            let response = try CommenMsgResponse (JSONDecoder(result.value ?? ""))
+            Log.info("\(result.value)")
+            guard response.commonMsg.code == RequestApiCode.Success.rawValue else {
+                
+                // token失效 重新去登录
+                if response.commonMsg.code == RequestApiCode.InvalidToken.rawValue {
+                    
+                    self.requesInvalidToken()
+                    
+                    return
+                        
+                }
+                
+                failureHandler?(response.commonMsg)
+                return
+            }
+            
+            successHandler?(try T(JSONDecoder(result.value ?? "")))
+            
+        } catch {
+            
+            let commonMsg = try! CommenResponse(JSONDecoder(["msg": RequestApiCode.NetError.description, "code": RequestApiCode.NetError.rawValue, "time": NSDate().timeIntervalSince1970]))
+            
+            failureHandler?(commonMsg)
+            
+        }
+
+    }
+    
 }
+
+
+
 
 // MARK: - Api Class 定义
 

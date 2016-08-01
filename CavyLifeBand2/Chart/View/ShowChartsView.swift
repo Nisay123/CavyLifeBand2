@@ -10,11 +10,13 @@ import UIKit
 import Charts
 
 var spaceBetweenLabels = 0 // X轴 显示Label的个数
+var defaultSpaceHeigh = 50 // 当数值为0时候 也默认显示5个像素点
+var spacePerect: CGFloat = 0.8
 
 class ShowChartsView: BarChartView, ChartViewDelegate {
-
+    
     var legendColors = [UIColor.whiteColor()]
-    var legdendText = L10n.ChartStep.string
+    var legdendText = ""// L10n.ChartStepTodayStep.string
     var legendTextColor = UIColor.whiteColor()
     var leftUnit = " k"
 
@@ -24,12 +26,17 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
     var chartsData: [PerStepChartsData] = []
     
     // 左上角显示最大值
-    var maxValue: Int = 3
+    var maxValue: Int = 0
+    
+    /// 透明视图 负责显示柱状图的数值
+    var clearView = UIView()
     
     /**
      配置所有视图 主入口
      */
     func configAllView() {
+        
+        maxValue = 0
         
         self.backgroundColor = UIColor(named: .HomeViewMainColor)
         
@@ -39,6 +46,8 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
         
         addxAxis()
         
+        addyAxis()
+        
         addLegend()
         
         if UIDevice.isPhone5() {
@@ -47,6 +56,11 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
             self.leftAxis.spaceTop = 0
         }
         
+        
+        leftAxis.axisMaxValue = Double(maxValue * 1000)
+        self.setNeedsDisplay()
+        
+//        addClearView()
 
     }
     
@@ -54,6 +68,7 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
      总设置
      */
     func setupBarLineChartView() {
+        
         
         noDataTextDescription = "You need to provide data for the chart." // 没有数据的时显示
         drawBordersEnabled = false //是否在折线图上添加边框
@@ -64,11 +79,12 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
         drawValueAboveBarEnabled = true
         
         rightAxis.enabled = false // Y轴方向左边 不放轴
-        leftAxis.enabled = false // Y轴方向右边 不放轴
+//        leftAxis.enabled = false // Y轴方向右边 不放轴
         
         delegate = self
-        highlightPerTapEnabled = false // 点击时是否高亮
-                if timeBucketStyle != .Month {
+        highlightPerTapEnabled = true // 点击时是否高亮 是否可以点击
+
+        if timeBucketStyle != .Month {
             
             dragEnabled = false // 是否可以拖拽
             setScaleEnabled(false)
@@ -78,9 +94,32 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
         
         descriptionText = "\(maxValue + 1)k"
         descriptionFont = UIFont.systemFontOfSize(12)
-        descriptionTextPosition = CGPointMake(20, 0)
+        descriptionTextAlign = .Left
+
+        descriptionTextPosition = CGPointMake(10, 5)
         descriptionTextColor = UIColor.whiteColor()
         
+        if UIDevice.isPhone5() {
+            
+            descriptionTextPosition = CGPointMake(15, chartTopHeigh / 2 - 6)
+
+        }
+        
+    }
+    
+    func addyAxis() {
+        
+        let leftAxis = self.leftAxis
+        leftAxis.axisMaxValue = Double(1000)
+        leftAxis.enabled = true
+
+        leftAxis.drawGridLinesEnabled = false
+        leftAxis.labelFont = UIFont.systemFontOfSize(0)//[UIFont systemFontOfSize:10.f]
+        leftAxis.labelCount = 0
+        leftAxis.axisLineColor = UIColor.clearColor()
+        leftAxis.spaceTop = 0
+        leftAxis.axisMinValue = 0.0  // this replaces startAtZero = YES
+
     }
 
     /**
@@ -122,10 +161,10 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
         self.legend.horizontalAlignment = .Right
         self.legend.verticalAlignment = .Top
         self.legend.form = .Circle
-        self.legend.formSize = 10
+        self.legend.formSize = 0
         self.legend.textColor = UIColor.whiteColor()
         self.legend.font = UIFont(name: "HelveticaNeue-Light", size: 12)!
-        self.legend.xEntrySpace = 10
+        self.legend.xEntrySpace = 0
         
     }
     
@@ -136,25 +175,25 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
      */
     func setData(count: Int) {
         
+        var datasCount = count
+
         maxValue = 0
         
         var xVals: [String] = []
         var yVals: [BarChartDataEntry] = []
         
-        if chartsData.count == 0 {
-            
-            return
-            
-        }
+        if datasCount == 0 { return }
         
-        for i in 0 ..< chartsData.count {
-            
+        if timeBucketStyle == .Week { datasCount = 7 }
+
+        for i in 0 ..< datasCount {
+
             if timeBucketStyle == .Week {
                 
                 xVals.append(weekArray[i])
 
             } else {
-                
+            
                 xVals.append(chartsData[i].time)
                 
             }
@@ -163,12 +202,17 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
         
             if maxValue < chartsData[i].step / 1000 {
                 maxValue = chartsData[i].step / 1000
+
             }
+
             
             let dataEntry = BarChartDataEntry(value: Double(chartsData[i].step), xIndex: i)
             
             yVals.append(dataEntry)
+
         }
+        
+        Log.info(yVals)
         
         descriptionText = "\(maxValue + 1)k"
         
@@ -181,7 +225,7 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
         } else {
             
             dataSet = BarChartDataSet(yVals: yVals, label: legdendText)
-            dataSet.barSpace = 0.80
+            dataSet.barSpace = spacePerect
             dataSet.setColors(legendColors, alpha: 0.9)
             dataSet.valueTextColor = UIColor.whiteColor()
             dataSet.highlightAlpha = 0.2
@@ -201,23 +245,47 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
 
     }
     
+    /**
+     添加透明视图 来放置显示单条数据
+     */
+    func addClearView() {
+        
+        clearView.backgroundColor = UIColor.lightGrayColor()
+        clearView.alpha = 0.2
+        clearView.userInteractionEnabled = false
+        self.addSubview(clearView)
+        clearView.snp_makeConstraints { make in
+            make.left.right.top.bottom.equalTo(self)
+            
+        }
+
+    }
+    
     // MARK: -- ChartViewDelegate
     /**
      点击事件
      */
     func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
         
-//        Log.info("\n\(chartView)\n\(entry)\n\(dataSetIndex)\n\(highlight)")
+        Log.info("\n\n\(chartView)\n\(entry)\n\(dataSetIndex)\n\(highlight)")
         
-        var totalStep = 0
+
+        Log.info("\n\(chartView.data?.dataSets.count)")
+        chartView.data?.dataSets.cs_arrayValue().count
         
-        for data in chartsData {
-            totalStep += data.step
-        }
-        
+//        chartView.data?.dataSets[entry.xIndex].valueTextColor = UIColor.blueColor()
+
+//
+//        var totalStep = 0
+//        
+//        for data in chartsData {
+//            totalStep += data.step
+//        }
+//        
 //        if totalStep != 0 {
+//            
 //            chartView.data?.setDrawValues(true)
-            
+//            
 //            chartView.setNeedsDisplay()
 //        }
         
@@ -225,12 +293,47 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
     
     func chartValueNothingSelected(chartView: ChartViewBase) {
         
-//        chartView.data?.setDrawValues(false)
+        chartView.data?.setDrawValues(false)
         
-//        chartView.setNeedsDisplay()
+        chartView.setNeedsDisplay()
 
     }
     
-   
+    /**
+     单独显示某一根柱状图的数据
+     
+     - parameter index: 第几根柱状图
+     - parameter value: 其数值
+     */
+    func addChartDataEntryValue(index: Int, value: Int) {
+        
+        // 间隔dataSet.barSpace = 0.80
+        
+        var yValsCount = 24
+        
+        if timeBucketStyle == .Week { yValsCount = 7}
+        if timeBucketStyle == .Month{ yValsCount = chartsData.count}
+        
+//        let left = 
+        
+        let view = UIView()
+        view.backgroundColor = UIColor.yellowColor()
+        clearView.addSubview(view)
+        view.snp_makeConstraints { (make) in
+            make.top.equalTo(0)
+            make.left.equalTo(0)
+            
+        }
+        
+        let label = UILabel()
+        label.textColor = UIColor.whiteColor()
+        label.snp_makeConstraints { (make) in
+            make.top.equalTo(0)
+            make.left.equalTo(0)
+            
+        }
+        
+    }
+    
     
 }

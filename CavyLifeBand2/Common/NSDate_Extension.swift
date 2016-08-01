@@ -138,11 +138,12 @@ extension NSDate {
 
             let index = self.indexInArray()
             var monday = self
-            let sunDay = (self.gregorian + (6 - index).day).date
+
+            let sunDay = (self.gregorian + (7 - index).day).date
             
-            if index != 0 {
+            if index != 1 {
                 
-                monday = (self.gregorian - index.day).date
+                monday = (self.gregorian - (index - 1).day).date
                 
             }
             
@@ -222,4 +223,5 @@ extension NSDate {
         return date!
         
     }
+    
 }

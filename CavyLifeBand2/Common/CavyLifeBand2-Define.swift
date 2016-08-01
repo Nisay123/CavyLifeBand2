@@ -19,7 +19,7 @@ struct CavyDefine {
     
     // 新的后台服务器地址
     static let webServerAddr = "http://pay.tunshu.com/live/api/v1/"
-    
+
     // webApi地址
     static let webApiAddr = serverAddr + "/api.do"
     
@@ -51,6 +51,11 @@ struct CavyDefine {
     
     // 已登录用户昵称
     static var userNickname = ""
+    
+    // 用户经纬度，用于用户登录退出事件统计的入参
+    static var userCoordinate = UserCoordinateInfo()
+    
+    static var gameServerAuthKey: String = "5QaN4e9i4HeqcSuX4"
     
     static var shareImageName: String = "CavyLifeBand2ShareImage"
     
@@ -86,6 +91,24 @@ struct CavyDefine {
         }
         
         return accountSex
+    }
+    
+    /**
+     性别汉字转数字
+     
+     - parameter sex: 性别标识
+     
+     - returns: 性别
+     */
+    static func translateSexToNumber(sex: String) -> Int {
+                
+        if sex == L10n.ContactsGenderGirl.string {
+            
+            return 0
+            
+        }
+        
+        return 1
     }
     
     // MARK - 蓝牙连接ViewController 跳转处理
@@ -199,8 +222,9 @@ protocol LoginStorage {
 extension NSUserDefaults: LoginStorage { }
 
 // MARK: - 手环绑定信息存储 KeyChain
+
 /**
- *  手环绑定信息
+ *  手环绑定信息  每个user 只会绑定一个MACAddress
  */
 struct BindBandInfo {
     
@@ -216,19 +240,25 @@ struct BindBandInfo {
     
     init() {
         
+        if keychain["CavyUserDevice"] == nil {
+            keychain["CavyUserDevice"] = UIDevice.currentDevice().identifierForVendor?.UUIDString ?? ""
+        }
+        
         guard let userMac = keychain[data: "CavyUserMAC"] else {
             
-            self.bindBandInfo = BindBandInfoStorage(defaultBindBand: keychain["CavyGameMAC"] ?? "", userBindBand: [:])
+            self.bindBandInfo = BindBandInfoStorage(defaultBindBand: keychain["CavyGameMAC"] ?? "", userBindBand: [:],
+                                                    deviceSerial: keychain["CavyUserDevice"]!)
             return
             
         }
         
         guard let userBindBand = NSKeyedUnarchiver.unarchiveObjectWithData(userMac) as? [String: NSData] else {
-            self.bindBandInfo = BindBandInfoStorage(defaultBindBand: keychain["CavyGameMAC"] ?? "", userBindBand: [:])
+            self.bindBandInfo = BindBandInfoStorage(defaultBindBand: keychain["CavyGameMAC"] ?? "", userBindBand: [:],
+                                                    deviceSerial: keychain["CavyUserDevice"]!)
             return
         }
         
-        self.bindBandInfo = BindBandInfoStorage(defaultBindBand: keychain["CavyGameMAC"] ?? "", userBindBand: userBindBand)
+        self.bindBandInfo = BindBandInfoStorage(defaultBindBand: keychain["CavyGameMAC"] ?? "", userBindBand: userBindBand, deviceSerial: keychain["CavyUserDevice"]!)
         
     }
     
@@ -246,8 +276,81 @@ struct BindBandInfoStorage {
     
     var defaultBindBand: String
     var userBindBand: [String: NSData]
+    var deviceSerial: String
     
     
+}
+
+extension BindBandInfoStorage {
+    
+    /**
+     获取手环mac地址正序格式，用于事件统计
+     
+     Cavy2-D525,25:D5:4B:F8:E6:A0 -> A0:E6:F8:4B:D5:25
+     
+     - returns: 
+     */
+    func eventBandMacAddress() -> String {
+        
+        guard LifeBandBle.shareInterface.getConnectState() == .Connected else {
+            
+            return ""
+            
+        }
+
+        guard  BindBandCtrl.bandMacAddress.length == 6 else {
+            
+            return ""
+            
+        }
+        
+        let macStr = String(format: "%02X:%02X:%02X:%02X:%02X:%02X",
+                            BindBandCtrl.bandMacAddress[5],
+                            BindBandCtrl.bandMacAddress[4],
+                            BindBandCtrl.bandMacAddress[3],
+                            BindBandCtrl.bandMacAddress[2],
+                            BindBandCtrl.bandMacAddress[1],
+                            BindBandCtrl.bandMacAddress[0])
+        
+        return macStr
+        
+    }
+    
+    
+    func eventBandMacAddressFromUserCache() -> String {
+        
+        let userKey = "CavyAppMAC_" + CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId
+        
+        guard let macAdd = userBindBand[userKey] else {
+            
+            return ""
+        
+        }
+        
+        guard  macAdd.length == 6 else {
+            
+            return ""
+            
+        }
+        
+        let macStr = String(format: "%02X:%02X:%02X:%02X:%02X:%02X",
+                            BindBandCtrl.bandMacAddress[5],
+                            BindBandCtrl.bandMacAddress[4],
+                            BindBandCtrl.bandMacAddress[3],
+                            BindBandCtrl.bandMacAddress[2],
+                            BindBandCtrl.bandMacAddress[1],
+                            BindBandCtrl.bandMacAddress[0])
+        
+        return macStr
+        
+    
+    }
+
+}
+
+struct UserCoordinateInfo {
+    var latitude: String = ""
+    var longitude: String = ""
 }
 
 
@@ -562,7 +665,9 @@ enum UserNetRequestMethod: String {
 
 // MARK: - Web Api 方法定义
 enum WebApiMethod: CustomStringConvertible {
-    case Login, Logout, Dailies, Steps, Sleep, UsersProfile, Firmware, EmergencyContacts, Emergency
+
+    case Login, Logout, Dailies, Steps, Sleep, UsersProfile, Firmware, EmergencyContacts, Emergency, SignUpEmailCode, SignUpPhoneCode, ResetPwdPhoneCode, ResetPwdEmailCode, ResetPwdEmail, ResetPwdPhone, SignUpPhone, SignUpEmail, UploadAvatar, Issues, Weather, Location, Helps, RecommendGames, Activities
+
 
     var description: String {
         
@@ -585,6 +690,36 @@ enum WebApiMethod: CustomStringConvertible {
             return CavyDefine.webServerAddr + "emergency/contacts"
         case .Emergency:
             return CavyDefine.webServerAddr + "emergency"
+        case .SignUpEmailCode:
+            return CavyDefine.webServerAddr + "signup/email/verify_code"
+        case .SignUpPhoneCode:
+            return CavyDefine.webServerAddr + "signup/phone/verify_code"
+        case .ResetPwdEmailCode:
+            return CavyDefine.webServerAddr + "reset_password/email/verify_code"
+        case .ResetPwdPhoneCode:
+            return CavyDefine.webServerAddr + "reset_password/phone/verify_code"
+        case .ResetPwdEmail:
+            return CavyDefine.webServerAddr + "reset_password/email"
+        case .ResetPwdPhone:
+            return CavyDefine.webServerAddr + "reset_password/phone"
+        case .SignUpEmail:
+            return CavyDefine.webServerAddr + "signup/email"
+        case .SignUpPhone:
+            return CavyDefine.webServerAddr + "signup/phone"
+        case .UploadAvatar:
+            return CavyDefine.webServerAddr + "avatar"
+        case .Issues:
+            return CavyDefine.webServerAddr + "issues"
+        case .Weather:
+            return CavyDefine.webServerAddr + "weather"
+        case .Location:
+            return CavyDefine.webServerAddr + "users/location"
+        case .Helps:
+            return CavyDefine.webServerAddr + "helps"
+        case .RecommendGames:
+            return CavyDefine.webServerAddr + "games/recommend"
+        case .Activities:
+            return CavyDefine.webServerAddr + "activities"
         }
         
     }
@@ -592,39 +727,52 @@ enum WebApiMethod: CustomStringConvertible {
 }
 
 // MARK: - Web Api 参数定义
-enum NetRequsetKey: String {
-    
-    case UserName = "username"
-    case Password = "password"
-    case Profile = "profile"
-    case Nickname = "nickname"
-    case Address = "address"
-    case Sex = "sex"
-    case Height = "height"
-    case Weight = "weight"
-    case Figure = "figure"
-    case Birthday = "birthday"
-    case StepsGoal = "steps_goal"
-    case SleepTimeGoal = "sleep_time_goal"
+enum NetRequestKey: String {
+
+    case UserName           = "username"
+    case Password           = "password"
+    case Profile            = "profile"
+    case Nickname           = "nickname"
+    case Address            = "address"
+    case Sex                = "sex"
+    case Height             = "height"
+    case Weight             = "weight"
+    case Figure             = "figure"
+    case Birthday           = "birthday"
+    case StepsGoal          = "steps_goal"
+    case SleepTimeGoal      = "sleep_time_goal"
     case EnableNotification = "enable_notification"
-    case ShareLocation = "share_location"
-    case ShareBirthday = "share_birthday"
-    case ShareHeight = "share_height"
-    case ShareWeight = "share_weight"
-    case Contacts = "contacts"
-    case Name = "name"
-    case Phone = "phone"
-    case Longitude = "longitude"
-    case Latitude = "latitude"
-    case StartDate = "start_date"
-    case EndDate   = "end_date"
-    case Date      = "date"
-    case Time      = "time"
-    case Tilts     = "tilts"
-    case Steps     = "steps"
-    case Raw       = "raw"
-    case TimeScale = "time_scale"
-    
+    case ShareLocation      = "share_location"
+    case ShareBirthday      = "share_birthday"
+    case ShareHeight        = "share_height"
+    case ShareWeight        = "share_weight"
+    case Contacts           = "contacts"
+    case Name               = "name"
+    case Phone              = "phone"
+    case Longitude          = "longitude"
+    case Latitude           = "latitude"
+    case StartDate          = "start_date"
+    case EndDate            = "end_date"
+    case Date               = "date"
+    case Time               = "time"
+    case Tilts              = "tilts"
+    case Steps              = "steps"
+    case Raw                = "raw"
+    case TimeScale          = "time_scale"
+    case AuthToken          = "auth-token"
+    case Language           = "language"
+    case PhoneType          = "phoneType"
+    case Email              = "email"
+    case Code               = "code"
+    case Base64Data         = "base64Data"
+    case Question           = "question"
+    case Detail             = "detail"
+    case City               = "city"
+    case DeviceSerial       = "device_serial"
+    case DeviceModel        = "device_model"
+    case AuthKey            = "auth_key"
+    case BandMac            = "band_mac"
+    case EventType          = "event_type"
 }
 
 
@@ -633,22 +781,44 @@ enum NetRequsetKey: String {
 
 enum RequestApiCode: Int {
     
-    case Success            = 1000
-    case UukownError        = 1100
-    case IncorrectParameter = 1102
-    case LostAccountField   = 1200
-    case LostPasswordField  = 1201
-    case AccountNotExist    = 1202
-    case LoginFailed        = 1203
-    case LogoutFailed       = 1204
-    case InvalidToken       = 1205
-    case NetError           = 9999
+    case Success             = 1000
+    case UukownError         = 1100
+    case IncorrectParameter  = 1102
+    case LostAccountField    = 1200
+    case LostPasswordField   = 1201
+    case AccountNotExist     = 1202
+    case LoginFailed         = 1203
+    case LogoutFailed        = 1204
+    case InvalidToken        = 1205
+    case AccountAlreadyExist = 1206
+    case ImageParseFail      = 9998
+    case NetError            = 9999
     
     init(apiCode: Int) {
         
         switch apiCode {
         case 1000:
             self = RequestApiCode.Success
+        case 1100:
+            self = RequestApiCode.UukownError
+        case 1102:
+            self = RequestApiCode.IncorrectParameter
+        case 1200:
+            self = RequestApiCode.LostAccountField
+        case 1201:
+            self = RequestApiCode.LostPasswordField
+        case 1202:
+            self = RequestApiCode.AccountNotExist
+        case 1203:
+            self = RequestApiCode.LoginFailed
+        case 1204:
+            self = RequestApiCode.LogoutFailed
+        case 1205:
+            self = RequestApiCode.InvalidToken
+        case 1206:
+            self = RequestApiCode.AccountAlreadyExist
+        case 9998:
+            self = RequestApiCode.ImageParseFail
         case 9999:
             self = RequestApiCode.NetError
         default:
@@ -666,6 +836,8 @@ extension RequestApiCode: CustomStringConvertible {
         switch self {
         case .Success:
             return ""
+        case .ImageParseFail:
+            return L10n.UserModuleErrorCodeNetError.string
         case .NetError:
             return L10n.UserModuleErrorCodeNetError.string
         default:

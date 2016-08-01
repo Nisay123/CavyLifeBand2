@@ -73,13 +73,25 @@ extension String {
      - returns: 转换后的字符串
      */
     static func  numberDecimalFormatter(num: Int = 0) -> String {
-    
+        
         let numberFormatter = NSNumberFormatter()
         numberFormatter.numberStyle = .DecimalStyle
         let string = numberFormatter.stringFromNumber(NSNumber(integer: num))
         
         return string!
     }
- 
-       
+    
+    
+    static func deviceModel() -> String {
+        
+        return UIDevice.deviceModelReadable() + ",iPhone OS " + UIDevice.systemVersion()
+        
+    }
+    
+    static func loginUserAvatarName() -> String {
+        
+        return "user-" + CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId
+    
+    }
+
 }

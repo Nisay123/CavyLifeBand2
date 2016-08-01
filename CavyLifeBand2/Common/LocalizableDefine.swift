@@ -63,7 +63,9 @@ enum L10n {
   case UserModuleErrorCodeLBSNil
   /// 电话号码列表不能为空
   case UserModuleErrorCodePhoneNumListNil
-  /// 登入
+  /// 图片转换失败
+  case UserModuleErrorCodeImageParseFail
+  /// 登录
   case MainPageSignInBtn
   /// 加入豚鼠
   case MainPageSignUpBtn
@@ -151,19 +153,19 @@ enum L10n {
   case GuideOpenBluetooth
   /// 手机蓝牙打开后才能成功连接手环
   case GuideOpenBluetoothInfo
-  /// 开启手环
+  /// 绑定手环
   case GuideOpenCavy
   /// 没有灯充电试试看
   case GuideOpenCavySugg
-  /// 按下手环按钮等待红灯亮起即打开手环
+  /// 请按下手环按钮，绑定手环
   case GuideOpenCavyInfo
   /// 正在连接...
   case GuideLinking
-  /// 配对成功
+  /// 绑定成功
   case GuidePairSuccess
   /// 开始健康之旅吧
   case GuidePairSuccessInfo
-  /// 无法配对
+  /// 绑定失败
   case GuidePairFail
   /// 确保手环有电，并且位于手机的连接范围
   case GuidePairFailInfo
@@ -171,9 +173,9 @@ enum L10n {
   case GuidePhoneRemindTitle
   /// 来电振动提醒，不漏接一个重要来电
   case GuidePhoneRemindInfo
-  /// 计步PK
+  /// 计步成就
   case GuidePKTitle
-  /// 实时查看与好友计步PK详情\n让走路成为一种乐趣
+  /// 让走路成为一种乐趣
   case GuidePKInfo
   /// 安全服务
   case GuideSafetyServiceTitle
@@ -251,21 +253,21 @@ enum L10n {
   case HomeLifeListTitleAbout
   /// 帮助与反馈
   case HomeLifeListTitleHelp
-  /// APP推荐
+  /// 体感应用
   case HomeLifeListTitleRelated
   /// 遥控相机
   case HomeRightListTitleCamera
-  /// 提醒
+  /// 来电提醒
   case HomeRightListTitleNotification
-  /// 智能闹钟
+  /// 手环闹钟
   case HomeRightListTitleAlarmClock
-  /// 安全
+  /// 紧急求救
   case HomeRightListTitleSecurity
   /// 固件升级
   case HomeRightListTitleFirmwareUpgrade
-  /// 绑定新的CavyBand
+  /// 绑定新的豚鼠手环
   case HomeRightListTitleBindingBand
-  /// 我的CavyBand
+  /// 我的豚鼠手环
   case BandTitle
   /// 固件版本: 
   case BandFWVersion
@@ -401,6 +403,10 @@ enum L10n {
   case ContactsEmptyViewNearbyInfo
   /// 手机通讯录中的好友中\n还没加入豚鼠
   case ContactsEmptyViewAddressBookInfo
+  /// 昵称
+  case ContactsChangeNickNameNavTitle
+  /// 地址
+  case ContactsChangeAddressNavTitle
   /// 账户信息
   case AccountInfoTitle
   /// 退出登录
@@ -415,9 +421,9 @@ enum L10n {
   case AccountInfoChangeAddressPlaceholder
   /// 您已累计行走
   case AccountInfoAchieveViewNumPrefix
-  /// 手环振动提醒 取消传统声音唤醒体系
+  /// 手环振动提醒 远离传统闹铃噪声
   case AlarmClockIntelligentClockTableFooterInfo
-  /// 智能闹钟
+  /// 手环闹钟
   case AlarmClockTitle
   /// 智能唤醒
   case AlarmClockAwakeTitle
@@ -427,7 +433,7 @@ enum L10n {
   case AlarmClockAlarmCircleTitle
   /// 小提示
   case AlarmClockAlarmCircleSubTitle
-  /// 闹钟振动过程中，按一下手环按钮即可停止振动。手环检测到你已起床，即会停止振动。
+  /// 闹钟振动过程中，按一下手环按钮即可停止振动。
   case AlarmClockAlarmCircleDescription
   /// 删除
   case AlarmClockDeleteBtnTitle
@@ -447,7 +453,7 @@ enum L10n {
   case AlarmClockCircleWeekendInfo
   /// 手环最多只能添加2个闹钟
   case AlarmClockAlarmClockCountError
-  /// 安全
+  /// 紧急求救
   case SettingSafetyTitle
   /// 点击添加
   case SettingSafetyTableCellContactButton
@@ -459,7 +465,7 @@ enum L10n {
   case SettingSafetyPhoneNumberCancel
   /// GPS定位
   case SettingSafetyTableCellGPSTitle
-  /// 紧急报警
+  /// 温馨提示
   case SettingSafetyTableFooterTitle
   /// 紧急情况下，连续按4下按钮，紧急联系人即可收到豚鼠为您发送的请求信息及GPS定位消息。
   case SettingSafetyTableFooterInfo
@@ -603,7 +609,7 @@ enum L10n {
   case RelateHelpAndFeedbackTextViewPlaceHolder
   /// 发送成功
   case RelateHelpAndFeedbackSendSuccessAlertMsg
-  /// APP推荐
+  /// 体感应用
   case RelateRelateAppNavTitle
   /// 下载
   case RelateRelateAppCellDownloadBtnTitle
@@ -629,18 +635,58 @@ enum L10n {
   case UpdateFirmwareBandDisconnectAlertMsg
   /// 固件版本已最新版本
   case UpdateFirmwareIsNewVersionAlertMsg
+  /// 安装新的固件版本
+  case UpdateFirmwareInstallNewVersionAlertTitle
+  /// error
+  case UpdateFirmwareDownloadError
+  /// 手环电量过低
+  case UpdateFirmwareLowElectricAlertTitle
+  /// 手环电量过低，固件升级至少需要20%%电量，请充电后再试
+  case UpdateFirmwareLowEleAlertMsg
+  /// 固件升级失败
+  case UpdateFirmwareUpdateFailAlertMsg
+  /// 请稍等，豚鼠手环将在重启后自动连接
+  case UpdateFirmwareUpdateSuccessAlertMsg
+  /// 正在检测固件版本
+  case UpdateFirmwareCheckVersionAlertMsg
   /// 下拉同步数据...
   case HomeRefreshIdle
   /// 松开同步数据...
   case HomeRefreshPulling
   ///   正在同步数据...
   case HomeRefreshRefreshing
-  /// 确认
+  /// 同步数据失败
+  case HomeRefreshAlertTitle
+  ///                 1.确认蓝牙已打开\n                2.确认手环处于连接状态\n                3.下拉重新同步数据
+  case HomeRefreshFaildDes
+  /// 确定
   case AlertSureActionTitle
   /// 取消
   case AlertCancelActionTitle
+  /// 升级
+  case AlertUpdateActionTitle
   /// 确认撤销此次PK？
   case AlertUndoPKWaitRecordMsg
+  /// 确认绑定新的手环？
+  case AlertReBindBandMsg
+  /// 提示
+  case AlertTipsMsg
+  /// 登录已失效，请重新登录
+  case AlertReloginTitle
+  /// 重新升级
+  case AlertReUpdateActionTitle
+  /// 充电后再试
+  case AlertReTryAfterChargeActionTitle
+  /// 请在iPhone的“设置-隐私-相机”选项中，允许豚鼠生活访问你的相机
+  case AlertCameraOpenCamera
+  /// 请在iPhone的“设置-隐私-麦克风”选项中，允许豚鼠生活访问你的麦克风
+  case AlertCameraOpenMicrophone
+  /// 请在iPhone的“设置-隐私”选项中，允许豚鼠生活访问你的相机和麦克风
+  case AlertCameraOpenAll
+  /// 能玩体感游戏的智能手环
+  case ShareTitle
+  /// 来自豚鼠科技
+  case ShareContent
 }
 
 extension L10n: CustomStringConvertible {
@@ -708,6 +754,8 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("UserModuleErrorCode.LBSNil")
       case .UserModuleErrorCodePhoneNumListNil:
         return L10n.tr("UserModuleErrorCode.PhoneNumListNil")
+      case .UserModuleErrorCodeImageParseFail:
+        return L10n.tr("UserModuleErrorCode.ImageParseFail")
       case .MainPageSignInBtn:
         return L10n.tr("MainPage.SignInBtn")
       case .MainPageSignUpBtn:
@@ -1046,6 +1094,10 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Contacts.EmptyView.NearbyInfo")
       case .ContactsEmptyViewAddressBookInfo:
         return L10n.tr("Contacts.EmptyView.AddressBookInfo")
+      case .ContactsChangeNickNameNavTitle:
+        return L10n.tr("Contacts.ChangeNickName.NavTitle")
+      case .ContactsChangeAddressNavTitle:
+        return L10n.tr("Contacts.ChangeAddress.NavTitle")
       case .AccountInfoTitle:
         return L10n.tr("AccountInfo.Title")
       case .AccountInfoLoginoutButtonTitle:
@@ -1274,18 +1326,58 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("UpdateFirmware.BandDisconnect.AlertMsg")
       case .UpdateFirmwareIsNewVersionAlertMsg:
         return L10n.tr("UpdateFirmware.IsNewVersion.AlertMsg")
+      case .UpdateFirmwareInstallNewVersionAlertTitle:
+        return L10n.tr("UpdateFirmware.InstallNewVersion.AlertTitle")
+      case .UpdateFirmwareDownloadError:
+        return L10n.tr("UpdateFirmware.DownloadError")
+      case .UpdateFirmwareLowElectricAlertTitle:
+        return L10n.tr("UpdateFirmware.LowElectric.AlertTitle")
+      case .UpdateFirmwareLowEleAlertMsg:
+        return L10n.tr("UpdateFirmware.LowEle.AlertMsg")
+      case .UpdateFirmwareUpdateFailAlertMsg:
+        return L10n.tr("UpdateFirmware.UpdateFail.AlertMsg")
+      case .UpdateFirmwareUpdateSuccessAlertMsg:
+        return L10n.tr("UpdateFirmware.UpdateSuccess.AlertMsg")
+      case .UpdateFirmwareCheckVersionAlertMsg:
+        return L10n.tr("UpdateFirmware.CheckVersion.AlertMsg")
       case .HomeRefreshIdle:
         return L10n.tr("Home.Refresh.Idle")
       case .HomeRefreshPulling:
         return L10n.tr("Home.Refresh.Pulling")
       case .HomeRefreshRefreshing:
         return L10n.tr("Home.Refresh.Refreshing")
+      case .HomeRefreshAlertTitle:
+        return L10n.tr("Home.Refresh.AlertTitle")
+      case .HomeRefreshFaildDes:
+        return L10n.tr("Home.Refresh.faildDes")
       case .AlertSureActionTitle:
         return L10n.tr("Alert.SureAction.Title")
       case .AlertCancelActionTitle:
         return L10n.tr("Alert.CancelAction.Title")
+      case .AlertUpdateActionTitle:
+        return L10n.tr("Alert.UpdateAction.Title")
       case .AlertUndoPKWaitRecordMsg:
         return L10n.tr("Alert.UndoPKWaitRecord.Msg")
+      case .AlertReBindBandMsg:
+        return L10n.tr("Alert.ReBindBand.Msg")
+      case .AlertTipsMsg:
+        return L10n.tr("Alert.tips.Msg")
+      case .AlertReloginTitle:
+        return L10n.tr("Alert.relogin.Title")
+      case .AlertReUpdateActionTitle:
+        return L10n.tr("Alert.ReUpdateAction.Title")
+      case .AlertReTryAfterChargeActionTitle:
+        return L10n.tr("Alert.ReTryAfterChargeAction.Title")
+      case .AlertCameraOpenCamera:
+        return L10n.tr("Alert.Camera.OpenCamera")
+      case .AlertCameraOpenMicrophone:
+        return L10n.tr("Alert.Camera.OpenMicrophone")
+      case .AlertCameraOpenAll:
+        return L10n.tr("Alert.Camera.Open.All")
+      case .ShareTitle:
+        return L10n.tr("Share.Title")
+      case .ShareContent:
+        return L10n.tr("Share.Content")
     }
   }
 

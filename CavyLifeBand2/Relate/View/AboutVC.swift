@@ -28,8 +28,10 @@ class AboutVC: UIViewController, BaseViewControllerPresenter {
         
         self.automaticallyAdjustsScrollViewInsets = false
         
-        tableDataSource = [AboutCellModel(title: L10n.RelateAboutCurrentVersion.string, info: ez.appVersion ?? ""),
-                           AboutCellModel(title: L10n.RelateAboutFunctionIntroduce.string),
+//        AboutCellModel(title: L10n.RelateAboutCurrentVersion.string, info: ez.appVersion ?? ""),
+        
+        
+        tableDataSource = [AboutCellModel(title: L10n.RelateAboutFunctionIntroduce.string),
                            AboutCellModel(title: L10n.RelateAboutGoOfficialWebsite.string)]
         
         updateNavUI()
@@ -44,6 +46,16 @@ class AboutVC: UIViewController, BaseViewControllerPresenter {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    /**
+     返回按钮处理
+     */
+    func onLeftBtnBack() {
+        
+        self.navigationController?.popViewControllerAnimated(false)
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.HomeLeftOnClickMenu.rawValue, object: nil)
+        
     }
     
     func baseUISetting() {
@@ -64,6 +76,11 @@ class AboutVC: UIViewController, BaseViewControllerPresenter {
         tableView.layer.cornerRadius = CavyDefine.commonCornerRadius
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.bounces = false
+        
+        tableView.snp_makeConstraints { (make) in
+            make.height.equalTo(tableDataSource.count * 50 + 2 * 10)
+        }
         
     }
     
@@ -79,15 +96,15 @@ class AboutVC: UIViewController, BaseViewControllerPresenter {
             self?.pushVC(targetVC)
         }
         
-        copyrightLabel.addTapGesture { [weak self] sender in
-            Log.info("前往版权网页")
-            
-            let targetVC = WebViewController()
-            
-            targetVC.dataSource = CopyrightWebViewModel()
-            
-            self?.pushVC(targetVC)
-        }
+//        copyrightLabel.addTapGesture { [weak self] sender in
+//            Log.info("前往版权网页")
+//            
+//            let targetVC = WebViewController()
+//            
+//            targetVC.dataSource = CopyrightWebViewModel()
+//            
+//            self?.pushVC(targetVC)
+//        }
         
     }
     
@@ -156,6 +173,8 @@ extension AboutVC: UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(aboutCellID, forIndexPath: indexPath) as? AboutCell
+        
+        cell?.accessoryType = .DisclosureIndicator
         
         cell?.configure(tableDataSource[indexPath.row])
         

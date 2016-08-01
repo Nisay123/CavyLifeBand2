@@ -149,6 +149,10 @@ struct GuideGoalViewModel: GuideViewModelPotocols, UserInfoRealmOperateDelegate,
     var viewStyle: GoalViewStyle
     var realm: Realm = try! Realm()
     
+    var loadingView: UIActivityIndicatorView?
+    
+    var notificationToken: NotificationToken? = nil
+    
     init(viewStyle: GoalViewStyle) {
         
         self.viewStyle = viewStyle
@@ -170,20 +174,35 @@ struct GuideGoalViewModel: GuideViewModelPotocols, UserInfoRealmOperateDelegate,
         switch viewStyle {
         case .Guide:
             break
-        case .RightMenu:
+        case .RightMenu:            
+       
+            let userInfos: Results<UserInfoModel> = queryUserInfo(CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId)
             
-            queryUserInfoByNet{ resultUserInfo in
+            notificationToken = userInfos.addNotificationBlock { (changes: RealmCollectionChange)  in
                 
-                guard let userInfo = resultUserInfo else {
-                    return
+                switch changes {
+                    
+                case .Initial(let value):
+                    
+                    if let user = value.first {
+                        goalView.sliderStepToValue(user.stepGoal)
+                        
+                        self.setGoalViewSleepValue(user.sleepGoal, view: goalView)
+                    }
+                    
+                case .Update(let value, deletions: _, insertions: _, modifications: _):
+                    if let user = value.first {
+                        goalView.sliderStepToValue(user.stepGoal)
+                        
+                        self.setGoalViewSleepValue(user.sleepGoal, view: goalView)
+                    }
+                    
+                default:
+                    break
+                    
                 }
                 
-                goalView.sliderStepToValue(userInfo.stepGoal)
-                
-                self.setGoalViewSleepValue(userInfo.sleepGoal, view: goalView)
-                
             }
-            
            
         }
 
@@ -218,7 +237,13 @@ struct GuideGoalViewModel: GuideViewModelPotocols, UserInfoRealmOperateDelegate,
             
             setGoalViewSleepValue(userInfo.sleepGoal, view: goalView!)
             
-            break
+            UIApplication.sharedApplication().idleTimerDisabled = false
+            viewController.navigationController?.popViewControllerAnimated(false)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.HomeLeftOnClickMenu.rawValue, object: nil)
+            
+            return
+            
         }
         
         if viewController.navigationController?.viewControllers.count > 1 {
@@ -233,7 +258,7 @@ struct GuideGoalViewModel: GuideViewModelPotocols, UserInfoRealmOperateDelegate,
         
     }
     
-    func onClickGuideOkBtn(viewController: UIViewController) {
+    mutating func onClickGuideOkBtn(viewController: UIViewController) {
         
         guard let goalView = centerView as? GoalView else {
             return
@@ -254,10 +279,19 @@ struct GuideGoalViewModel: GuideViewModelPotocols, UserInfoRealmOperateDelegate,
             
         } else {
             
+            if loadingView == nil {
+                loadingView = getLoadingView()
+            }
+            
+            loadingView?.startAnimating()
+            
             // 调接口上传目标设置
             uploadGoalData {
                 // 返回主页
-                viewController.popVC()
+                UIApplication.sharedApplication().idleTimerDisabled = false
+                viewController.navigationController?.popViewControllerAnimated(false)
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.HomeLeftOnClickMenu.rawValue, object: nil)
                 // 目标值改变 通知 主页圆环更新
                 NSNotificationCenter.defaultCenter().postNotificationName("updateUpperViewRing", object: nil)
             }
@@ -275,10 +309,10 @@ struct GuideGoalViewModel: GuideViewModelPotocols, UserInfoRealmOperateDelegate,
         
         let goalView = self.centerView as? GoalView
         
-        let updateUserInfoPara: [String: AnyObject] = [NetRequsetKey.StepsGoal.rawValue: goalView!.stepCurrentValue,
-                                                       NetRequsetKey.SleepTimeGoal.rawValue: goalView!.sleepTimeValue]
+        let updateUserInfoPara: [String: AnyObject] = [NetRequestKey.StepsGoal.rawValue: goalView!.stepCurrentValue,
+                                                       NetRequestKey.SleepTimeGoal.rawValue: goalView!.sleepTimeValue]
         
-        let parameters: [String: AnyObject] = [NetRequsetKey.Profile.rawValue: updateUserInfoPara]
+        let parameters: [String: AnyObject] = [NetRequestKey.Profile.rawValue: updateUserInfoPara]
 
         NetWebApi.shareApi.netPostRequest(WebApiMethod.UsersProfile.description, para: parameters, modelObject: CommenMsgResponse.self, successHandler: { data in
             
@@ -288,10 +322,11 @@ struct GuideGoalViewModel: GuideViewModelPotocols, UserInfoRealmOperateDelegate,
                 return $0
             }
             
+            self.loadingView?.stopAnimating()
             completeHandler()
             
         }) { (msg) in
-            
+            self.loadingView?.stopAnimating()
         }
 
     }

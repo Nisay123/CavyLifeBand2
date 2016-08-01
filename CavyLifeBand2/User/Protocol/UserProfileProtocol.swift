@@ -14,7 +14,7 @@ import Log
 protocol QueryUserInfoRequestsDelegate {
     
     
-    func queryUserInfoByNet(vc: UIViewController?, completeHeadle: (UserProfile? -> Void)?)
+    func queryUserInfoByNet(vc: UIViewController?, failBack: (Void -> Void)?, completeHeadle: (UserProfile? -> Void)?)
     
 }
 
@@ -24,16 +24,22 @@ extension QueryUserInfoRequestsDelegate {
     /**
      查询用户信息
      */
-    func queryUserInfoByNet(vc: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController, completeHeadle completeHandle: (UserProfile? -> Void)? = nil) {
+    func queryUserInfoByNet(vc: UIViewController? = nil, failBack: (Void -> Void)? = nil, completeHeadle completeHandle: (UserProfile? -> Void)? = nil) {
 
         NetWebApi.shareApi.netGetRequest(WebApiMethod.UsersProfile.description, modelObject: UserProfileMsg.self, successHandler: { (data) in
 
             completeHandle?(data.userProfile)
 
         }) { (msg) in
-            CavyLifeBandAlertView.sharedIntance.showViewTitle(message: msg.msg)
+            Log.info(msg.msg)
+            
+            if vc != nil {
+                failBack?()
+                CavyLifeBandAlertView.sharedIntance.showViewTitle(vc, message: msg.msg)
+                
+            }
+            
         }
-        
         
     }
     
@@ -48,7 +54,7 @@ extension QueryUserInfoRequestsDelegate {
 protocol SetUserInfoRequestsDelegate {
     
     var userInfoPara: [String: AnyObject] { get set }
-    
+
     func setUserInfo(completeHandle: (Bool -> Void)?)
     
     var viewController: UIViewController? { get }
@@ -60,6 +66,7 @@ extension SetUserInfoRequestsDelegate {
     
     var viewController: UIViewController? { return nil }
     
+    
     /**
      设置用户信息
      
@@ -67,7 +74,7 @@ extension SetUserInfoRequestsDelegate {
      */
     func setUserInfo(completeHandle: (Bool -> Void)? = nil) {
         
-        let parameters: [String: AnyObject] = [NetRequsetKey.Profile.rawValue: userInfoPara]
+        let parameters: [String: AnyObject] = [NetRequestKey.Profile.rawValue: userInfoPara]
 
         NetWebApi.shareApi.netPostRequest(WebApiMethod.UsersProfile.description, para: parameters, modelObject: CommenMsgResponse.self, successHandler: { (data) in
             

@@ -30,6 +30,8 @@ class SecondsTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.selectionStyle = .None
+        
         self.addTimePicker()
         
         self.addSeparatorView()
@@ -83,14 +85,16 @@ class SecondsTableViewCell: UITableViewCell {
         separatorView1.snp_makeConstraints { make in
             make.height.equalTo(1)
             make.bottom.equalTo(self.pickerView.snp_bottom)
-            make.width.equalTo(200.0)
+            make.leading.equalTo(self).offset(30.0)
+            make.trailing.equalTo(self).offset(-30.0)
             make.centerX.equalTo(self.contentView.snp_centerX)
         }
         
         separatorView2.snp_makeConstraints { make in
             make.height.equalTo(1)
             make.top.equalTo(self.pickerView.snp_top)
-            make.width.equalTo(separatorView1.snp_width)
+            make.leading.equalTo(separatorView1)
+            make.trailing.equalTo(separatorView1)
             make.centerX.equalTo(separatorView1.snp_centerX)
         }
     

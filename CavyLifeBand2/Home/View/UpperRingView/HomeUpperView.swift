@@ -18,7 +18,7 @@ enum NumberFollowUpper: String {
     
 }
 
-class HomeUpperView: UIView, UserInfoRealmOperateDelegate, ChartsRealmProtocol {
+class HomeUpperView: UIView, UserInfoRealmOperateDelegate, ChartsRealmProtocol, HomeRealmProtocol, ChartStepRealmProtocol, SleepWebRealmOperate {
     
     var realm: Realm = try! Realm()
     var userId: String { return CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId }
@@ -52,6 +52,7 @@ class HomeUpperView: UIView, UserInfoRealmOperateDelegate, ChartsRealmProtocol {
     override func awakeFromNib() {
         
         allViewLayout()
+        
         configStepAndSleepValue()
         
         configRealm()
@@ -64,7 +65,6 @@ class HomeUpperView: UIView, UserInfoRealmOperateDelegate, ChartsRealmProtocol {
     func configRealm() {
         
         let stepRealmReslut = queryAllStepInfo()
-        let sleepRealmReslut = queryAllSleepInfo()
         
         stepNotificationToken = stepRealmReslut.addNotificationBlock { change in
             
@@ -72,19 +72,22 @@ class HomeUpperView: UIView, UserInfoRealmOperateDelegate, ChartsRealmProtocol {
             case .Update(_, deletions: _, insertions: _, modifications: _):
                 self.configStepValue()
                 NSNotificationCenter.defaultCenter().postNotificationName(NumberFollowUpper.FollowUpperStep.rawValue, object: nil)
-
+                
             default:
                 break
             }
             
         }
         
+        let sleepRealmReslut = queryAllSleepInfo()
+        
         sleepNotificationToken = sleepRealmReslut.addNotificationBlock { change in
             switch change {
             case .Update(_, deletions: _, insertions: _, modifications: _):
                 self.configSleepValue()
+                self.configSleepWebRealm()
                 NSNotificationCenter.defaultCenter().postNotificationName(NumberFollowUpper.FollowUpperSleep.rawValue, object: nil)
-
+                
             default:
                 break
             }
@@ -92,6 +95,26 @@ class HomeUpperView: UIView, UserInfoRealmOperateDelegate, ChartsRealmProtocol {
         
     }
 
+    func configSleepWebRealm() {
+        
+        guard let sleepRealmReslut = queryUserSleepWebRealm() else {
+            return
+        }
+        
+        sleepNotificationToken = sleepRealmReslut.addNotificationBlock { change in
+            switch change {
+            case .Update(_, deletions: _, insertions: _, modifications: _):
+                self.configSleepValue()
+                NSNotificationCenter.defaultCenter().postNotificationName(NumberFollowUpper.FollowUpperSleep.rawValue, object: nil)
+                
+            default:
+                break
+            }
+        }
+
+    }
+    
+    
     /**
      适配
      */
@@ -170,23 +193,14 @@ class HomeUpperView: UIView, UserInfoRealmOperateDelegate, ChartsRealmProtocol {
             return
         }
         
-        var sleepString = "\(userInfo.sleepGoal/60):\(userInfo.sleepGoal%60)"
-        
-        if sleepString == "0:0" {
-            // 如果没有目标值 则显示推荐值
-            sleepString = "8:30"
-            
-        }
-        
-        let sleepTimeArray = sleepString.componentsSeparatedByString(":")
-        let sleepTargetNumber = sleepTimeArray[0].toInt()! * 60 + sleepTimeArray[1].toInt()!
-        
+        let sleepTarget = userInfo.sleepGoal
+
         // 计步睡眠 当前值
-        let time = NSDate()
-        let resultSeelp = self.querySleepInfoDay(time.gregorian.beginningOfDay.date, endTime: time)
-        let sleepCurrentNumber = Int(resultSeelp.0 * 10)
-        
-        sleepView.ringWithStyle(sleepTargetNumber, currentNumber: sleepCurrentNumber)
+        let resultSeelp = self.querySleepNumber(NSDate().gregorian.beginningOfDay.date, endTime: NSDate()).first //self.queryTodaySleepInfo()
+
+        let sleepCurrentNumber = (resultSeelp!.deepSleep + resultSeelp!.lightSleep) ?? 0  //Int(resultSeelp.0)
+
+        sleepView.ringWithStyle(sleepTarget, currentNumber: sleepCurrentNumber)
         
     }
     
@@ -204,9 +218,8 @@ class HomeUpperView: UIView, UserInfoRealmOperateDelegate, ChartsRealmProtocol {
             
         }
         
-        let time = NSDate()
-        let resultStep = self.queryStepNumber(time.gregorian.beginningOfDay.date, endTime: time, timeBucket: .Day)
-        
+        // 新表的查询协议 查询当天总步数
+        let resultStep = queryStepNumber(NSDate().gregorian.beginningOfDay.date, endTime: NSDate(), timeBucket: .Day)
          let stepCurrentNumber = resultStep.totalStep
         
         stepView.ringWithStyle(stepTargetNumber, currentNumber: stepCurrentNumber)

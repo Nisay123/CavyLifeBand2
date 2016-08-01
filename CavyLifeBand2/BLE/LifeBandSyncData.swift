@@ -188,7 +188,10 @@ class LifeBandSyncData {
                 NSThread.sleepForTimeInterval(1)
             }
             
+            var i: Int = 0
             LifeBandBle.shareInterface.installCmd(0xDA) { [unowned self] data in
+                
+                Log.info("同步\(i += 1)")
                 
                 Log.info("syncDataFormBand ---- \(data)")
                 
@@ -288,9 +291,6 @@ class LifeBandSyncData {
             syncState = .NoSync
             
             Log.info("Band sync end")
-            
-            // 发送通知让主页停止同步数据下拉消失
-            NSNotificationCenter.defaultCenter().postNotificationName(RefreshStatus.StopRefresh.rawValue, object: nil)
             
             return true
             
