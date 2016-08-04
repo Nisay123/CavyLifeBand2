@@ -34,9 +34,9 @@ class HomeDateTimeLineCell: UICollectionViewCell, UITableViewDelegate, UITableVi
         
         // 跟随上面的环的数值再变化一下
         // 接收通知
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeStepNumber), name: NumberFollowUpper.FollowUpperStep.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeSleepAndStep), name: NumberFollowUpper.FollowUpperStep.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeSleepNumber), name: NumberFollowUpper.FollowUpperSleep.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeSleepAndStep), name: NumberFollowUpper.FollowUpperSleep.rawValue, object: nil)
     }
     
     deinit {
@@ -50,16 +50,22 @@ class HomeDateTimeLineCell: UICollectionViewCell, UITableViewDelegate, UITableVi
      */
     func configLayout() {
         
-        parseDataToHomeListRealm()
+        self.datasViewModels = self.queryRealmGetViewModelLists(self.queryHomeData(timeString))
+        self.tableView.reloadData()
+        
+        if NSDate(fromString: timeString, format: "yyyy.M.d")?.gregorian.isToday != true {
+            
+            parseDataToHomeListRealm()
+            
+        }
         
         initNotificationHomeList()
         initNotificationStep()
         initNotificationSleep()
         
-        if NSDate(fromString: timeString, format: "yyyy.M.d")?.gregorian.isToday != true {
-            self.datasViewModels = self.queryRealmGetViewModelLists(self.queryHomeData(timeString))
-            self.tableView.reloadData()
-        }
+//        if NSDate(fromString: timeString, format: "yyyy.M.d")?.gregorian.isToday != true {
+        
+//        }
         
         
         
@@ -241,7 +247,12 @@ class HomeDateTimeLineCell: UICollectionViewCell, UITableViewDelegate, UITableVi
         
         // 如果数据库存在数据 就直接返回
         
-        if isExistHomeData(timeString) { return }
+        if isExistHomeData(timeString) {
+            
+            HomeWebApi.shareApi.parserHomeLineData(timeString, exist: true)
+            return
+        
+        }
         
         // 不存在 解析数据 并保存
         HomeWebApi.shareApi.parserHomeLineData(timeString)
@@ -257,12 +268,8 @@ class HomeDateTimeLineCell: UICollectionViewCell, UITableViewDelegate, UITableVi
         
         // 转成 VM数组
         var listVM: [HomeListViewModelProtocol] = [HomeListStepViewModel(stepNumber: 0), HomeListSleepViewModel(sleepTime: 0)]
-        
-        guard let listRealm = homeListRealm.first else {
-            return listVM
-        }
-        
-        if homeListRealm.first == NSDate().toString(format: "yyyy.M.d") {
+
+        if timeString == NSDate().toString(format: "yyyy.M.d") {
           
             let sleepInfo = querySleepNumber(NSDate().gregorian.beginningOfDay.date, endTime: NSDate()).first
             let resultSeelp = (sleepInfo!.lightSleep + sleepInfo!.deepSleep) ?? 0
@@ -271,27 +278,31 @@ class HomeDateTimeLineCell: UICollectionViewCell, UITableViewDelegate, UITableVi
             let resultStep = queryStepNumber(NSDate().gregorian.beginningOfDay.date, endTime: NSDate(), timeBucket: .Day)
             let stepCurrentNumber = resultStep.totalStep
             
-            
             listVM[0] = HomeListStepViewModel(stepNumber: stepCurrentNumber)
             listVM[1] = HomeListSleepViewModel(sleepTime: sleepCurrentNumber)
             
         } else {
             
-            // 其他天数直接查询HomeLineData
-            listVM[0] = self.datasViewModels[0]
-            listVM[1] = self.datasViewModels[1]
-            
-        }
-        
-        
-        
-        // 成就列表
-        if listRealm.awards.count > 0 {
-            
-            for list in listRealm.awards {
-                
-                listVM.append(HomeListAchiveViewModel(medalIndex: list.award))
+            guard let listRealm = homeListRealm.first else {
+                return listVM
             }
+            
+            // 其他天数直接查询HomeLineData
+//            listVM[0] = self.datasViewModels[0]
+//            listVM[1] = self.datasViewModels[1]
+            listVM[0] = HomeListStepViewModel(stepNumber: homeListRealm.first?.totalSteps ?? 0)
+            listVM[1] = HomeListSleepViewModel(sleepTime: homeListRealm.first?.totalSleep ?? 0)
+            
+            // 成就列表
+            if listRealm.awards.count > 0 {
+                
+                for list in listRealm.awards {
+                    
+                    listVM.append(HomeListAchiveViewModel(medalIndex: list.award))
+                }
+                
+            }
+            
         }
         
         // 隐藏PK模块
@@ -316,35 +327,21 @@ class HomeDateTimeLineCell: UICollectionViewCell, UITableViewDelegate, UITableVi
         
         return listVM
     }
-    
+        
     /**
-     接受通知更新计步值
+     接受通知更新睡眠计步值
      */
-    func changeStepNumber() {
+    func changeSleepAndStep() {
         
         guard let curDate = NSDate(fromString: timeString, format: "yyyy.M.d") else {
             fatalError("时间格式不正确\(timeString)")
         }
         
         guard curDate.gregorian.isToday else { return }
-                
+        
         self.datasViewModels[0] = HomeListStepViewModel(stepNumber: self.queryStepNumber(curDate, endTime: NSDate(), timeBucket: TimeBucketStyle.Day).totalStep)
-        
-        self.tableView.reloadData()
-    }
-    
-    /**
-     接受通知更新睡眠值
-     */
-    func changeSleepNumber() {
-        
-        guard let curDate = NSDate(fromString: timeString, format: "yyyy.M.d") else {
-            fatalError("时间格式不正确\(timeString)")
-        }
-        
-        guard curDate.gregorian.isToday else { return }
-
         self.datasViewModels[1] = HomeListSleepViewModel(sleepTime: Int(self.queryTodaySleepInfo().0))
+        
         self.tableView.reloadData()
         
     }

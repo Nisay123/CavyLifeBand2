@@ -27,11 +27,10 @@ class HomeWebApi: NetRequest, HomeRealmProtocol {
      
      - parameter timeString: yyyy.M.d
      */
-    func parserHomeLineData(timeString: String) {
+    func parserHomeLineData(timeString: String, exist: Bool = false) {
         
         let date = NSDate(fromString: timeString, format: "yyyy.M.d")
     
-        let startDate = (date!.gregorian - 2.day).date
         let endDate = date!
         
         let parameters: [String: AnyObject] = [NetRequestKey.StartDate.rawValue: endDate.toString(format: "yyyy-MM-dd"), NetRequestKey.EndDate.rawValue: endDate.toString(format: "yyyy-MM-dd")]
@@ -39,6 +38,12 @@ class HomeWebApi: NetRequest, HomeRealmProtocol {
         netGetRequest(WebApiMethod.Dailies.description, para: parameters, modelObject: HomeLineMsg.self, successHandler: { result in
             
             Log.info(result.data?.dailiesData)
+            
+            if exist == true {
+                
+                self.deleteHomeData(timeString)
+                
+            }
             
             // 保存到本地
             result.data?.dailiesData.forEach {

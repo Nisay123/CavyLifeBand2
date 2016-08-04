@@ -84,4 +84,26 @@ extension HomeRealmProtocol {
         
     }
     
+    func deleteHomeData(timeString: String) -> Bool {
+        
+        let date = queryHomeData(timeString)
+        
+        if date.count <= 0 {
+            return true
+        }
+        
+        realm.beginWrite()
+        
+        realm.delete(date)
+        
+        do {
+            try realm.commitWrite()
+        } catch let error {
+            Log.error("\(#function) error = \(error)")
+            return false
+        }
+        
+        return true
+    }
+    
 }
