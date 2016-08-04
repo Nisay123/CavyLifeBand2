@@ -16,6 +16,7 @@ class NChartStepDataRealm: Object {
     
     dynamic var userId             = ""
     dynamic var date: NSDate       = NSDate()
+    dynamic var dateStr: String    = NSDate().toString(format: "yyyy-MM-dd HH:mm:ss")
     dynamic var totalTime: Int     = 0
     dynamic var totalStep: Int     = 0
     dynamic var kilometer: CGFloat = 0
@@ -28,10 +29,15 @@ class NChartStepDataRealm: Object {
         self.init()
         self.userId    = userId
         self.date      = date
+        self.dateStr   = date.toString(format: "yyyy-MM-dd HH:mm:ss")
         self.totalStep = totalStep
         self.kilometer = CGFloat(self.totalStep) * 0.0006
         self.totalTime = totalTime
         self.stepList  = stepList
+    }
+    
+    override class func primaryKey() -> String? {
+        return "dateStr"
     }
     
 }
@@ -139,6 +145,39 @@ extension ChartStepRealmProtocol {
         
     }
 
+    /**
+     删除全部
+     
+     - parameter beginDate:
+     
+     - returns:
+     */
+    func deleteNSteptDate() -> Bool {
+        
+        let personalList = realm.objects(NChartStepDataRealm)
+        
+        guard personalList.count > 0 else { return true }
+        
+        self.realm.beginWrite()
+        
+        self.realm.delete(personalList)
+        
+        do {
+            
+            try self.realm.commitWrite()
+            
+        } catch let error {
+            
+            Log.error("\(#function) error = \(error)")
+            
+            return false
+        }
+        
+        Log.info("delete charts info success")
+        
+        return true
+        
+    }
     
     
     /**
@@ -195,7 +234,7 @@ extension ChartStepRealmProtocol {
             
             try realm.write {
                 
-                realm.add(chartsInfo, update: false)
+                realm.add(chartsInfo, update: true)
             }
             
         } catch {

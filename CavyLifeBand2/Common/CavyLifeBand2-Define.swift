@@ -386,6 +386,8 @@ enum NotificationName: String {
     case HomeShowHealthyView                // 主页push 健康页面
     case HomeRefreshDate                    // 进入前台刷新日期
     
+    case UploadDataSuccess
+    
 }
 
 

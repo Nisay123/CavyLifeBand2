@@ -405,6 +405,31 @@ extension ChartsRealmProtocol {
         
     }
     
+    func deleteChartStepDataRealm() -> Bool {
+        
+        let dataInfo = realm.objects(ChartStepDataRealm)
+        
+        self.realm.beginWrite()
+        
+        self.realm.delete(dataInfo)
+        
+        do {
+            
+            try self.realm.commitWrite()
+            
+        } catch let error {
+            
+            Log.error("\(#function) error = \(error)")
+            
+            return false
+        }
+        
+        Log.info("delete ChartStep info success")
+        
+        return true
+        
+    }
+    
 }
 
 // MARK: Sleep Extension
@@ -855,8 +880,33 @@ extension ChartsRealmProtocol {
         
         return true
         
+    }
+    
+    func deleteChartSleepDataRealm() -> Bool {
+        
+        let dataInfo = realm.objects(ChartSleepDataRealm)
+        
+        self.realm.beginWrite()
+        
+        self.realm.delete(dataInfo)
+        
+        do {
+            
+            try self.realm.commitWrite()
+            
+        } catch let error {
+            
+            Log.error("\(#function) error = \(error)")
+            
+            return false
+        }
+        
+        Log.info("delete ChartSleepDataRealm info success")
+        
+        return true
         
     }
+    
     
     /**
      获取需要上报的数据

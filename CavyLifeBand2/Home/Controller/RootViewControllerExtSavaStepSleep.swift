@@ -60,6 +60,11 @@ extension RootViewController: ChartsRealmProtocol {
                 UploadBandData.shareApi.uploadBandData(uploadData.0, successHandler: {
                     [unowned self] data in
                     self.setChartBandDataSynced(uploadData.1, endDate: uploadData.2)
+                    
+                    let userInfo = ["begin": uploadData.1] as [NSObject: AnyObject]
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.UploadDataSuccess.rawValue, object: nil, userInfo: userInfo)
+                    
                     Log.info("上报数据成功")
                 }) {
                     // 发送通知让主页停止同步数据下拉消失

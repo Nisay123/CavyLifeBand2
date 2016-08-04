@@ -15,9 +15,15 @@ class SleepWebRealm: Object {
     
     dynamic var date: NSDate = NSDate()
     
+    dynamic var dateStr: String = NSDate().toString(format: "yyyy-MM-dd")
+    
     dynamic var totalTime: Int = 0
     
     dynamic var deepTime: Int = 0
+    
+    override class func primaryKey() -> String? {
+        return "dateStr"
+    }
     
 }
 
@@ -35,6 +41,7 @@ extension SleepWebRealm {
         self.init()
         
         self.date      = jsonModel.date
+        self.dateStr   = jsonModel.date.toString(format: "yyyy-MM-dd")
         self.totalTime = jsonModel.totalTime
         self.deepTime  = jsonModel.deepTime
 
@@ -94,6 +101,13 @@ protocol SleepWebRealmOperate {
     func deleteSleepWebRealm(userId: String, startDate: NSDate, endDate: NSDate) -> Bool
     
     /**
+     删除全部
+     
+     - returns:
+     */
+    func deleteSleepWebRealm() -> Bool
+    
+    /**
      获取该用户所有睡眠数据
      
      - parameter userId:
@@ -112,7 +126,7 @@ extension SleepWebRealmOperate {
             
             try realm.write {
                 
-                realm.add(model, update: false)
+                realm.add(model, update: true)
             }
             
         } catch {
@@ -123,6 +137,33 @@ extension SleepWebRealmOperate {
         }
         
         Log.info("Add SleepWebRealm success")
+        
+        return true
+        
+    }
+    
+    func deleteSleepWebRealm() -> Bool {
+        
+        let sleepList = realm.objects(SleepWebRealm)
+        
+        guard sleepList.count > 0 else { return true }
+        
+        self.realm.beginWrite()
+        
+        self.realm.delete(sleepList)
+        
+        do {
+            
+            try self.realm.commitWrite()
+            
+        } catch let error {
+            
+            Log.error("\(#function) error = \(error)")
+            
+            return false
+        }
+        
+        Log.info("delete charts info success")
         
         return true
         

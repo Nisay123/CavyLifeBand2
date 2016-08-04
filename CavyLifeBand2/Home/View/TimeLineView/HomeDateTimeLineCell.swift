@@ -288,8 +288,7 @@ class HomeDateTimeLineCell: UICollectionViewCell, UITableViewDelegate, UITableVi
             }
             
             // 其他天数直接查询HomeLineData
-//            listVM[0] = self.datasViewModels[0]
-//            listVM[1] = self.datasViewModels[1]
+
             listVM[0] = HomeListStepViewModel(stepNumber: homeListRealm.first?.totalSteps ?? 0)
             listVM[1] = HomeListSleepViewModel(sleepTime: homeListRealm.first?.totalSleep ?? 0)
             

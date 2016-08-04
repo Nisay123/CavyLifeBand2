@@ -225,6 +225,8 @@ class ContactsAccountInfoVC: UIViewController, BaseViewControllerPresenter, User
                 
                 UIImage.deleteCacheImageWithName()
                 
+                LogoutCleanObj.shareInstance.deleteUserDBData()
+                
                 CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = ""
                 CavyDefine.loginUserBaseInfo.loginUserInfo.loginUsername = ""
                 CavyDefine.loginUserBaseInfo.loginUserInfo.loginAuthToken = ""

@@ -85,10 +85,11 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         addNotificationObserver(NotificationName.HomeShowPKView.rawValue, selector: #selector(HomeViewController.showPKDetailView))
         addNotificationObserver(NotificationName.HomeShowAchieveView.rawValue, selector: #selector(HomeViewController.showAchieveDetailView))
         addNotificationObserver(NotificationName.HomeShowHealthyView.rawValue, selector: #selector(HomeViewController.showHealthyDetailView))
+        addNotificationObserver(NotificationName.UploadDataSuccess.rawValue, selector: #selector(HomeViewController.fetchDataAfterUpload(_:)))
         
         addNotificationObserver(BandBleNotificationName.BandDesconnectNotification.rawValue, selector: #selector(HomeViewController.bandDesconnect))
         addNotificationObserver(BandBleNotificationName.BandConnectNotification.rawValue, selector: #selector(HomeViewController.bandConnect))
-        
+       
         // 刷新
         addRefershHeader()
         addNotificationObserver(RefreshStyle.BeginRefresh.rawValue, selector: #selector(beginBandRefersh))
@@ -250,15 +251,52 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         
     }
 
+    /**
+     上传
+     
+     - parameter userInfo: <#userInfo description#>
+     */
+    func fetchDataAfterUpload(userInfo: NSNotification) {
+        
+        guard let beginDate = userInfo.userInfo?["begin"] as? NSDate else {
+            return
+        }
+        
+        SleepWebApi.shareApi.fetchSleepWebDataAfterUpload(beginDate)
+        
+        var startDate = ""
+        let endDate = NSDate().toString(format: "yyyy-MM-dd HH:mm:ss")
+        
+        let personalList = realm.objects(NChartStepDataRealm).filter("userId = '\(userId)'").sorted("date")
+        
+        if personalList.count != 0 {
+            
+            let dbDate = personalList.last!.date.gregorian.beginningOfDay.date
+                        
+            startDate = dbDate.earlierDate(beginDate).toString(format: "yyyy-MM-dd HH:mm:ss")
+            
+        } else {
+            
+            // 如果查询不到数据 则 使用注册日期开始请求
+            guard let startTime = realm.objects(UserInfoModel).filter("userId = '\(userId)'").first?.signUpDate else {
+                return
+            }
+            
+            startDate = startTime.toString(format: "yyyy-MM-dd HH:mm:ss")
+            
+        }
+        
+        self.parseStepDate(startDate, endDate: endDate)
+        
+        
+    }
     
     // MARK: 解析数据 保存数据库
-    
     /**
      解析 计步睡眠数据 并保存Realm 每次请求前前先删除最后一条数据 在获取时间同步
      */
     func parseChartListData() {
         
-
         // MARK: 睡眠相关
         SleepWebApi.shareApi.fetchSleepWebData()
         
@@ -266,17 +304,16 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         var startDate = ""
         let endDate = NSDate().toString(format: "yyyy-MM-dd HH:mm:ss")
         
-        if isNeedUpdateStepData() {
-        
+        if self.isNeedUpdateStepData() {
+            
             let personalList = realm.objects(NChartStepDataRealm).filter("userId = '\(userId)'")
             
             if personalList.count != 0 {
                 
                 startDate = personalList.last!.date.toString(format: "yyyy-MM-dd HH:mm:ss")
                 
-                 //删除数据库最后一条数据 重新开始添加
-                delecNSteptDate(personalList.last!)
-                
+                //删除数据库最后一条数据 重新开始添加
+                self.delecNSteptDate(personalList.last!)
                 
             } else {
                 
@@ -289,10 +326,10 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
                 
             }
             
-           
-            parseStepDate(startDate, endDate: endDate)
-        
+            self.parseStepDate(startDate, endDate: endDate)
+            
         }
+
     }
     
       /**
