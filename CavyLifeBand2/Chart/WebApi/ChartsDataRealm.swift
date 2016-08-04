@@ -1122,30 +1122,30 @@ extension ChartsRealmProtocol {
     func getTodaySleepRingData() -> (Double, Double, Double) {
         
         let nowDate = NSDate()
-//
-//        if (nowDate - nowDate.gregorian.beginningOfDay.date).totalMinutes > 360 {
-//            
-//            guard let refreshDate = NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.isRefreshSleepRingKey) as? NSDate else {
-//                return setSleepRingCache(nowDate)
-//            }
-//            
-//            guard (refreshDate - nowDate.gregorian.beginningOfDay.date).totalMinutes >= 0 else {
-//                return setSleepRingCache(nowDate)
-//            }
-//            
-//            guard let sleepArr = NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.sleepRingCacheKey) as? NSArray else {
-//                return setSleepRingCache(nowDate)
-//            }
-//            
-//            return (sleepArr[0].doubleValue, sleepArr[1].doubleValue, sleepArr[2].doubleValue)
-//            
-//        } else {
-//            
-//            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: CavyDefine.isRefreshSleepRingKey)
+
+        if (nowDate - nowDate.gregorian.beginningOfDay.date).totalMinutes > 360 {
+            
+            guard let refreshDate = NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.isRefreshSleepRingKey) as? NSDate else {
+                return setSleepRingCache(nowDate)
+            }
+            
+            guard (refreshDate - nowDate.gregorian.beginningOfDay.date).totalMinutes >= 0 else {
+                return setSleepRingCache(nowDate)
+            }
+            
+            guard let sleepArr = NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.sleepRingCacheKey) as? NSArray else {
+                return setSleepRingCache(nowDate)
+            }
+            
+            return (sleepArr[0].doubleValue, sleepArr[1].doubleValue, sleepArr[2].doubleValue)
+            
+        } else {
+            
+            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: CavyDefine.isRefreshSleepRingKey)
         
             return setSleepRingCache(nowDate)
         
-//        }
+        }
         
     }
     
