@@ -166,6 +166,7 @@
 		68C558D41CB754090031719D /* IntelligentClockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C558D21CB754090031719D /* IntelligentClockCell.swift */; };
 		68C558D51CB754090031719D /* IntelligentClockCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68C558D31CB754090031719D /* IntelligentClockCell.xib */; };
 		68D6ED5F1CB7AEE700E1A1FB /* SafetySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6ED5E1CB7AEE700E1A1FB /* SafetySettingViewController.swift */; };
+		68DE037F1D53364C006B9E07 /* LogoutCleanObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DE037E1D53364B006B9E07 /* LogoutCleanObj.swift */; };
 		68E977F41CC5D15C00651724 /* PK.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68E977F31CC5D15C00651724 /* PK.storyboard */; };
 		68E977F61CC6008F00651724 /* PKRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E977F51CC6008F00651724 /* PKRulesView.swift */; };
 		68E977F81CC600A100651724 /* PKRulesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68E977F71CC600A100651724 /* PKRulesView.xib */; };
@@ -524,6 +525,7 @@
 		68C558D21CB754090031719D /* IntelligentClockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntelligentClockCell.swift; sourceTree = "<group>"; };
 		68C558D31CB754090031719D /* IntelligentClockCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntelligentClockCell.xib; sourceTree = "<group>"; };
 		68D6ED5E1CB7AEE700E1A1FB /* SafetySettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafetySettingViewController.swift; sourceTree = "<group>"; };
+		68DE037E1D53364B006B9E07 /* LogoutCleanObj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutCleanObj.swift; sourceTree = "<group>"; };
 		68E977F31CC5D15C00651724 /* PK.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PK.storyboard; sourceTree = "<group>"; };
 		68E977F51CC6008F00651724 /* PKRulesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKRulesView.swift; sourceTree = "<group>"; };
 		68E977F71CC600A100651724 /* PKRulesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PKRulesView.xib; sourceTree = "<group>"; };
@@ -1356,6 +1358,7 @@
 				917936CA1CBCEB4B002936E3 /* SCLocationManager.swift */,
 				9197CF9D1C58BADE00E5D1C9 /* NetRequestAdapter.swift */,
 				912019451CD1AF3A00D8BC4C /* CavyLifeBand2-Swift.h */,
+				68DE037E1D53364B006B9E07 /* LogoutCleanObj.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2150,7 +2153,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if hash tailor 2>/dev/null; then\ntailor --except=brace-style,trailing-whitespace,comment-whitespace,terminating-newline,forced-type-cast\nelse\necho \"warning: Please install Tailor from https://tailor.sh\"\nfi";
+			shellScript = "#if hash tailor 2>/dev/null; then\n#tailor --except=brace-style,trailing-whitespace,comment-whitespace,terminating-newline,forced-type-cast\n#else\n#echo \"warning: Please install Tailor from https://tailor.sh\"\n#fi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2246,6 +2249,7 @@
 				91E1B4F01CA524BA008ADEE6 /* ContactsAddFriendViewModel.swift in Sources */,
 				683655971CBE261B009373EA /* SettingRealmModel.swift in Sources */,
 				684C6AD81CC9BA1C000C176E /* PKJSON.swift in Sources */,
+				68DE037F1D53364C006B9E07 /* LogoutCleanObj.swift in Sources */,
 				4C8D36AE1D377ADE00CCE06F /* ChartsSleepLegendView.swift in Sources */,
 				4C9E0B581D1A395200DBC1FC /* ChartsDataRealm.swift in Sources */,
 				91ACEC5C1CB4B526008ED8B0 /* GuideUserInfo.swift in Sources */,

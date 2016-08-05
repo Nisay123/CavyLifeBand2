@@ -19,6 +19,18 @@ struct CavyDefine {
     
     // 新的后台服务器地址
     static let webServerAddr = "http://pay.tunshu.com/live/api/v1/"
+    
+    // 百度服务端key
+    static let baiduServerKey = "7mtU3ocqPLj4Posdi42BI1qsIZFGLdUq"
+    
+    // 睡眠圆环是否刷新的key
+    static let refreshSleepRingDateKey = "refreshSleepRingDate"
+    
+    // 上次同步到手环数据的key
+    static let lastSyncDataDateKey = "lastSyncDataDate"
+    
+    // 睡眠圆环缓存数据
+    static let sleepRingCacheKey = "sleepRingCache"
 
     // webApi地址
     static let webApiAddr = serverAddr + "/api.do"
@@ -375,6 +387,9 @@ enum NotificationName: String {
     case HomeShowPKView                     // 主页push PK页面
     case HomeShowAchieveView                  // 主页push 徽章页面
     case HomeShowHealthyView                // 主页push 健康页面
+    case HomeRefreshDate                    // 进入前台刷新日期
+    
+    case UploadDataSuccess
     
 }
 

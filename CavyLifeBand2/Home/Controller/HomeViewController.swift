@@ -85,15 +85,25 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         addNotificationObserver(NotificationName.HomeShowPKView.rawValue, selector: #selector(HomeViewController.showPKDetailView))
         addNotificationObserver(NotificationName.HomeShowAchieveView.rawValue, selector: #selector(HomeViewController.showAchieveDetailView))
         addNotificationObserver(NotificationName.HomeShowHealthyView.rawValue, selector: #selector(HomeViewController.showHealthyDetailView))
+        addNotificationObserver(NotificationName.UploadDataSuccess.rawValue, selector: #selector(HomeViewController.fetchDataAfterUpload(_:)))
         
         addNotificationObserver(BandBleNotificationName.BandDesconnectNotification.rawValue, selector: #selector(HomeViewController.bandDesconnect))
         addNotificationObserver(BandBleNotificationName.BandConnectNotification.rawValue, selector: #selector(HomeViewController.bandConnect))
-        
+       
         // 刷新
         addRefershHeader()
         addNotificationObserver(RefreshStyle.BeginRefresh.rawValue, selector: #selector(beginBandRefersh))
         addNotificationObserver(RefreshStyle.StopRefresh.rawValue, selector: #selector(endBandRefersh))
+        
+        addNotificationObserver(NotificationName.HomeRefreshDate.rawValue, selector: #selector(HomeViewController.configureHomeDate))
  
+    }
+    
+    func configureHomeDate() {
+        dateView.configureDate()
+        timeLineView.configureDate()
+        
+        upperView?.updateUpperViewRing()
     }
 
     /**
@@ -115,24 +125,27 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
     func bandConnect() {
         
         // 手环连接 自动同步数据
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * NSEC_PER_SEC)), dispatch_get_main_queue ()) {
-            // 等待两秒 连接手环的时间
-                        
-            let lifeBandModel = LifeBandModelType.LLA.rawValue | LifeBandModelType.Step.rawValue | LifeBandModelType.Tilt.rawValue | LifeBandModelType.Alarm.rawValue | LifeBandModelType.Alert.rawValue
-            LifeBandCtrl.shareInterface.getLifeBandInfo {
-                
-                // 如果不等于生活手环模式，则重新设置生活手环模式
-                if $0.model & lifeBandModel  != lifeBandModel {
-                    LifeBandCtrl.shareInterface.seLifeBandModel()
-                }
-                
-                BindBandCtrl.fwVersion = $0.fwVersion
-                
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * NSEC_PER_SEC)), dispatch_get_main_queue ()) {
+//            // 等待两秒 连接手环的时间
+//            
+//            LifeBandCtrl.shareInterface.setDateToBand(NSDate())
+//            let lifeBandModel = LifeBandModelType.LLA.rawValue | LifeBandModelType.Step.rawValue | LifeBandModelType.Tilt.rawValue | LifeBandModelType.Alarm.rawValue | LifeBandModelType.Alert.rawValue
+//            LifeBandCtrl.shareInterface.getLifeBandInfo {
+//                
+//                // 如果不等于生活手环模式，则重新设置生活手环模式
+//                if $0.model & lifeBandModel  != lifeBandModel {
+//                    LifeBandCtrl.shareInterface.seLifeBandModel()
+//                }
+//                
+//                BindBandCtrl.fwVersion = $0.fwVersion
+//                
                 self.scrollView.mj_header.beginRefreshing()
-                
-            }
-            
-        }
+//
+//            }
+//            
+//            LifeBandCtrl.shareInterface.installButtonEven()
+//            
+//        }
         rightBtn?.setBackgroundImage(UIImage(asset: .HomeBandMenu), forState: .Normal)
         
     }
@@ -238,15 +251,52 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         
     }
 
+    /**
+     上传
+     
+     - parameter userInfo: <#userInfo description#>
+     */
+    func fetchDataAfterUpload(userInfo: NSNotification) {
+        
+        guard let beginDate = userInfo.userInfo?["begin"] as? NSDate else {
+            return
+        }
+        
+        SleepWebApi.shareApi.fetchSleepWebDataAfterUpload(beginDate)
+        
+        var startDate = ""
+        let endDate = NSDate().toString(format: "yyyy-MM-dd HH:mm:ss")
+        
+        let personalList = realm.objects(NChartStepDataRealm).filter("userId = '\(userId)'").sorted("date")
+        
+        if personalList.count != 0 {
+            
+            let dbDate = personalList.last!.date.gregorian.beginningOfDay.date
+                        
+            startDate = dbDate.earlierDate(beginDate).toString(format: "yyyy-MM-dd HH:mm:ss")
+            
+        } else {
+            
+            // 如果查询不到数据 则 使用注册日期开始请求
+            guard let startTime = realm.objects(UserInfoModel).filter("userId = '\(userId)'").first?.signUpDate else {
+                return
+            }
+            
+            startDate = startTime.toString(format: "yyyy-MM-dd HH:mm:ss")
+            
+        }
+        
+        self.parseStepDate(startDate, endDate: endDate)
+        
+        
+    }
     
     // MARK: 解析数据 保存数据库
-    
     /**
      解析 计步睡眠数据 并保存Realm 每次请求前前先删除最后一条数据 在获取时间同步
      */
     func parseChartListData() {
         
-
         // MARK: 睡眠相关
         SleepWebApi.shareApi.fetchSleepWebData()
         
@@ -254,7 +304,7 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         var startDate = ""
         let endDate = NSDate().toString(format: "yyyy-MM-dd HH:mm:ss")
         
-        if isNeedUpdateStepData() {
+        if self.isNeedUpdateStepData() {
             
             let personalList = realm.objects(NChartStepDataRealm).filter("userId = '\(userId)'")
             
@@ -262,9 +312,8 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
                 
                 startDate = personalList.last!.date.toString(format: "yyyy-MM-dd HH:mm:ss")
                 
-                 //删除数据库最后一条数据 重新开始添加
-                delecNSteptDate(personalList.last!)
-                
+                //删除数据库最后一条数据 重新开始添加
+                self.delecNSteptDate(personalList.last!)
                 
             } else {
                 
@@ -277,10 +326,10 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
                 
             }
             
-           
-            parseStepDate(startDate, endDate: endDate)
+            self.parseStepDate(startDate, endDate: endDate)
             
         }
+
     }
     
       /**
@@ -410,10 +459,10 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
      */
     func showStepDetailView(){
         
-        let stepVM = ChartViewModel(title: L10n.ContactsShowInfoStep.string, chartStyle: .StepChart)
-        let chartVC = ChartsViewController()
-        chartVC.configChartsView(stepVM)
-        self.pushVC(chartVC)
+//        let stepVM = ChartViewModel(title: L10n.ContactsShowInfoStep.string, chartStyle: .StepChart)
+//        let chartVC = ChartsViewController()
+//        chartVC.configChartsView(stepVM)
+//        self.pushVC(chartVC)
         
     }
     
@@ -422,10 +471,10 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
      */
     func showSleepDetailView(){
         
-        let sleepVM = ChartViewModel(title: L10n.ContactsShowInfoSleep.string, chartStyle: .SleepChart)
-        let chartVC = ChartsViewController()
-        chartVC.configChartsView(sleepVM)
-        self.pushVC(chartVC)
+//        let sleepVM = ChartViewModel(title: L10n.ContactsShowInfoSleep.string, chartStyle: .SleepChart)
+//        let chartVC = ChartsViewController()
+//        chartVC.configChartsView(sleepVM)
+//        self.pushVC(chartVC)
         
     }
     

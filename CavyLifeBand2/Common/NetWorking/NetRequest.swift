@@ -101,7 +101,7 @@ extension NetRequest {
         
         requestByAlamofire(.POST, urlString: urlString, parameters: para) { (result) in
             
-            self.requestHanlder(result, url:urlString, successHandler: successHandler, failureHandler: failureHandler)
+            self.requestHanlder(result, url: urlString, successHandler: successHandler, failureHandler: failureHandler)
             
         }
         
@@ -162,6 +162,9 @@ extension NetRequest {
         
         //清空登录信息
         UIImage.deleteCacheImageWithName()
+        
+        LogoutCleanObj.shareInstance.deleteUserDBData()
+     
         CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = ""
         CavyDefine.loginUserBaseInfo.loginUserInfo.loginUsername = ""
         CavyDefine.loginUserBaseInfo.loginUserInfo.loginAuthToken = ""

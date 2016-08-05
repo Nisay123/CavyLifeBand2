@@ -29,11 +29,32 @@ extension RootViewController: ChartsRealmProtocol {
             
         }
         
+        if let realmUserInfo: UserInfoModel = queryUserInfo(userId) {
+            if (syncDate - realmUserInfo.signUpDate).totalSeconds < 0 {
+                syncDate = realmUserInfo.signUpDate.gregorian.beginningOfDay.date
+            }
+        }
+        
+        Log.info("开始刷新")
+        
         LifeBandSyncData.shareInterface.syncDataFormBand(syncDate) {
             
             $0.success { titlsAndSteps in
+          
+                if let refreshDate = NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.refreshSleepRingDateKey) as? NSDate {
                 
+                } else {
+                    
+                    NSUserDefaults.standardUserDefaults().setObject(NSDate().gregorian.beginningOfDay.date, forKey: CavyDefine.refreshSleepRingDateKey)
                 
+                }
+            
+                
+                NSUserDefaults.standardUserDefaults().setObject(NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.refreshSleepRingDateKey), forKey: CavyDefine.lastSyncDataDateKey)
+                
+                NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: CavyDefine.refreshSleepRingDateKey)
+                
+                Log.info("同步到手环数据")
                 let steps = titlsAndSteps.map { return ($0.date, $0.steps) }
                 let sleeps = titlsAndSteps.map { return ($0.date, $0.tilts) }
                 
@@ -42,7 +63,7 @@ extension RootViewController: ChartsRealmProtocol {
                 self.saveStepsToRealm(steps)
                 
                 let uploadData = self.queryUploadBandData()
-                
+                Log.info("获取上报数据")
                 guard uploadData.0.count > 0 else {
                     // 不需要同步也要让下拉消失
                     NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
@@ -53,9 +74,15 @@ extension RootViewController: ChartsRealmProtocol {
                     [unowned self] data in
                     self.setChartBandDataSynced(uploadData.1, endDate: uploadData.2)
                     
+                    let userInfo = ["begin": uploadData.1] as [NSObject: AnyObject]
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.UploadDataSuccess.rawValue, object: nil, userInfo: userInfo)
+                    
+                    Log.info("上报数据成功")
                 }) {
                     // 发送通知让主页停止同步数据下拉消失
                     NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
+                    Log.info("上报数据失败")
                 }
             
             }.failure { error in
@@ -146,19 +173,19 @@ extension RootViewController: ChartsRealmProtocol {
      - author: sim cai
      - date: 2016-05-31
      */
-    func startSyncDataTime() {
-        
-        // 连接成功后会同步信息，所以这里在10分钟后再启动
-        
-        NSTimer.runThisAfterDelay(seconds: 60 * 10) {
-            self.syncDataTime = NSTimer.runThisEvery(seconds: 60 * 10) { _ in
-//                self.syncDataFormBand()
-                NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.BeginRefresh.rawValue, object: nil)
-
-            }
-        }
-        
-    }
+//    func startSyncDataTime() {
+//        
+//        // 连接成功后会同步信息，所以这里在10分钟后再启动
+//        
+//        NSTimer.runThisAfterDelay(seconds: 60 * 10) {
+//            self.syncDataTime = NSTimer.runThisEvery(seconds: 60 * 10) { _ in
+////                self.syncDataFormBand()
+//                NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.BeginRefresh.rawValue, object: nil)
+//
+//            }
+//        }
+//        
+//    }
     
     /**
      蓝牙状态改变

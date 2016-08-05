@@ -25,10 +25,39 @@ class SleepWebApi: NetRequest, SleepWebRealmOperate, UserInfoRealmOperateDelegat
         
         netGetRequest(WebApiMethod.Sleep.description, para: parameters, modelObject: NChartSleepMsg.self, successHandler: { [unowned self] (data) in
             
-            
             // 把数据库最后一条数据删除，以防止原本的最后一条数据不是最新的
             self.deleteSleepWebRealm(startDate: NSDate(fromString: dateTuple.0, format: "yyyy-MM-dd")!,
                                        endDate: NSDate(fromString: dateTuple.0, format: "yyyy-MM-dd")!)
+            
+            // 把数据存到数据库
+            data.data?.sleepData.forEach {
+                self.addSleepWebRealm(SleepWebRealm(jsonModel: $0))
+            }
+            
+        }) { (msg) in
+            
+            Log.error(msg)
+            
+        }
+        
+    }
+    
+    func fetchSleepWebDataAfterUpload(beginDate: NSDate) {
+        
+        guard let dateTuple = calculateFetchDate() else { return }
+        
+        let dbDate = NSDate(fromString: dateTuple.0, format: "yyyy-MM-dd")!
+        
+        let fetchDate = dbDate.earlierDate(beginDate).toString(format: "yyyy-MM-dd")
+        
+        let parameters: [String: AnyObject] = [NetRequestKey.StartDate.rawValue: fetchDate,
+                                               NetRequestKey.EndDate.rawValue: dateTuple.1]
+        
+        netGetRequest(WebApiMethod.Sleep.description, para: parameters, modelObject: NChartSleepMsg.self, successHandler: { [unowned self] (data) in
+            
+            // 把数据库最后一条数据删除，以防止原本的最后一条数据不是最新的
+            self.deleteSleepWebRealm(startDate: NSDate(fromString: fetchDate, format: "yyyy-MM-dd")!,
+                endDate: NSDate(fromString: dateTuple.0, format: "yyyy-MM-dd")!)
             
             // 把数据存到数据库
             data.data?.sleepData.forEach {
