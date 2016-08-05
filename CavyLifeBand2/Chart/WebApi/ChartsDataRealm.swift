@@ -566,14 +566,20 @@ extension ChartsRealmProtocol {
         let sleepDatas = transformSleepData(startTime, endTime: finishTime)
         let stepDatas = transformStepData(startTime, endTime: finishTime)
         
+        let range = 2
     
-        if stepDatas.isEmpty || sleepDatas.isEmpty {
+        if stepDatas.count < (2*range + 1) || sleepDatas.count < (2*range + 1) {
             return (0, 0)
         }
         
-        var  zeroCoun = 0  //计算睡眠条件之外的连续的超过9个0 的计数count
+        var zeroCoun = 0  //计算睡眠条件之外的连续的超过9个0 的计数count
         
-        for timeIndex in 0..<sleepDatas.count {
+        /// 记录连续0的数组
+        var noSleepZerpArr = [Int]()
+        /// 记录睡眠时长里为0的数组
+        var sleeoZeroArr = [Int]()
+        
+        for timeIndex in range..<sleepDatas.count - range {
             
             let stepItem = stepDatas[timeIndex]
             let tiltsItem = sleepDatas[timeIndex]
@@ -582,14 +588,15 @@ extension ChartsRealmProtocol {
                 
                 zeroCoun += 1
                 
-            }else
+            } else {
                 
-            {
-                if zeroCoun >= noSleepTime
+                if zeroCoun >= noSleepTime {
                     
-                {
+                    defaltZeroCoun += zeroCoun
                     
-                  defaltZeroCoun += zeroCoun
+                    for j in (timeIndex-zeroCoun)...timeIndex-1 {
+                        noSleepZerpArr.append(j)
+                    }
                     
                 }
                 
@@ -599,27 +606,25 @@ extension ChartsRealmProtocol {
         }
         
         
-        if zeroCoun >= noSleepTime
-            
-        {
+        if zeroCoun >= noSleepTime {
             
             defaltZeroCoun += zeroCoun
+            
+            for j in (sleepDatas.count-range-zeroCoun)...(sleepDatas.count-range-1) {
+                noSleepZerpArr.append(j)
+            }
             
         }
         
         
         
-        for timeIndex in 0..<sleepDatas.count {
-            
-            
-            // 前后计算范围
-            let range = 2
+        for timeIndex in range..<sleepDatas.count - range {
             
             // 如果timeIndex为前range个数组，则开始所以从0开始
-            let beginIndex = timeIndex <= range ? 0 : timeIndex - range
+            let beginIndex = timeIndex - range
             
             // 如果timeIndex为最后两个元素，则以最末尾作为结束
-            let endIndex   = timeIndex > sleepDatas.count - (range + 1) ? sleepDatas.count - 1 : timeIndex + range
+            let endIndex   = timeIndex + range
             
             let tiltsTotal = sleepDatas[beginIndex...endIndex].reduce(0, combine: +)
             
@@ -646,6 +651,8 @@ extension ChartsRealmProtocol {
                 if stepItem == 0 && tiltsItem == 0 {
                     
                     longSleepCount += 1 //记录深睡
+                    
+                    sleeoZeroArr.append(timeIndex)
    
                 }
 
@@ -655,15 +662,20 @@ extension ChartsRealmProtocol {
         }
         
         
-        guard  minustsCount >= 0 else {
+        guard minustsCount >= 0 else {
             
             return  (0, 0)
         }
         
+        var needCutCount = 0
+        
+        sleeoZeroArr.forEach { (item) in
+            if noSleepZerpArr.contains(item) { needCutCount += 1 }
+        }
         
         Log.info("总共睡眠\(minustsCount)=====深睡个数\(longSleepCount)")
         
-        return (minustsCount - defaltZeroCoun , longSleepCount - defaltZeroCoun)
+        return (minustsCount - needCutCount , longSleepCount - needCutCount)
     }
     
     
