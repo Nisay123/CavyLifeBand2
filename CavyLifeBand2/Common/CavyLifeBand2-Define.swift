@@ -24,7 +24,10 @@ struct CavyDefine {
     static let baiduServerKey = "7mtU3ocqPLj4Posdi42BI1qsIZFGLdUq"
     
     // 睡眠圆环是否刷新的key
-    static let isRefreshSleepRingKey = "isRefreshSleepRing"
+    static let refreshSleepRingDateKey = "refreshSleepRingDate"
+    
+    // 上次同步到手环数据的key
+    static let lastSyncDataDateKey = "lastSyncDataDate"
     
     // 睡眠圆环缓存数据
     static let sleepRingCacheKey = "sleepRingCache"

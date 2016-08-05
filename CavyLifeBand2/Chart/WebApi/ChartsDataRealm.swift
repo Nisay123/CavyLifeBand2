@@ -1125,11 +1125,11 @@ extension ChartsRealmProtocol {
 
         if (nowDate - nowDate.gregorian.beginningOfDay.date).totalMinutes > 360 {
             
-            guard let refreshDate = NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.isRefreshSleepRingKey) as? NSDate else {
+            guard let refreshDate = NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.lastSyncDataDateKey) as? NSDate else {
                 return setSleepRingCache(nowDate)
             }
             
-            guard (refreshDate - nowDate.gregorian.beginningOfDay.date).totalMinutes >= 0 else {
+            guard (refreshDate - nowDate.gregorian.beginningOfDay.date).totalMinutes > 360 else {
                 return setSleepRingCache(nowDate)
             }
             
@@ -1141,12 +1141,12 @@ extension ChartsRealmProtocol {
             
         } else {
             
-            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: CavyDefine.isRefreshSleepRingKey)
+            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: CavyDefine.refreshSleepRingDateKey)
         
             return setSleepRingCache(nowDate)
         
         }
-        
+    
     }
     
     /**
@@ -1157,8 +1157,6 @@ extension ChartsRealmProtocol {
      - returns:
      */
     func setSleepRingCache(nowDate: NSDate) -> (Double, Double, Double) {
-        
-        NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: CavyDefine.isRefreshSleepRingKey)
         
         let newBeginTime = (nowDate.gregorian.beginningOfDay - 3.hour).date
         let newEndTime = (newBeginTime.gregorian + 12.hour).date

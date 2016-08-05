@@ -40,6 +40,19 @@ extension RootViewController: ChartsRealmProtocol {
         LifeBandSyncData.shareInterface.syncDataFormBand(syncDate) {
             
             $0.success { titlsAndSteps in
+          
+                if let refreshDate = NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.refreshSleepRingDateKey) as? NSDate {
+                
+                } else {
+                    
+                    NSUserDefaults.standardUserDefaults().setObject(NSDate().gregorian.beginningOfDay.date, forKey: CavyDefine.refreshSleepRingDateKey)
+                
+                }
+            
+                
+                NSUserDefaults.standardUserDefaults().setObject(NSUserDefaults.standardUserDefaults().objectForKey(CavyDefine.refreshSleepRingDateKey), forKey: CavyDefine.lastSyncDataDateKey)
+                
+                NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: CavyDefine.refreshSleepRingDateKey)
                 
                 Log.info("同步到手环数据")
                 let steps = titlsAndSteps.map { return ($0.date, $0.steps) }
