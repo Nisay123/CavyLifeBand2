@@ -254,8 +254,7 @@ extension SafetySettingViewController: SCAddressBookPickerDelegate {
     
     func contactPicker(didSelectContact contact: SCAddressBookContact) {
         
-        let
-        newContact = contact
+        let newContact = contact
         
         Log.info(newContact.phoneList)
         addEmergency(newContact)
