@@ -164,6 +164,9 @@ extension NetRequest {
         UIImage.deleteCacheImageWithName()
         
         LogoutCleanObj.shareInstance.deleteUserDBData()
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.lastSyncDataDateKey)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.sleepRingCacheKey)
      
         CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = ""
         CavyDefine.loginUserBaseInfo.loginUserInfo.loginUsername = ""

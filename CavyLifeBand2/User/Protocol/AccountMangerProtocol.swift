@@ -115,7 +115,7 @@ protocol SendSafetyCodeDelegate {
     /**
      ## 邮箱注册验证码
      */
-    func sendSignUpEmailCode(failBack: (CommenResponse -> Void)?)
+    func sendSignUpEmailCode(successBack: (Void -> Void)?, failBack: (CommenResponse -> Void)?)
     
     /**
      ## 手机号注册验证码
@@ -149,7 +149,7 @@ extension SendSafetyCodeDelegate where Self: UIViewController {
         else { return true }
     }
     
-    func sendSignUpEmailCode(failBack: (CommenResponse -> Void)? = nil) {
+    func sendSignUpEmailCode(successBack: (Void -> Void)? = nil, failBack: (CommenResponse -> Void)? = nil) {
         
         loadingView.startAnimating()
         
@@ -164,6 +164,8 @@ extension SendSafetyCodeDelegate where Self: UIViewController {
             self.sendSafetyCodeBtn.enabled = true
             
             self.sendSafetyCodeBtn.countDown()
+            
+            successBack?()
             
         }) { (msg) in
             

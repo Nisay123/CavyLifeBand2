@@ -246,6 +246,7 @@
 "AccountInfo.ChangeNickname.Placeholder" = "输入昵称";
 "AccountInfo.ChangeAddress.Placeholder"  = "输入地址";
 "AccountInfo.AchieveView.NumPrefix"      = "您已累计行走";
+"AccountInfo.EditNickName"               = "编辑昵称";
 
 //闹钟
 "AlarmClock.IntelligentClockTableFooter.Info" = "手环振动提醒 远离传统闹铃噪声";
@@ -397,6 +398,7 @@
 "Alert.Camera.OpenCamera" = "请在iPhone的“设置-隐私-相机”选项中，允许豚鼠生活访问你的相机";
 "Alert.Camera.OpenMicrophone" = "请在iPhone的“设置-隐私-麦克风”选项中，允许豚鼠生活访问你的麦克风";
 "Alert.Camera.Open.All" = "请在iPhone的“设置-隐私”选项中，允许豚鼠生活访问你的相机和麦克风";
+"Alert.SignUpSendEmailCode.Title" = "验证码已发送到你的邮箱，请注意查收";
 
 // 分享
 "Share.Title" = "能玩体感游戏的智能手环";

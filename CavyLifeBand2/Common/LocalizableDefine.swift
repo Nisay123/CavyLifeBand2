@@ -421,6 +421,8 @@ enum L10n {
   case AccountInfoChangeAddressPlaceholder
   /// 您已累计行走
   case AccountInfoAchieveViewNumPrefix
+  /// 编辑昵称
+  case AccountInfoEditNickName
   /// 手环振动提醒 远离传统闹铃噪声
   case AlarmClockIntelligentClockTableFooterInfo
   /// 手环闹钟
@@ -683,6 +685,8 @@ enum L10n {
   case AlertCameraOpenMicrophone
   /// 请在iPhone的“设置-隐私”选项中，允许豚鼠生活访问你的相机和麦克风
   case AlertCameraOpenAll
+  /// 验证码已发送到你的邮箱，请注意查收
+  case AlertSignUpSendEmailCodeTitle
   /// 能玩体感游戏的智能手环
   case ShareTitle
   /// 来自豚鼠科技
@@ -1112,6 +1116,8 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("AccountInfo.ChangeAddress.Placeholder")
       case .AccountInfoAchieveViewNumPrefix:
         return L10n.tr("AccountInfo.AchieveView.NumPrefix")
+      case .AccountInfoEditNickName:
+        return L10n.tr("AccountInfo.EditNickName")
       case .AlarmClockIntelligentClockTableFooterInfo:
         return L10n.tr("AlarmClock.IntelligentClockTableFooter.Info")
       case .AlarmClockTitle:
@@ -1374,6 +1380,8 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Alert.Camera.OpenMicrophone")
       case .AlertCameraOpenAll:
         return L10n.tr("Alert.Camera.Open.All")
+      case .AlertSignUpSendEmailCodeTitle:
+        return L10n.tr("Alert.SignUpSendEmailCode.Title")
       case .ShareTitle:
         return L10n.tr("Share.Title")
       case .ShareContent:
