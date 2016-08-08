@@ -67,10 +67,10 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(requestAlert, animated: true, completion: nil)
         
         // 获取手环版本信息
-        LifeBandCtrl.shareInterface.getLifeBandInfo { bandInfo in
-            
-            let fwVersion = bandInfo.fwVersion
-            let hwVersion = bandInfo.hwVersion
+//        LifeBandCtrl.shareInterface.getLifeBandInfo { bandInfo in
+        
+            let fwVersion = BindBandCtrl.fwVersion
+            let hwVersion = BindBandCtrl.hwVersion
             
             let localVersion = "\(hwVersion)" + "." + "\(fwVersion)"
             
@@ -137,7 +137,7 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
                 
             }
             
-        }
+//        }
   
     }
     

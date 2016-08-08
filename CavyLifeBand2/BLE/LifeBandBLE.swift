@@ -25,7 +25,7 @@ struct BindBandCtrl {
     static var bandMacAddress: NSData = NSData()
     static var bindScene: BindScene   = .SignUpBind
     static var fwVersion: Int         = 0
-    
+    static var hwVersion: Int         = 0
 }
 
 protocol LifeBandBleDelegate {
@@ -412,6 +412,7 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
                 }
                 
                 BindBandCtrl.fwVersion = $0.fwVersion
+                BindBandCtrl.hwVersion = $0.hwVersion
                 
             }
             

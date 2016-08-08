@@ -56,7 +56,7 @@ class RightViewController: UIViewController {
         LifeBandCtrl.shareInterface.getBandElectric { [unowned self] electric in
             
             self.bandElectricView.setElectric(CGFloat(electric), isConnect: true)
-            self.fwVersion.text = L10n.BandFWVersion.string + "\(BindBandCtrl.fwVersion)"
+            self.fwVersion.text = L10n.BandFWVersion.string + "\(BindBandCtrl.hwVersion)" + "." + "\(BindBandCtrl.fwVersion)"
             
         }
         
@@ -104,7 +104,7 @@ class RightViewController: UIViewController {
         } else {
             
             bandTitle.text = L10n.BandTitle.string
-            fwVersion.text = L10n.BandFWVersion.string + "\(BindBandCtrl.fwVersion)"
+            fwVersion.text = L10n.BandFWVersion.string + "\(BindBandCtrl.hwVersion)" + "." + "\(BindBandCtrl.fwVersion)"
             bandName.text  = LifeBandBle.shareInterface.getPeripheralName()
             getBandElectric()
             
