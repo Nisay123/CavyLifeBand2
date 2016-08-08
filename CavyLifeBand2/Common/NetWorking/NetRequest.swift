@@ -166,6 +166,7 @@ extension NetRequest {
         LogoutCleanObj.shareInstance.deleteUserDBData()
         
         NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.lastSyncDataDateKey)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.refreshSleepRingDateKey)
         NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.sleepRingCacheKey)
      
         CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = ""

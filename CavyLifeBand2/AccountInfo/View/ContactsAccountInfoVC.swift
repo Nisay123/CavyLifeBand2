@@ -232,6 +232,7 @@ class ContactsAccountInfoVC: UIViewController, BaseViewControllerPresenter, User
                 CavyDefine.loginUserBaseInfo.loginUserInfo.loginAuthToken = ""
                 
                 NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.lastSyncDataDateKey)
+                NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.refreshSleepRingDateKey)
                 NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.sleepRingCacheKey)
                 
                 UIApplication.sharedApplication().keyWindow?.setRootViewController(StoryboardScene.Main.instantiateMainPageView(), transition: CATransition())
