@@ -103,7 +103,7 @@ extension SCAddressBookPicker: ABPeoplePickerNavigationControllerDelegate {
         
         var returnNumArr: [String] = []
         
-        let phoneNums: ABMultiValueRef 
+        let phoneNums: ABMultiValueRef
         
         guard let phoneNumsUnmanaged = ABRecordCopyValue(person, kABPersonPhoneProperty) else {
             
