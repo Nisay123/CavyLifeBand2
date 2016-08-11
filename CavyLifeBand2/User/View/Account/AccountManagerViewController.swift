@@ -344,6 +344,13 @@ class AccountManagerViewController: UIViewController, BaseViewControllerPresente
             return
         }
         
+        if passwd.characters.count < 6 {
+        
+            CavyLifeBandAlertView.sharedIntance.showViewTitle(self, message: L10n.UserModuleErrorCodePasswdError.string)
+            return
+            
+        }
+        
         if dataSource?.isSignUp == true {
             loadingView.startAnimating()
             signUp((dataSource?.isEmail)!, successBack: { [unowned self] in
