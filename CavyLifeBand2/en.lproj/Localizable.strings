@@ -24,7 +24,7 @@
 "UserModuleErrorCode.NetAPIError"     = "服务器返回错误";
 "UserModuleErrorCode.PhoneError"      = "手机号码错误";
 "UserModuleErrorCode.EmailError"      = "邮箱格式错误";
-"UserModuleErrorCode.PasswdError"     = "密码6位数或密码大于16位数";
+"UserModuleErrorCode.PasswdError"     = "密码长度应不少于6位";
 "UserModuleErrorCode.SecurityError"   = "验证码错误";
 "UserModuleErrorCode.UserNameError"   = "用户名格式错误";
 "UserModuleErrorCode.PhoneNil"        = "手机号码不能为空";
@@ -62,7 +62,7 @@
 "SignUp.EmailTextField"      = "邮箱";
 "SignUp.SafetyCodeTextField" = "验证码";
 "SignUp.SendSafetyCode"      = "发送验证码";
-"SignUp.ProcotolViewTitle"   = "我们已经阅读并接受";
+"SignUp.ProcotolViewTitle"   = "我已经阅读并接受";
 "SignUp.ProcotolViewBtn"     = "《豚鼠科技服务协议》";
 "SignUp.SignUpBtn"           = "注册";
 "SignUp.ReadProcotol"        = "请先阅读《豚鼠科技服务协议》";
@@ -81,7 +81,7 @@
 "Guide.Step"                  = "步";
 "Guide.Average"               = "平均";
 "Guide.Recommend"             = "推荐";
-"Guide.Introduce"             = "可以更好的帮助健康统计哦！";
+"Guide.Introduce"             = "准确填写，健康监测更精确！";
 "Guide.Minute"                = "分钟";
 "Guide.Hour"                  = "小时";
 
@@ -92,17 +92,17 @@
 "Guide.OpenLocationShare"     = "开启位置共享";
 "Guide.OpenLocationShareInfo" = "告诉豚鼠你的位置，更有安全服务！";
 
-"Guide.LinkCavy"              = "连接手环";
-"Guide.OpenBluetooth"         = "打开蓝牙";
+"Guide.LinkCavy"              = "绑定手环";
+"Guide.OpenBluetooth"         = "请打开蓝牙";
 "Guide.OpenBluetoothInfo"     = "手机蓝牙打开后才能成功连接手环";
-"Guide.OpenCavy"              = "绑定手环";
-"Guide.OpenCavySugg"          = "没有灯充电试试看";
-"Guide.OpenCavyInfo"          = "请按下手环按钮，绑定手环";
+"Guide.OpenCavy"              = "连接手环";
+"Guide.OpenCavySugg"          = "没有灯? 充电试试看";
+"Guide.OpenCavyInfo"          = "按下手环按钮，连接手环";
 "Guide.Linking"               = "正在连接...";
 "Guide.PairSuccess"           = "绑定成功";
 "Guide.PairSuccessInfo"       = "开始健康之旅吧";
 "Guide.PairFail"              = "绑定失败";
-"Guide.PairFailInfo"          = "确保手环有电，并且位于手机的连接范围";
+"Guide.PairFailInfo"          = "确保手环有电，并且位于手机的连接范围内";
 
 "Guide.PhoneRemind.Title"   = "来电提醒";
 "Guide.PhoneRemind.Info"    = "来电振动提醒，不漏接一个重要来电";
@@ -366,16 +366,16 @@
 
 // 固件升级
 "UpdateProgress.Info"                         = "请勿退出应用或关闭手环";
-"UpdateProgress.title"                        = "手环正在升级";
+"UpdateProgress.title"                        = "手环固件正在升级";
 "UpdateFirmware.BandDisconnect.AlertMsg"      = "请先连接手环";
-"UpdateFirmware.IsNewVersion.AlertMsg"        = "固件版本已最新版本";
+"UpdateFirmware.IsNewVersion.AlertMsg"        = "固件已是最新版本";
 "UpdateFirmware.InstallNewVersion.AlertTitle" = "安装新的固件版本";
-"UpdateFirmware.DownloadError" = "error";
-"UpdateFirmware.LowElectric.AlertTitle" = "手环电量过低";
-"UpdateFirmware.LowEle.AlertMsg" = "手环电量过低，固件升级至少需要20%%电量，请充电后再试";
-"UpdateFirmware.UpdateFail.AlertMsg" = "固件升级失败";
-"UpdateFirmware.UpdateSuccess.AlertMsg" = "请稍等，豚鼠手环将在重启后自动连接";
-"UpdateFirmware.CheckVersion.AlertMsg" = "正在检测固件版本";
+"UpdateFirmware.DownloadError"                = "error";
+"UpdateFirmware.LowElectric.AlertTitle"       = "手环电量过低";
+"UpdateFirmware.LowEle.AlertMsg"              = "手环电量过低，固件升级至少需要20%%电量，请充电后再试";
+"UpdateFirmware.UpdateFail.AlertMsg"          = "固件升级失败";
+"UpdateFirmware.UpdateSuccess.AlertMsg"       = "请稍等，豚鼠手环将在重启后自动连接";
+"UpdateFirmware.CheckVersion.AlertMsg"        = "正在检测固件版本";
 
 // 主页同步数据
 "Home.Refresh.Idle"       = "下拉同步数据...";
@@ -384,22 +384,20 @@
 "Home.Refresh.AlertTitle" = "同步数据失败";
 "Home.Refresh.faildDes"   = "                1.确认蓝牙已打开\n                2.确认手环处于连接状态\n                3.下拉重新同步数据";
 
-
-
 // 弹窗相关
-"Alert.SureAction.Title"     = "确定";
-"Alert.CancelAction.Title"   = "取消";
-"Alert.UpdateAction.Title"   = "升级";
-"Alert.UndoPKWaitRecord.Msg" = "确认撤销此次PK？";
-"Alert.ReBindBand.Msg"       = "确认绑定新的手环？";
-"Alert.tips.Msg"             = "提示";
-"Alert.relogin.Title"        = "登录已失效，请重新登录";
-"Alert.ReUpdateAction.Title" = "重新升级";
+"Alert.SureAction.Title"             = "确定";
+"Alert.CancelAction.Title"           = "取消";
+"Alert.UpdateAction.Title"           = "升级";
+"Alert.UndoPKWaitRecord.Msg"         = "确认撤销此次PK？";
+"Alert.ReBindBand.Msg"               = "是否确定要绑定新的手环？该操作将会解除与当前豚鼠手环的绑定。";
+"Alert.tips.Msg"                     = "提示";
+"Alert.relogin.Title"                = "登录已失效，请重新登录";
+"Alert.ReUpdateAction.Title"         = "重新升级";
 "Alert.ReTryAfterChargeAction.Title" = "充电后再试";
-"Alert.Camera.OpenCamera" = "请在iPhone的“设置-隐私-相机”选项中，允许豚鼠生活访问你的相机";
-"Alert.Camera.OpenMicrophone" = "请在iPhone的“设置-隐私-麦克风”选项中，允许豚鼠生活访问你的麦克风";
-"Alert.Camera.Open.All" = "请在iPhone的“设置-隐私”选项中，允许豚鼠生活访问你的相机和麦克风";
-"Alert.SignUpSendEmailCode.Title" = "验证码已发送到你的邮箱，请注意查收";
+"Alert.Camera.OpenCamera"            = "请在iPhone的“设置-隐私-相机”选项中，允许豚鼠生活访问你的相机";
+"Alert.Camera.OpenMicrophone"        = "请在iPhone的“设置-隐私-麦克风”选项中，允许豚鼠生活访问你的麦克风";
+"Alert.Camera.Open.All"              = "请在iPhone的“设置-隐私”选项中，允许豚鼠生活访问你的相机和麦克风";
+"Alert.SignUpSendEmailCode.Title"    = "验证码已发送到你的邮箱，请注意查收";
 
 // 分享
 "Share.Title" = "能玩体感游戏的智能手环";

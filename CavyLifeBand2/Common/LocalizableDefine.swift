@@ -31,7 +31,7 @@ enum L10n {
   case UserModuleErrorCodePhoneError
   /// 邮箱格式错误
   case UserModuleErrorCodeEmailError
-  /// 密码6位数或密码大于16位数
+  /// 密码长度应不少于6位
   case UserModuleErrorCodePasswdError
   /// 验证码错误
   case UserModuleErrorCodeSecurityError
@@ -95,7 +95,7 @@ enum L10n {
   case SignUpSafetyCodeTextField
   /// 发送验证码
   case SignUpSendSafetyCode
-  /// 我们已经阅读并接受
+  /// 我已经阅读并接受
   case SignUpProcotolViewTitle
   /// 《豚鼠科技服务协议》
   case SignUpProcotolViewBtn
@@ -129,7 +129,7 @@ enum L10n {
   case GuideAverage
   /// 推荐
   case GuideRecommend
-  /// 可以更好的帮助健康统计哦！
+  /// 准确填写，健康监测更精确！
   case GuideIntroduce
   /// 分钟
   case GuideMinute
@@ -147,17 +147,17 @@ enum L10n {
   case GuideOpenLocationShare
   /// 告诉豚鼠你的位置，更有安全服务！
   case GuideOpenLocationShareInfo
-  /// 连接手环
+  /// 绑定手环
   case GuideLinkCavy
-  /// 打开蓝牙
+  /// 请打开蓝牙
   case GuideOpenBluetooth
   /// 手机蓝牙打开后才能成功连接手环
   case GuideOpenBluetoothInfo
-  /// 绑定手环
+  /// 连接手环
   case GuideOpenCavy
-  /// 没有灯充电试试看
+  /// 没有灯? 充电试试看
   case GuideOpenCavySugg
-  /// 请按下手环按钮，绑定手环
+  /// 按下手环按钮，连接手环
   case GuideOpenCavyInfo
   /// 正在连接...
   case GuideLinking
@@ -167,7 +167,7 @@ enum L10n {
   case GuidePairSuccessInfo
   /// 绑定失败
   case GuidePairFail
-  /// 确保手环有电，并且位于手机的连接范围
+  /// 确保手环有电，并且位于手机的连接范围内
   case GuidePairFailInfo
   /// 来电提醒
   case GuidePhoneRemindTitle
@@ -631,11 +631,11 @@ enum L10n {
   case AlarmDaySunday
   /// 请勿退出应用或关闭手环
   case UpdateProgressInfo
-  /// 手环正在升级
+  /// 手环固件正在升级
   case UpdateProgressTitle
   /// 请先连接手环
   case UpdateFirmwareBandDisconnectAlertMsg
-  /// 固件版本已最新版本
+  /// 固件已是最新版本
   case UpdateFirmwareIsNewVersionAlertMsg
   /// 安装新的固件版本
   case UpdateFirmwareInstallNewVersionAlertTitle
@@ -669,7 +669,7 @@ enum L10n {
   case AlertUpdateActionTitle
   /// 确认撤销此次PK？
   case AlertUndoPKWaitRecordMsg
-  /// 确认绑定新的手环？
+  /// 是否确定要绑定新的手环？该操作将会解除与当前豚鼠手环的绑定。
   case AlertReBindBandMsg
   /// 提示
   case AlertTipsMsg
