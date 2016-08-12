@@ -65,7 +65,6 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         let requestAlert = UIAlertController(title: "", message: L10n.UpdateFirmwareCheckVersionAlertMsg.string, preferredStyle: .Alert)
         
         UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(requestAlert, animated: true, completion: nil)
-
         
         let fwVersion = BindBandCtrl.fwVersion
         let hwVersion = BindBandCtrl.hwVersion
@@ -125,7 +124,10 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
             versionAlert.addAction(cancelAction)
             versionAlert.addAction(updateAction)
             
-            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionAlert, animated: true, completion: nil)
+            dispatch_async(dispatch_get_main_queue(), {
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionAlert, animated: true, completion: nil)
+            })
+        
 
         }) { (msg) in
             
