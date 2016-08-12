@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
      
-        
         /**
          5适配
          */
@@ -42,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate {
         setRootViewController()
         
         setUserDefaultCoordinate()
+        
+        compareIsNewVersionApp()
         
         EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.AppOpen)
         
@@ -90,9 +91,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate {
         UMAnalyticsConfig.sharedInstance().appKey = UMAPPKey
         MobClick.startWithConfigure(UMAnalyticsConfig.sharedInstance())
       
-        
     }
     
+    func compareIsNewVersionApp() {
+                
+        NetWebApi.shareApi.netGetRequest(WebApiMethod.LiveApp.description, modelObject: AppVersionResponse.self, successHandler: { (response) in
+            
+            if (ez.appVersion ?? "0").compareIsNewVersionStr(response.version) == false {
+                
+                let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Cancel) { (action) in }
+                
+                let updateAction = UIAlertAction(title: L10n.AlertUpdateActionTitle.string, style: .Default) { (action) in
+                    
+                    UIApplication.sharedApplication().openURL(NSURL(string: CavyDefine.cavyAppStoreAddr)!)
+                    
+                }
+                
+                let versionAlert = UIAlertController(title: L10n.AlertAppUpdateTitle.string, message: response.description, preferredStyle: .Alert)
+                
+                versionAlert.addAction(cancelAction)
+                versionAlert.addAction(updateAction)
+                
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionAlert, animated: true, completion: nil)
+            
+            }
+            
+        }) { (error) in
+            Log.error(error.msg)
+        }
+    }
     
     /**
      5,5c,5s适配

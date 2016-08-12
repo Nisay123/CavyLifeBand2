@@ -693,6 +693,8 @@ enum L10n {
   case AlertLocationTitle
   /// 请点击“设置”前往开启定位服务
   case AlertLocationMsg
+  /// 发现新版本
+  case AlertAppUpdateTitle
   /// 能玩体感游戏的智能手环
   case ShareTitle
   /// 来自豚鼠科技
@@ -1394,6 +1396,8 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Alert.Location.Title")
       case .AlertLocationMsg:
         return L10n.tr("Alert.Location.Msg")
+      case .AlertAppUpdateTitle:
+        return L10n.tr("Alert.AppUpdate.Title")
       case .ShareTitle:
         return L10n.tr("Share.Title")
       case .ShareContent:

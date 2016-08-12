@@ -402,6 +402,7 @@
 "Alert.SetAction.Title"              = "设置";
 "Alert.Location.Title"               = "紧急求救功能无法使用";
 "Alert.Location.Msg"                 = "请点击“设置”前往开启定位服务";
+"Alert.AppUpdate.Title"              = "发现新版本";
 
 // 分享
 "Share.Title" = "能玩体感游戏的智能手环";
