@@ -399,6 +399,9 @@
 "Alert.Camera.OpenMicrophone"        = "请在iPhone的“设置-隐私-麦克风”选项中，允许豚鼠生活访问你的麦克风";
 "Alert.Camera.Open.All"              = "请在iPhone的“设置-隐私”选项中，允许豚鼠生活访问你的相机和麦克风";
 "Alert.SignUpSendEmailCode.Title"    = "验证码已发送到你的邮箱，请注意查收";
+"Alert.SetAction.Title"              = "设置";
+"Alert.Location.Title"               = "紧急求救功能无法使用";
+"Alert.Location.Msg"                 = "请点击“设置”前往开启定位服务";
 
 // 分享
 "Share.Title" = "能玩体感游戏的智能手环";

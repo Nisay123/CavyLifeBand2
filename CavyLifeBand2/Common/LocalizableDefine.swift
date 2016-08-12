@@ -687,6 +687,12 @@ enum L10n {
   case AlertCameraOpenAll
   /// 验证码已发送到你的邮箱，请注意查收
   case AlertSignUpSendEmailCodeTitle
+  /// 设置
+  case AlertSetActionTitle
+  /// 紧急求救功能无法使用
+  case AlertLocationTitle
+  /// 请点击“设置”前往开启定位服务
+  case AlertLocationMsg
   /// 能玩体感游戏的智能手环
   case ShareTitle
   /// 来自豚鼠科技
@@ -1382,6 +1388,12 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Alert.Camera.Open.All")
       case .AlertSignUpSendEmailCodeTitle:
         return L10n.tr("Alert.SignUpSendEmailCode.Title")
+      case .AlertSetActionTitle:
+        return L10n.tr("Alert.SetAction.Title")
+      case .AlertLocationTitle:
+        return L10n.tr("Alert.Location.Title")
+      case .AlertLocationMsg:
+        return L10n.tr("Alert.Location.Msg")
       case .ShareTitle:
         return L10n.tr("Share.Title")
       case .ShareContent:

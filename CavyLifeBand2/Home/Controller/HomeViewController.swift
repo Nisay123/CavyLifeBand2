@@ -247,6 +247,10 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         
         }
         
+        if let safeVC = viewController as? SafetySettingViewController {            
+            safeVC.shouldLoactiaon = true
+        }
+        
         self.navigationController?.pushViewController(viewController, animated: false)
         
     }
