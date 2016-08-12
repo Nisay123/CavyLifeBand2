@@ -400,6 +400,7 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(BandBleNotificationName.BandConnectNotification.rawValue, object: nil)
             
             EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.BandConnect)
+            EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.BandConnect)
             
             self.saveMacAddress()
             LifeBandCtrl.shareInterface.setDateToBand(NSDate())
@@ -425,6 +426,7 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName(BandBleNotificationName.BandDesconnectNotification.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
         EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.BandDisconnect)
+        EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.BandDisconnect)
         
     }
     

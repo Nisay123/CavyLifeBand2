@@ -376,6 +376,8 @@ extension SignUpDelegate where Self: UIViewController {
             
             Log.info("[\(CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId)] Sign up success")
             
+            EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.UserSignup)
+            
             callBack?(msg.userId!)
             
             
@@ -419,6 +421,8 @@ extension SignInDelegate where Self: UIViewController {
             CavyDefine.loginUserBaseInfo.loginUserInfo.loginAuthToken = data.authToken
 
             successBack?()
+            
+            EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.UserLogin)
 
         }) { (msg) in
             

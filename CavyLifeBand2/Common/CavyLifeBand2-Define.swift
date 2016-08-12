@@ -788,6 +788,7 @@ enum NetRequestKey: String {
     case AuthKey            = "auth_key"
     case BandMac            = "band_mac"
     case EventType          = "event_type"
+    case UserId             = "userId"
 }
 
 

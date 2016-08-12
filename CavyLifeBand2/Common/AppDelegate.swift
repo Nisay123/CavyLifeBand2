@@ -306,7 +306,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate {
         if LifeBandBle.shareInterface.centraManager?.state == .PoweredOn && LifeBandBle.shareInterface.getConnectState() == .Connected {
             
             EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.BandDisconnect)
-            
+            EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.BandDisconnect)
         }
         
     }
