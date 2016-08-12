@@ -64,7 +64,9 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         
         let requestAlert = UIAlertController(title: "", message: L10n.UpdateFirmwareCheckVersionAlertMsg.string, preferredStyle: .Alert)
         
-        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(requestAlert, animated: true, completion: nil)
+        let rootVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+        
+        rootVC?.presentViewController(requestAlert, animated: true, completion: nil)
         
         let fwVersion = BindBandCtrl.fwVersion
         let hwVersion = BindBandCtrl.hwVersion
@@ -74,7 +76,9 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         // 获取服务器最新固件版本信息
         NetWebApi.shareApi.netGetRequest(WebApiMethod.Firmware.description, modelObject: FirmwareUpdateResponse.self, successHandler: { (data) in
             
-            requestAlert.dismissVC(completion: nil)
+            dispatch_async(dispatch_get_main_queue(), { 
+                requestAlert.dismissVC(completion: nil)
+            })
             
             if localVersion == data.data.version {
                 CavyLifeBandAlertView.sharedIntance.showViewTitle(message: L10n.UpdateFirmwareIsNewVersionAlertMsg.string)
@@ -90,8 +94,6 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
             }
             
             let title = L10n.UpdateFirmwareInstallNewVersionAlertTitle.string + "（\(data.data.version)）"
-            
-            let versionAlert = UIAlertController(title: title, message: data.data.description, preferredStyle: .Alert)
             
             let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Cancel) { (action) in }
             
@@ -121,13 +123,13 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
                 
             }
             
+            let versionAlert = UIAlertController(title: title, message: data.data.description, preferredStyle: .Alert)
             versionAlert.addAction(cancelAction)
             versionAlert.addAction(updateAction)
             
-            dispatch_async(dispatch_get_main_queue(), {
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionAlert, animated: true, completion: nil)
+            NSTimer.runThisAfterDelay(seconds: 0.5, queue: dispatch_get_main_queue(), after: {
+                rootVC?.presentViewController(versionAlert, animated: true, completion: nil)
             })
-        
 
         }) { (msg) in
             
