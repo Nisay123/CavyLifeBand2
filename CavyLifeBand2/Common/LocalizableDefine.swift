@@ -273,9 +273,9 @@ enum L10n {
   case BandFWVersion
   /// 手环未连接
   case BandDisconnectTitle
-  /// 开启蓝牙，按下手环
+  /// 按下手环按钮自动连接
   case BandDisconnectFWVersionTitle
-  /// 按钮自动连接
+  /// 开启蓝牙，
   case BandDisconnectBandNameTitle
   /// 睡眠
   case ChartSleep
