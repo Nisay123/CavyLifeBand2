@@ -766,7 +766,7 @@ extension ChartsRealmProtocol {
         
         let sleepInfo = validSleep(beginTime, endTime: endTime)
         
-        let deepSleep = Double(sleepInfo.1) * 0.9
+        let deepSleep = Double(sleepInfo.1) * 0.8
         
         let lightSleep = Double(sleepInfo.0) - deepSleep
         

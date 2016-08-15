@@ -97,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate {
                 
         NetWebApi.shareApi.netGetRequest(WebApiMethod.LiveApp.description, modelObject: AppVersionResponse.self, successHandler: { (response) in
             
-            if (ez.appVersion ?? "0").compareIsNewVersionStr(response.version) == false {
+            if (ez.appVersion ?? "99.99").compareIsNewVersionStr(response.version) == false {
                 
                 let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Cancel) { (action) in }
                 
