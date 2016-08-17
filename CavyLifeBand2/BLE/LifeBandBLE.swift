@@ -403,8 +403,11 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
             EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.BandConnect)
             
             self.saveMacAddress()
+            
             LifeBandCtrl.shareInterface.setDateToBand(NSDate())
+            
             let lifeBandModel = LifeBandModelType.LLA.rawValue | LifeBandModelType.Step.rawValue | LifeBandModelType.Tilt.rawValue | LifeBandModelType.Alarm.rawValue | LifeBandModelType.Alert.rawValue
+            
             LifeBandCtrl.shareInterface.getLifeBandInfo {
                 
                 // 如果不等于生活手环模式，则重新设置生活手环模式
@@ -414,6 +417,8 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
                 
                 BindBandCtrl.fwVersion = $0.fwVersion
                 BindBandCtrl.hwVersion = $0.hwVersion
+                                
+                NSNotificationCenter.defaultCenter().postNotificationName( NotificationName.UpdateRightTopView.rawValue, object: nil)
                 
             }
             
@@ -427,6 +432,9 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
         EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.BandDisconnect)
         EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.BandDisconnect)
+        
+        BindBandCtrl.fwVersion = 0
+        BindBandCtrl.hwVersion = 0
         
     }
     

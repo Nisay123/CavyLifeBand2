@@ -45,6 +45,7 @@ class RightViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RightViewController.checkBandLining), name: BandBleNotificationName.BandConnectNotification.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RightViewController.checkBandLining), name: BandBleNotificationName.BandDesconnectNotification.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RightViewController.updateRightTop), name: NotificationName.UpdateRightTopView.rawValue, object: nil)
         
         
     }
@@ -62,11 +63,22 @@ class RightViewController: UIViewController {
         
     }
     
+    func updateRightTop() {
+        
+        LifeBandCtrl.shareInterface.getBandElectric { [unowned self] electric in
+            
+            self.bandElectricView.setElectric(CGFloat(electric), isConnect: true)
+            self.fwVersion.text = L10n.BandFWVersion.string + "\(BindBandCtrl.hwVersion)" + "." + "\(BindBandCtrl.fwVersion)"
+            
+        }
+        
+    }
+    
     deinit {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: BandBleNotificationName.BandConnectNotification.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: BandBleNotificationName.BandDesconnectNotification.rawValue, object: nil)
-        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationName.UpdateRightTopView.rawValue, object: nil)
     }
     
     func setTopViewLabel() {
@@ -106,7 +118,7 @@ class RightViewController: UIViewController {
             bandTitle.text = L10n.BandTitle.string
             fwVersion.text = L10n.BandFWVersion.string + "\(BindBandCtrl.hwVersion)" + "." + "\(BindBandCtrl.fwVersion)"
             bandName.text  = LifeBandBle.shareInterface.getPeripheralName()
-            getBandElectric()
+//            getBandElectric()
             
             isConnect  = true
             clearMenuMenuGroupData()

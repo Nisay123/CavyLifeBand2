@@ -392,6 +392,7 @@ enum NotificationName: String {
     case HomeRefreshDate                    // 进入前台刷新日期
     
     case UploadDataSuccess
+    case UpdateRightTopView               // 更新右侧侧栏顶部视图的更新
     
 }
 
