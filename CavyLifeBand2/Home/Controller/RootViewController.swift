@@ -241,6 +241,7 @@ class RootViewController: UIViewController, CoordinateReport, PKWebRequestProtoc
                 self.updateUserInfo(userInfoModel)
             } else {
                 self.addUserInfo(userInfoModel)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.FirstTimeFetchData.rawValue, object: nil, userInfo: nil)
             }
             
         }

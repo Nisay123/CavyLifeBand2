@@ -86,10 +86,11 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         addNotificationObserver(NotificationName.HomeShowAchieveView.rawValue, selector: #selector(HomeViewController.showAchieveDetailView))
         addNotificationObserver(NotificationName.HomeShowHealthyView.rawValue, selector: #selector(HomeViewController.showHealthyDetailView))
         addNotificationObserver(NotificationName.UploadDataSuccess.rawValue, selector: #selector(HomeViewController.fetchDataAfterUpload(_:)))
+        addNotificationObserver(NotificationName.FirstTimeFetchData.rawValue, selector: #selector(HomeViewController.parseChartListData))
         
         addNotificationObserver(BandBleNotificationName.BandDesconnectNotification.rawValue, selector: #selector(HomeViewController.bandDesconnect))
         addNotificationObserver(BandBleNotificationName.BandConnectNotification.rawValue, selector: #selector(HomeViewController.bandConnect))
-       
+        
         // 刷新
         addRefershHeader()
         addNotificationObserver(RefreshStyle.BeginRefresh.rawValue, selector: #selector(beginBandRefersh))
