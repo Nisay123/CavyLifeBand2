@@ -387,7 +387,7 @@ struct UserChangeAddressVM: ContactsReqFriendPortocols, SetUserInfoRequestsDeleg
     
     var restrictedInput: Bool  = false
     
-    var navTitle: String = L10n.ContactsChangeAddressNavTitle.string
+    var navTitle: String = L10n.ContactsShowInfoCity.string
     
     var textFieldTitle: String {
         didSet {

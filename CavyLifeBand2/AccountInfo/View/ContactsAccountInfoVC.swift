@@ -157,7 +157,7 @@ class ContactsAccountInfoVC: UIViewController, BaseViewControllerPresenter, User
         let heightCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoHeight.string, info: "\(Int(accountInfo.height))cm")
         let weightCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoWeight.string, info: "\(accountInfo.weight)kg")
         let birthCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoBirth.string, info: accountInfo.birthday)
-        let addressCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoAddress.string, info: accountInfo.address)
+        let addressCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoCity.string, info: accountInfo.address)
         
         accountInfos.append(headCellViewModle)
         accountInfos.append(genderCellViewModel)

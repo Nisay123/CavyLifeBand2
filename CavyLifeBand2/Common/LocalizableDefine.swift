@@ -417,7 +417,7 @@ enum L10n {
   case AccountInfoCamera
   /// 输入昵称
   case AccountInfoChangeNicknamePlaceholder
-  /// 输入地址
+  /// 输入城市
   case AccountInfoChangeAddressPlaceholder
   /// 您已累计行走
   case AccountInfoAchieveViewNumPrefix

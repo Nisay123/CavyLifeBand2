@@ -243,7 +243,7 @@
 "AccountInfo.Photo"                      = "从手机相册中选择";
 "AccountInfo.Camera"                     = "拍照";
 "AccountInfo.ChangeNickname.Placeholder" = "输入昵称";
-"AccountInfo.ChangeAddress.Placeholder"  = "输入地址";
+"AccountInfo.ChangeAddress.Placeholder"  = "输入城市";
 "AccountInfo.AchieveView.NumPrefix"      = "您已累计行走";
 "AccountInfo.EditNickName"               = "编辑昵称";
 
