@@ -385,7 +385,7 @@ struct UserChangeAddressVM: ContactsReqFriendPortocols, SetUserInfoRequestsDeleg
     
     var realm: Realm = try! Realm()
     
-    var restrictedInput: Bool  = false
+    var restrictedInput: Bool  = true
     
     var navTitle: String = L10n.ContactsShowInfoCity.string
     
