@@ -5,6 +5,6 @@
   Created by xuemincai on 16/1/5.
   Copyright © 2016年 xuemincai. All rights reserved.
 */
-"CFBundleDisplayName" = "CavyBand 2";
-"CFBundleName" = "CavyBand 2";
+"CFBundleDisplayName" = "CavyLife";
+"CFBundleName" = "CavyLife";
 "NSLocationWhenInUseUsageDescription" = " Open the positioning function -> \"Settings\"-> \"Privacy\" -> \"Location services\" set to open the service";
