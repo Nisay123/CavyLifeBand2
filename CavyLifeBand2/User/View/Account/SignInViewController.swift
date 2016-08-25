@@ -282,7 +282,6 @@ class SignInViewController: UIViewController, SignInDelegate, BaseViewController
         
         signIn({ [unowned self] in
             self.loadingView.stopAnimating()
-
             
             // 登录绑定场景
             BindBandCtrl.bindScene = .SignInBind
@@ -332,7 +331,7 @@ class SignInViewController: UIViewController, SignInDelegate, BaseViewController
             }
 
         }) { [unowned self] in
-                self.loadingView.stopAnimating()
+            self.loadingView.stopAnimating()
         }
         
     }

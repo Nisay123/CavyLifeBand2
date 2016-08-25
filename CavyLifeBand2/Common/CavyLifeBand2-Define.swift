@@ -46,6 +46,8 @@ struct CavyDefine {
     //APP推荐地址
     static let relateAppWebApiAddr = officialSiteAddr + "/appIndex/index"
     
+    static let cavyAppStoreAddr = "https://itunes.apple.com/cn/app/tun-shu-sheng-huo-bu-zhi-shi/id1132504369?mt=8"
+    
     // 1/25 宽度间隙
     static let spacingWidth25 = ez.screenWidth / 25
     
@@ -390,6 +392,8 @@ enum NotificationName: String {
     case HomeRefreshDate                    // 进入前台刷新日期
     
     case UploadDataSuccess
+    case FirstTimeFetchData
+    case UpdateRightTopView               // 更新右侧侧栏顶部视图的更新
     
 }
 
@@ -681,7 +685,7 @@ enum UserNetRequestMethod: String {
 // MARK: - Web Api 方法定义
 enum WebApiMethod: CustomStringConvertible {
 
-    case Login, Logout, Dailies, Steps, Sleep, UsersProfile, Firmware, EmergencyContacts, Emergency, SignUpEmailCode, SignUpPhoneCode, ResetPwdPhoneCode, ResetPwdEmailCode, ResetPwdEmail, ResetPwdPhone, SignUpPhone, SignUpEmail, UploadAvatar, Issues, Weather, Location, Helps, RecommendGames, Activities
+    case Login, Logout, Dailies, Steps, Sleep, UsersProfile, Firmware, EmergencyContacts, Emergency, SignUpEmailCode, SignUpPhoneCode, ResetPwdPhoneCode, ResetPwdEmailCode, ResetPwdEmail, ResetPwdPhone, SignUpPhone, SignUpEmail, UploadAvatar, Issues, Weather, Location, Helps, RecommendGames, Activities, LiveApp
 
 
     var description: String {
@@ -735,6 +739,8 @@ enum WebApiMethod: CustomStringConvertible {
             return CavyDefine.webServerAddr + "games/recommend"
         case .Activities:
             return CavyDefine.webServerAddr + "activities"
+        case .LiveApp:
+            return CavyDefine.webServerAddr + "live_app"
         }
         
     }
@@ -788,6 +794,7 @@ enum NetRequestKey: String {
     case AuthKey            = "auth_key"
     case BandMac            = "band_mac"
     case EventType          = "event_type"
+    case UserId             = "userId"
 }
 
 

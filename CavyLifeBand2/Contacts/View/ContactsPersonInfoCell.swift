@@ -77,18 +77,15 @@ class ContactsPersonInfoCell: UITableViewCell {
         }
         
         /**
-         如果备注名称为空字符串则主标题显示用户昵称，副标题为空字符串；
-         反之主标题显示备注，副标题显示用户昵称
+         如果备注名称为空字符串则主标题显示'编辑昵称'；
          */
         if datasource.title == "" {
-            titleLab.text = datasource.subTitle
-            
-            subTitleLab.text = ""
+            titleLab.text = L10n.AccountInfoEditNickName.string
         } else {
             titleLab.text = datasource.title
-            
-            subTitleLab.text = datasource.subTitle
         }
+        
+        subTitleLab.text = datasource.subTitle
                 
         personRealtion(datasource.relation)
         

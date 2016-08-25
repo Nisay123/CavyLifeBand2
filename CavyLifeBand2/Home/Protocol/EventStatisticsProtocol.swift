@@ -31,14 +31,31 @@ class EventStatisticsApi: NetRequest {
         }
     }
     
+    func uploadUMeng(type: ActivityEventType) {
+        
+        let macAdd = type == .BandDisconnect ? CavyDefine.bindBandInfos.bindBandInfo.eventBandMacAddressFromUserCache() : CavyDefine.bindBandInfos.bindBandInfo.eventBandMacAddress()
+        
+        let parameters: [String: AnyObject] = [NetRequestKey.DeviceSerial.rawValue: CavyDefine.bindBandInfos.bindBandInfo.deviceSerial,
+                                               NetRequestKey.DeviceModel.rawValue: String.deviceModel(),
+                                               NetRequestKey.BandMac.rawValue: macAdd,
+                                               NetRequestKey.Longitude.rawValue: CavyDefine.userCoordinate.longitude,
+                                               NetRequestKey.Latitude.rawValue: CavyDefine.userCoordinate.latitude,
+                                               NetRequestKey.UserId.rawValue: CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId]
+        
+        MobClick.event(type.rawValue, attributes: parameters)
+    }
+    
 }
 
 enum ActivityEventType: String {
     
     case AppOpen        = "APP_OPEN"
     case AppQuit        = "APP_QUIT"
+    case UserLogin      = "USER_LOGIN"
+    case UserLogout     = "USER_LOGOUT"
+    case UserSignup     = "USER_SIGNUP"
     case BandConnect    = "BAND_CONNECT"
     case BandDisconnect = "BAND_DISCONNECT"
-    case Unkown         = "Unkown"    
+    case Unkown         = "Unkown"
 
 }

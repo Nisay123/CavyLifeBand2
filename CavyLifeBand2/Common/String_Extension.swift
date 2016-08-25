@@ -93,5 +93,21 @@ extension String {
         return "user-" + CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId
     
     }
+    
+    func compareIsNewVersionStr(version: String) -> Bool {
+        
+        if self == version {
+            return true
+        }
+        
+        let localIsLast = self.compare(version, options: .NumericSearch, range: nil, locale: nil) == .OrderedDescending
+        
+        if localIsLast {
+            return true
+        }
+        
+        return false
+        
+    }
 
 }

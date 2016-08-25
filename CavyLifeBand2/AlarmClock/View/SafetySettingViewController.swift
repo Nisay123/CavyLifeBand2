@@ -10,17 +10,17 @@ import UIKit
 import RealmSwift
 import JSONJoy
 
+import CoreLocation
+
 class SafetySettingViewController: UIViewController, BaseViewControllerPresenter {
     
     @IBOutlet weak var tableView: UITableView!
     
     let tableViewMargin: CGFloat          = 20.0
-    
-    let tableSectionHeaderHeight: CGFloat    = 20.0
+
+    let tableSectionHeaderHeight: CGFloat = 0.0
 
     let tableSectionFooterHeight: CGFloat = 100.0
-
-    let safetySwitchCell  = "SettingSwitchTableViewCell"
     
     let safetyContactCell = "EmergencyContactPersonCell"
     
@@ -30,7 +30,17 @@ class SafetySettingViewController: UIViewController, BaseViewControllerPresenter
     
     var navTitle: String { return L10n.HomeRightListTitleSecurity.string }
     
+    var shouldLoactiaon: Bool = false
+    
     var contactModels: [EmergencyContactInfoCellViewModel] = [EmergencyContactInfoCellViewModel]()
+    
+    override func viewDidAppear(animated: Bool) {
+        if shouldLoactiaon {
+            queryLocationable()
+            
+            shouldLoactiaon = false
+        }
+    }
     
     override func viewDidLoad() {
         
@@ -48,8 +58,6 @@ class SafetySettingViewController: UIViewController, BaseViewControllerPresenter
         tableView.tableFooterView = UIView()
         tableView.layer.cornerRadius = CavyDefine.commonCornerRadius
         tableView.showsVerticalScrollIndicator = false
-        
-        tableView.registerNib(UINib(nibName: safetySwitchCell, bundle: nil), forCellReuseIdentifier: safetySwitchCell)
         
         tableView.registerNib(UINib(nibName: safetyContactCell, bundle: nil), forCellReuseIdentifier: safetyContactCell)
         
@@ -70,12 +78,61 @@ class SafetySettingViewController: UIViewController, BaseViewControllerPresenter
         updateNavUI()
         
         loadContactFromWeb()
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func queryLocationable() {
+        
+        
+        if (!CLLocationManager.locationServicesEnabled()) {
+            
+            let versionAlert = UIAlertController(title: L10n.AlertLocationTitle.string, message: L10n.AlertLocationMsg.string, preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Default) { (action) in }
+            
+            let setAction = UIAlertAction(title: L10n.AlertSetActionTitle.string, style: .Cancel) { (action) in
+                let url = NSURL.init(string: "prefs:root=LOCATION_SERVICES")
+                
+                if UIApplication.sharedApplication().canOpenURL(url ?? NSURL()) {
+                    UIApplication.sharedApplication().openURL(url!)
+                }
+                
+            }
+            
+            versionAlert.addAction(cancelAction)
+            versionAlert.addAction(setAction)
+            
+            self.presentVC(versionAlert)
+            
+            return
+            
+        }
+        
+        switch CLLocationManager.authorizationStatus() {
+            
+        case .Denied, .NotDetermined, .Restricted:
+            
+            let versionAlert = UIAlertController(title: "定位服务", message: "定位服务已关闭，为了紧急求救服务，请前往打开", preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Default) { (action) in }
+            
+            let setAction = UIAlertAction(title: "设置", style: .Cancel) { (action) in
+               UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            }
+            
+            versionAlert.addAction(cancelAction)
+            versionAlert.addAction(setAction)
+            
+            self.presentVC(versionAlert)
+            
+            break
+        default:
+            break
+        }
     }
     
     func loadContactFromWeb() {
@@ -254,8 +311,7 @@ extension SafetySettingViewController: SCAddressBookPickerDelegate {
     
     func contactPicker(didSelectContact contact: SCAddressBookContact) {
         
-        let
-        newContact = contact
+        let newContact = contact
         
         Log.info(newContact.phoneList)
         addEmergency(newContact)
@@ -269,46 +325,30 @@ extension SafetySettingViewController: SCAddressBookPickerDelegate {
 extension SafetySettingViewController: UITableViewDataSource {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if section == 1 {
-            return contactModels.count + 1
-        }
-        
-        return 1
+        return contactModels.count + 1
+      
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
+        if indexPath.row == 0 {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier(safetySwitchCell, forIndexPath: indexPath) as? SettingSwitchTableViewCell
-            cell?.setWithStyle(.NoneDescription)
-            cell?.titleLabel.text = L10n.SettingSafetyTableCellGPSTitle.string
-            cell?.layer.cornerRadius = CavyDefine.commonCornerRadius
-            cell?.clipsToBounds = true
-            return cell!
-            
-        } else {
-            
-            if indexPath.row == 0 {
-                
-                let cell = tableView.dequeueReusableCellWithIdentifier(safetyContactCell, forIndexPath: indexPath) as? EmergencyContactPersonCell
-                cell?.selectionStyle = .None
-                return cell!
-                
-            }
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier(ContactInfoCell, forIndexPath: indexPath) as? EmergencyContactInfoCell
-            
-            cell?.configure(contactModels[indexPath.row - 1], delegate: self, indexPath: indexPath)
-            
+            let cell = tableView.dequeueReusableCellWithIdentifier(safetyContactCell, forIndexPath: indexPath) as? EmergencyContactPersonCell
+            cell?.selectionStyle = .None
             return cell!
             
         }
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier(ContactInfoCell, forIndexPath: indexPath) as? EmergencyContactInfoCell
+        
+        cell?.configure(contactModels[indexPath.row - 1], delegate: self, indexPath: indexPath)
+        
+        return cell!
         
     }
     
@@ -318,19 +358,11 @@ extension SafetySettingViewController: UITableViewDataSource {
 extension SafetySettingViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        
-        if section == 0 {
-            return 0
-        }
-        
+
         return tableSectionFooterHeight
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        if section == 0 {
-            return 0
-        }
         
         return tableSectionHeaderHeight
     }
