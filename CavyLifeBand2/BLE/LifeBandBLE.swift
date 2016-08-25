@@ -420,7 +420,7 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
                 BindBandCtrl.fwVersion = $0.fwVersion
                 BindBandCtrl.hwVersion = $0.hwVersion
                                 
-                NSNotificationCenter.defaultCenter().postNotificationName( NotificationName.UpdateRightTopView.rawValue, object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.UpdateRightTopView.rawValue, object: nil)
                 
             }
             

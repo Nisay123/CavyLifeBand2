@@ -88,7 +88,7 @@ class SafetySettingViewController: UIViewController, BaseViewControllerPresenter
     func queryLocationable() {
         
         
-        if (!CLLocationManager.locationServicesEnabled()) {
+        if !CLLocationManager.locationServicesEnabled() {
             
             let versionAlert = UIAlertController(title: L10n.AlertLocationTitle.string, message: L10n.AlertLocationMsg.string, preferredStyle: .Alert)
             

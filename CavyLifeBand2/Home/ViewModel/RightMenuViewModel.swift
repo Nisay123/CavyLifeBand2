@@ -76,9 +76,9 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         // 获取服务器最新固件版本信息
         NetWebApi.shareApi.netGetRequest(WebApiMethod.Firmware.description, modelObject: FirmwareUpdateResponse.self, successHandler: { (data) in
             
-            dispatch_async(dispatch_get_main_queue(), { 
+            dispatch_async(dispatch_get_main_queue()) {
                 requestAlert.dismissVC(completion: nil)
-            })
+            }
             
             if localVersion.compareIsNewVersionStr(data.data.version) {
                 

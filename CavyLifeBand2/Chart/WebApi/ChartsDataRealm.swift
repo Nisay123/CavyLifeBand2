@@ -675,7 +675,7 @@ extension ChartsRealmProtocol {
         
         Log.info("总共睡眠\(minustsCount)=====深睡个数\(longSleepCount)")
         
-        return (minustsCount - needCutCount , longSleepCount - needCutCount)
+        return (minustsCount - needCutCount, longSleepCount - needCutCount)
     }
     
     

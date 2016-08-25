@@ -21,6 +21,7 @@ struct LogoutCleanObj {
         self.deleteChartStepDataRealm()
         self.deleteChartSleepDataRealm()
     }
+    
 }
 
 extension LogoutCleanObj: ChartsRealmProtocol {

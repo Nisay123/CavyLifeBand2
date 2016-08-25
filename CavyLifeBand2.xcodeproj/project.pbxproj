@@ -82,7 +82,7 @@
 		4CF9CB331D2A41FF00D9C88F /* HomeRealmApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB2F1D2A41FF00D9C88F /* HomeRealmApi.swift */; };
 		4CF9CB341D2A41FF00D9C88F /* HomeWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB301D2A41FF00D9C88F /* HomeWebApi.swift */; };
 		4CF9CB351D2A41FF00D9C88F /* HomeWebJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB311D2A41FF00D9C88F /* HomeWebJSON.swift */; };
-		63B434DCCEB536C360E2037A /* Pods_CavyLifeBand2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 590A4176408FA696E63D90F6 /* Pods_CavyLifeBand2.framework */; };
+		63B434DCCEB536C360E2037A /* Pods_CavyLifeBand2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 590A4176408FA696E63D90F6 /* Pods_CavyLifeBand2.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		67837F3055FAE4CB07F34391 /* Pods_CavyLifeBand2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B308C2BA77F2EED99C226A28 /* Pods_CavyLifeBand2UITests.framework */; };
 		683655271CBB3B2C009373EA /* SettingSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683655251CBB3B2C009373EA /* SettingSwitchTableViewCell.swift */; };
 		683655281CBB3B2C009373EA /* SettingSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 683655261CBB3B2C009373EA /* SettingSwitchTableViewCell.xib */; };
@@ -343,7 +343,6 @@
 		91F0361F1C8D6BB6003E059A /* Profile_Ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 91F0361E1C8D6BB6003E059A /* Profile_Ok.json */; };
 		98CE4AAE2910AB63E72ECA83 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CE436F5AB3387A6ACC0F69 /* UIImageExtension.swift */; };
 		CCC7C82BB91E803A273BED90 /* Pods_CavyLifeBand2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8459E91F9A54D3E7AB8FF576 /* Pods_CavyLifeBand2Tests.framework */; };
-		FEEA59B0530DBF292999D652 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A7CFAEA8FAD0237C60B20B /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -731,7 +730,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				918AA2301CE328070022AE30 /* CoreBluetooth.framework in Frameworks */,
-				FEEA59B0530DBF292999D652 /* Pods.framework in Frameworks */,
 				63B434DCCEB536C360E2037A /* Pods_CavyLifeBand2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1828,8 +1826,6 @@
 				9C96EDCAA15349112C23D4D1 /* [CP] Embed Pods Frameworks */,
 				FA2D68840715E9D8900A434B /* Tailor */,
 				014978E6D44FBCCACD14AACB /* [CP] Copy Pods Resources */,
-				4865024804E1D3A76BCDEAC2 /* Tailor */,
-				1E727986D106F8538D6B5391 /* Tailor */,
 			);
 			buildRules = (
 			);
@@ -2049,20 +2045,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CavyLifeBand2/Pods-CavyLifeBand2-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1E727986D106F8538D6B5391 /* Tailor */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Tailor;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
-		};
 		1FFA4C2A8B15AA696D1A45EC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2077,20 +2059,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CavyLifeBand2Tests/Pods-CavyLifeBand2Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		4865024804E1D3A76BCDEAC2 /* Tailor */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Tailor;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
 		};
 		9B2BD6B95D7A2188FB2331A3 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2620,7 +2588,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/MOBFoundation\"",
-					"\"${PODS_ROOT}/PgyUpdate/PgySDK/sdk\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/Connection\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/UI\"",
@@ -2668,7 +2635,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/MOBFoundation\"",
-					"\"${PODS_ROOT}/PgyUpdate/PgySDK/sdk\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/Connection\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/UI\"",

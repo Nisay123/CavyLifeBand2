@@ -153,13 +153,13 @@ class ChartsViewController: UIViewController, BaseViewControllerPresenter, Chart
      */
     func clipImage() {
         
-        UIGraphicsBeginImageContextWithOptions(self.view.size, false, 0);
+        UIGraphicsBeginImageContextWithOptions(self.view.size, false, 0)
         
         self.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         
-        let image = UIGraphicsGetImageFromCurrentImageContext();
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         
-        UIGraphicsEndImageContext();
+        UIGraphicsEndImageContext()
         
         image.writeToChacheDocument(CavyDefine.shareImageName)
         
