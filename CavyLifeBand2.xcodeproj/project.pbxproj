@@ -82,6 +82,7 @@
 		4CF9CB331D2A41FF00D9C88F /* HomeRealmApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB2F1D2A41FF00D9C88F /* HomeRealmApi.swift */; };
 		4CF9CB341D2A41FF00D9C88F /* HomeWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB301D2A41FF00D9C88F /* HomeWebApi.swift */; };
 		4CF9CB351D2A41FF00D9C88F /* HomeWebJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB311D2A41FF00D9C88F /* HomeWebJSON.swift */; };
+		63B434DCCEB536C360E2037A /* Pods_CavyLifeBand2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 590A4176408FA696E63D90F6 /* Pods_CavyLifeBand2.framework */; };
 		67837F3055FAE4CB07F34391 /* Pods_CavyLifeBand2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B308C2BA77F2EED99C226A28 /* Pods_CavyLifeBand2UITests.framework */; };
 		683655271CBB3B2C009373EA /* SettingSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683655251CBB3B2C009373EA /* SettingSwitchTableViewCell.swift */; };
 		683655281CBB3B2C009373EA /* SettingSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 683655261CBB3B2C009373EA /* SettingSwitchTableViewCell.xib */; };
@@ -442,6 +443,7 @@
 		4CF9CB2F1D2A41FF00D9C88F /* HomeRealmApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRealmApi.swift; sourceTree = "<group>"; };
 		4CF9CB301D2A41FF00D9C88F /* HomeWebApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWebApi.swift; sourceTree = "<group>"; };
 		4CF9CB311D2A41FF00D9C88F /* HomeWebJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWebJSON.swift; sourceTree = "<group>"; };
+		590A4176408FA696E63D90F6 /* Pods_CavyLifeBand2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CavyLifeBand2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62B877474089074C0F590F2C /* Pods-CavyLifeBand2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CavyLifeBand2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CavyLifeBand2UITests/Pods-CavyLifeBand2UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		683655251CBB3B2C009373EA /* SettingSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		683655261CBB3B2C009373EA /* SettingSwitchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingSwitchTableViewCell.xib; sourceTree = "<group>"; };
@@ -540,6 +542,7 @@
 		68E978141CC77D8C00651724 /* PKInfoOrResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKInfoOrResultView.swift; sourceTree = "<group>"; };
 		68E978161CC77DE500651724 /* PKInfoOrResultView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PKInfoOrResultView.xib; sourceTree = "<group>"; };
 		68FD94BC1D5DABE60010DA2D /* AppVersionJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionJSON.swift; sourceTree = "<group>"; };
+		79913265166CC49C9ADE3278 /* Pods-CavyLifeBand2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CavyLifeBand2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CavyLifeBand2/Pods-CavyLifeBand2.debug.xcconfig"; sourceTree = "<group>"; };
 		8459E91F9A54D3E7AB8FF576 /* Pods_CavyLifeBand2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CavyLifeBand2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88482C211D220AC30084628B /* GuideLinking@3x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "GuideLinking@3x.gif"; sourceTree = "<group>"; };
 		887C75B71D114AB2009EA1F6 /* Array_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array_Extension.swift; sourceTree = "<group>"; };
@@ -719,6 +722,7 @@
 		AD7D0502CC392B502E081F26 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B308C2BA77F2EED99C226A28 /* Pods_CavyLifeBand2UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CavyLifeBand2UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C848EB391C46240F001FA1BF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		E12A12140E4DDD3F0BEE7BED /* Pods-CavyLifeBand2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CavyLifeBand2.release.xcconfig"; path = "Pods/Target Support Files/Pods-CavyLifeBand2/Pods-CavyLifeBand2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -728,6 +732,7 @@
 			files = (
 				918AA2301CE328070022AE30 /* CoreBluetooth.framework in Frameworks */,
 				FEEA59B0530DBF292999D652 /* Pods.framework in Frameworks */,
+				63B434DCCEB536C360E2037A /* Pods_CavyLifeBand2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -935,6 +940,8 @@
 				91931FBDB93D6202BBC98835 /* Pods-CavyLifeBand2Tests.release.xcconfig */,
 				62B877474089074C0F590F2C /* Pods-CavyLifeBand2UITests.debug.xcconfig */,
 				0E86C8C6C588F3A38FB9C30B /* Pods-CavyLifeBand2UITests.release.xcconfig */,
+				79913265166CC49C9ADE3278 /* Pods-CavyLifeBand2.debug.xcconfig */,
+				E12A12140E4DDD3F0BEE7BED /* Pods-CavyLifeBand2.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1802,6 +1809,7 @@
 				24A7CFAEA8FAD0237C60B20B /* Pods.framework */,
 				8459E91F9A54D3E7AB8FF576 /* Pods_CavyLifeBand2Tests.framework */,
 				B308C2BA77F2EED99C226A28 /* Pods_CavyLifeBand2UITests.framework */,
+				590A4176408FA696E63D90F6 /* Pods_CavyLifeBand2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1813,13 +1821,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 917DA9901C3B8EB800FF675D /* Build configuration list for PBXNativeTarget "CavyLifeBand2" */;
 			buildPhases = (
-				D517CEF9A44190E5F6B327FB /* Check Pods Manifest.lock */,
+				D517CEF9A44190E5F6B327FB /* [CP] Check Pods Manifest.lock */,
 				917DA9641C3B8EB700FF675D /* Sources */,
 				917DA9651C3B8EB700FF675D /* Frameworks */,
 				917DA9661C3B8EB700FF675D /* Resources */,
-				9C96EDCAA15349112C23D4D1 /* Embed Pods Frameworks */,
+				9C96EDCAA15349112C23D4D1 /* [CP] Embed Pods Frameworks */,
 				FA2D68840715E9D8900A434B /* Tailor */,
-				014978E6D44FBCCACD14AACB /* Copy Pods Resources */,
+				014978E6D44FBCCACD14AACB /* [CP] Copy Pods Resources */,
+				4865024804E1D3A76BCDEAC2 /* Tailor */,
+				1E727986D106F8538D6B5391 /* Tailor */,
 			);
 			buildRules = (
 			);
@@ -1834,12 +1844,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 917DA9931C3B8EB800FF675D /* Build configuration list for PBXNativeTarget "CavyLifeBand2Tests" */;
 			buildPhases = (
-				A213B0908518E3F74EBA624B /* Check Pods Manifest.lock */,
+				A213B0908518E3F74EBA624B /* [CP] Check Pods Manifest.lock */,
 				917DA9781C3B8EB800FF675D /* Sources */,
 				917DA9791C3B8EB800FF675D /* Frameworks */,
 				917DA97A1C3B8EB800FF675D /* Resources */,
-				CC8D0AF30B13C2AD7C7D8602 /* Embed Pods Frameworks */,
-				1FFA4C2A8B15AA696D1A45EC /* Copy Pods Resources */,
+				CC8D0AF30B13C2AD7C7D8602 /* [CP] Embed Pods Frameworks */,
+				1FFA4C2A8B15AA696D1A45EC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1855,11 +1865,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 917DA9961C3B8EB800FF675D /* Build configuration list for PBXNativeTarget "CavyLifeBand2UITests" */;
 			buildPhases = (
-				DCA09848B6D9D547DE5B8B6D /* Check Pods Manifest.lock */,
+				DCA09848B6D9D547DE5B8B6D /* [CP] Check Pods Manifest.lock */,
 				917DA9831C3B8EB800FF675D /* Sources */,
 				917DA9841C3B8EB800FF675D /* Frameworks */,
 				917DA9851C3B8EB800FF675D /* Resources */,
-				9B2BD6B95D7A2188FB2331A3 /* Copy Pods Resources */,
+				9B2BD6B95D7A2188FB2331A3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2024,29 +2034,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		014978E6D44FBCCACD14AACB /* Copy Pods Resources */ = {
+		014978E6D44FBCCACD14AACB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CavyLifeBand2/Pods-CavyLifeBand2-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1FFA4C2A8B15AA696D1A45EC /* Copy Pods Resources */ = {
+		1E727986D106F8538D6B5391 /* Tailor */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = Tailor;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
+		};
+		1FFA4C2A8B15AA696D1A45EC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2054,14 +2078,28 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CavyLifeBand2Tests/Pods-CavyLifeBand2Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9B2BD6B95D7A2188FB2331A3 /* Copy Pods Resources */ = {
+		4865024804E1D3A76BCDEAC2 /* Tailor */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = Tailor;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
+		};
+		9B2BD6B95D7A2188FB2331A3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2069,29 +2107,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CavyLifeBand2UITests/Pods-CavyLifeBand2UITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9C96EDCAA15349112C23D4D1 /* Embed Pods Frameworks */ = {
+		9C96EDCAA15349112C23D4D1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CavyLifeBand2/Pods-CavyLifeBand2-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A213B0908518E3F74EBA624B /* Check Pods Manifest.lock */ = {
+		A213B0908518E3F74EBA624B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2099,14 +2137,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		CC8D0AF30B13C2AD7C7D8602 /* Embed Pods Frameworks */ = {
+		CC8D0AF30B13C2AD7C7D8602 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2114,14 +2152,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CavyLifeBand2Tests/Pods-CavyLifeBand2Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D517CEF9A44190E5F6B327FB /* Check Pods Manifest.lock */ = {
+		D517CEF9A44190E5F6B327FB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2129,14 +2167,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		DCA09848B6D9D547DE5B8B6D /* Check Pods Manifest.lock */ = {
+		DCA09848B6D9D547DE5B8B6D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2572,7 +2610,7 @@
 		};
 		917DA9911C3B8EB800FF675D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD7D0502CC392B502E081F26 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 79913265166CC49C9ADE3278 /* Pods-CavyLifeBand2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CavyLifeBand2/CavyLifeBand2.entitlements;
@@ -2620,7 +2658,7 @@
 		};
 		917DA9921C3B8EB800FF675D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01513CBBEAFFF398A5D5CA79 /* Pods.release.xcconfig */;
+			baseConfigurationReference = E12A12140E4DDD3F0BEE7BED /* Pods-CavyLifeBand2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CavyLifeBand2/CavyLifeBand2.entitlements;

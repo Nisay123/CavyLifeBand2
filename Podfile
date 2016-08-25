@@ -1,6 +1,7 @@
 platform :ios, "8.0"
 use_frameworks!
 
+target :CavyLifeBand2 do
 pod 'SnapKit'
 pod 'Alamofire'
 pod 'AlamofireImage'
@@ -29,13 +30,14 @@ pod 'ShareSDK2/UI/Flat'
 pod 'ShareSDK2/Connection/SinaWeibo'
 pod 'ShareSDK2/Connection/WeChat'
 pod 'ShareSDK2/Connection/QQ'
+end
 
-target :CavyLifeBand2Tests, :exclusive => true do
+target :CavyLifeBand2Tests do
     pod 'OHHTTPStubs'
     pod 'OHHTTPStubs/Swift'
 end
 
-target :CavyLifeBand2UITests, :exclusive => true do
+target :CavyLifeBand2UITests do
     pod 'OHHTTPStubs'
     pod 'OHHTTPStubs/Swift'
 end
