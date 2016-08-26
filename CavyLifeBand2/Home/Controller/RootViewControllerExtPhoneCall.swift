@@ -50,12 +50,29 @@ extension RootViewController: SettingRealmListOperateDelegate {
         
         if call.callState == CTCallStateIncoming && phoneReminderAble == true {
             
+            CavyDefine.phoneCallConnectTag = 0
+            CavyDefine.bandVibrateTag = 0
+            
             NSTimer.runThisAfterDelay(seconds: NSTimeInterval(vibrateSeconds * 5)) {
+                
+                if CavyDefine.phoneCallConnectTag == 1 {
+                    return
+                }
+                CavyDefine.bandVibrateTag = 1
                 LifeBandCtrl.shareInterface.vibrate(10)
+            }
+            
+        } else if call.callState == CTCallStateConnected && phoneReminderAble == true {
+            
+            CavyDefine.phoneCallConnectTag = 1
+            
+            if CavyDefine.bandVibrateTag == 1 {
+                LifeBandCtrl.shareInterface.stopVibrate()
             }
             
         }
         
     }
+
     
 }

@@ -11,7 +11,11 @@ import EZSwiftExtensions
 import KeychainAccess
 
 struct CavyDefine {
-
+    
+    // 来电接听状态 0 未接听 1 已接听
+    static var phoneCallConnectTag = 0
+    // 来电振动状态 0 未振动 1 已振动
+    static var bandVibrateTag = 0
     
     // 服务器地址
     static let serverAddr = "http://test.tunshu.com/cavylife"

@@ -93,6 +93,15 @@ class LifeBandCtrl {
     }
     
     /**
+     停止手环振动，参数参考上一个函数
+     */
+    func stopVibrate() {
+        
+        LifeBandBle.shareInterface.sendMsgToBand("%VIB=\(0),\(0),\(500),\(100)")
+        
+    }
+    
+    /**
      获取手环电量
      
      - parameter relust: 电量返回回调
