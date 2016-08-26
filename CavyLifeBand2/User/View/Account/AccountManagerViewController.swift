@@ -344,6 +344,13 @@ class AccountManagerViewController: UIViewController, BaseViewControllerPresente
             return
         }
         
+        if passwd.characters.count < 6 {
+        
+            CavyLifeBandAlertView.sharedIntance.showViewTitle(self, message: L10n.UserModuleErrorCodePasswdError.string)
+            return
+            
+        }
+        
         if dataSource?.isSignUp == true {
             loadingView.startAnimating()
             signUp((dataSource?.isEmail)!, successBack: { [unowned self] in
@@ -450,9 +457,20 @@ class AccountManagerViewController: UIViewController, BaseViewControllerPresente
             
             if dataSource?.isEmail == true {
                 
-                sendSignUpEmailCode{ [unowned self] (msg) in
-                    self.signUpOrCodeFail(msg)
-                }
+                sendSignUpEmailCode({ [unowned self] in
+                    
+                    let alert = UIAlertController(title: "", message: L10n.AlertSignUpSendEmailCodeTitle.string, preferredStyle: .Alert)
+                    
+                    let cancelAction = UIAlertAction(title: L10n.AlertSureActionTitle.string, style: .Cancel) { (action) in }
+                    
+                    alert.addAction(cancelAction)
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                }, failBack: { [unowned self] (msg) in
+                        self.signUpOrCodeFail(msg)
+                })
+             
                 
             } else {
                 sendSignUpPhoneCode{ [unowned self] (msg) in

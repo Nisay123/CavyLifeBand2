@@ -25,7 +25,7 @@ struct BindBandCtrl {
     static var bandMacAddress: NSData = NSData()
     static var bindScene: BindScene   = .SignUpBind
     static var fwVersion: Int         = 0
-    
+    static var hwVersion: Int         = 0
 }
 
 protocol LifeBandBleDelegate {
@@ -382,6 +382,8 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
 //            EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.BandDisconnect)
             // 如果在正在同步数据时候 断开蓝牙 要是下拉同步消失
             NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
+            BindBandCtrl.fwVersion = 0
+            BindBandCtrl.hwVersion = 0
 
         }
         
@@ -400,10 +402,14 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(BandBleNotificationName.BandConnectNotification.rawValue, object: nil)
             
             EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.BandConnect)
+            EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.BandConnect)
             
             self.saveMacAddress()
+            
             LifeBandCtrl.shareInterface.setDateToBand(NSDate())
+            
             let lifeBandModel = LifeBandModelType.LLA.rawValue | LifeBandModelType.Step.rawValue | LifeBandModelType.Tilt.rawValue | LifeBandModelType.Alarm.rawValue | LifeBandModelType.Alert.rawValue
+            
             LifeBandCtrl.shareInterface.getLifeBandInfo {
                 
                 // 如果不等于生活手环模式，则重新设置生活手环模式
@@ -412,6 +418,9 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
                 }
                 
                 BindBandCtrl.fwVersion = $0.fwVersion
+                BindBandCtrl.hwVersion = $0.hwVersion
+                                
+                NSNotificationCenter.defaultCenter().postNotificationName( NotificationName.UpdateRightTopView.rawValue, object: nil)
                 
             }
             
@@ -424,6 +433,10 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName(BandBleNotificationName.BandDesconnectNotification.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
         EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.BandDisconnect)
+        EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.BandDisconnect)
+        
+        BindBandCtrl.fwVersion = 0
+        BindBandCtrl.hwVersion = 0
         
     }
     

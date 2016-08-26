@@ -103,7 +103,17 @@ extension SCAddressBookPicker: ABPeoplePickerNavigationControllerDelegate {
         
         var returnNumArr: [String] = []
         
-        let phoneNums: ABMultiValueRef = ABRecordCopyValue(person, kABPersonPhoneProperty).takeRetainedValue()
+        let phoneNums: ABMultiValueRef
+        
+        guard let phoneNumsUnmanaged = ABRecordCopyValue(person, kABPersonPhoneProperty) else {
+            
+            CavyLifeBandAlertView.sharedIntance.showViewTitle(message: L10n.SettingSafetyPhoneNumberError.string)
+            
+            return
+            
+        }
+        
+        phoneNums = phoneNumsUnmanaged.takeRetainedValue()
  
         guard let phoneNumArr = ABMultiValueCopyArrayOfAllValues(phoneNums)?.takeRetainedValue()  else {
             

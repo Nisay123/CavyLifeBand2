@@ -64,80 +64,78 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         
         let requestAlert = UIAlertController(title: "", message: L10n.UpdateFirmwareCheckVersionAlertMsg.string, preferredStyle: .Alert)
         
-        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(requestAlert, animated: true, completion: nil)
+        let rootVC = UIApplication.sharedApplication().keyWindow?.rootViewController
         
-        // 获取手环版本信息
-        LifeBandCtrl.shareInterface.getLifeBandInfo { bandInfo in
+        rootVC?.presentViewController(requestAlert, animated: true, completion: nil)
+        
+        let fwVersion = BindBandCtrl.fwVersion
+        let hwVersion = BindBandCtrl.hwVersion
+        
+        let localVersion = "\(hwVersion)" + "." + "\(fwVersion)"
+        
+        // 获取服务器最新固件版本信息
+        NetWebApi.shareApi.netGetRequest(WebApiMethod.Firmware.description, modelObject: FirmwareUpdateResponse.self, successHandler: { (data) in
             
-            let fwVersion = bandInfo.fwVersion
-            let hwVersion = bandInfo.hwVersion
-            
-            let localVersion = "\(hwVersion)" + "." + "\(fwVersion)"
-            
-            // 获取服务器最新固件版本信息
-            NetWebApi.shareApi.netGetRequest(WebApiMethod.Firmware.description, modelObject: FirmwareUpdateResponse.self, successHandler: { (data) in
-                
+            dispatch_async(dispatch_get_main_queue(), { 
                 requestAlert.dismissVC(completion: nil)
+            })
+            
+            if localVersion.compareIsNewVersionStr(data.data.version) {
                 
-                if localVersion == data.data.version {
+                NSTimer.runThisAfterDelay(seconds: 0.5, queue: dispatch_get_main_queue(), after: {
                     CavyLifeBandAlertView.sharedIntance.showViewTitle(message: L10n.UpdateFirmwareIsNewVersionAlertMsg.string)
-                    return
-                }
+                })
                 
-                let localIsLast = localVersion.compare(data.data.version, options: .NumericSearch, range: nil, locale: nil) == .OrderedDescending
+                return
+            
+            }
+            
+            let title = L10n.UpdateFirmwareInstallNewVersionAlertTitle.string + "（\(data.data.version)）"
+            
+            let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Cancel) { (action) in }
+            
+            let updateAction = UIAlertAction(title: L10n.AlertUpdateActionTitle.string, style: .Default) { (action) in
                 
-                guard localIsLast == false else {
-                    CavyLifeBandAlertView.sharedIntance.showViewTitle(message: L10n.UpdateFirmwareIsNewVersionAlertMsg.string)
-                    return
+                // 检测电量是否足够
+                LifeBandCtrl.shareInterface.getBandElectric { electric in
                     
-                }
-                
-                let title = L10n.UpdateFirmwareInstallNewVersionAlertTitle.string + "（\(data.data.version)）"
-                
-                let versionAlert = UIAlertController(title: title, message: data.data.description, preferredStyle: .Alert)
-                
-                let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Cancel) { (action) in }
-                
-                let updateAction = UIAlertAction(title: L10n.AlertUpdateActionTitle.string, style: .Default) { (action) in
-                    
-                    // 检测电量是否足够
-                    LifeBandCtrl.shareInterface.getBandElectric { electric in
+                    guard electric >= 0.2 else {
                         
-                        guard electric >= 0.2 else {
-                            
-                            let electricAlert = UIAlertController(title: L10n.UpdateFirmwareLowElectricAlertTitle.string,
-                                message: L10n.UpdateFirmwareLowEleAlertMsg.string, preferredStyle: .Alert)
-                            
-                            let cancelAction = UIAlertAction(title: L10n.AlertReTryAfterChargeActionTitle.string, style: .Cancel) { (action) in }
-                            
-                            electricAlert.addAction(cancelAction)
-                            
-                            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(electricAlert, animated: true, completion: nil)
-                            
-                            return
-                        }
+                        let electricAlert = UIAlertController(title: L10n.UpdateFirmwareLowElectricAlertTitle.string,
+                            message: L10n.UpdateFirmwareLowEleAlertMsg.string, preferredStyle: .Alert)
                         
-                        let updateView = UpdateProgressView.show()
-                        self.downloadAndUpdateFW(data.data.url, updateView: updateView)
+                        let cancelAction = UIAlertAction(title: L10n.AlertReTryAfterChargeActionTitle.string, style: .Cancel) { (action) in }
                         
+                        electricAlert.addAction(cancelAction)
+                        
+                        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(electricAlert, animated: true, completion: nil)
+                        
+                        return
                     }
                     
+                    let updateView = UpdateProgressView.show()
+                    self.downloadAndUpdateFW(data.data.url, updateView: updateView)
+                    
                 }
-                
-                versionAlert.addAction(cancelAction)
-                versionAlert.addAction(updateAction)
-                
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionAlert, animated: true, completion: nil)
-
-            }) { (msg) in
-                
-                requestAlert.dismissVC(completion: nil)
-                
-                CavyLifeBandAlertView.sharedIntance.showViewTitle(message: msg.msg)
                 
             }
             
+            let versionAlert = UIAlertController(title: title, message: data.data.description, preferredStyle: .Alert)
+            versionAlert.addAction(cancelAction)
+            versionAlert.addAction(updateAction)
+            
+            NSTimer.runThisAfterDelay(seconds: 0.5, queue: dispatch_get_main_queue(), after: {
+                rootVC?.presentViewController(versionAlert, animated: true, completion: nil)
+            })
+
+        }) { (msg) in
+            
+            requestAlert.dismissVC(completion: nil)
+            
+            CavyLifeBandAlertView.sharedIntance.showViewTitle(message: msg.msg)
+            
         }
+            
   
     }
     

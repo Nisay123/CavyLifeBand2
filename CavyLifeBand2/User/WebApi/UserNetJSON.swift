@@ -116,7 +116,7 @@ struct UserProfile: JSONJoy {
 struct UserAward: JSONJoy {
     var date: NSDate
     
-    var number: String
+    var number: Int
     
     init(_ decoder: JSONDecoder) throws {
         
@@ -128,7 +128,7 @@ struct UserAward: JSONJoy {
             date = NSDate()
         }
         
-        do { number = try decoder["number"].getString() } catch { number = "" }
+        do { number = try decoder["number"].getInt() } catch { number = 1 }
         
     }
 }

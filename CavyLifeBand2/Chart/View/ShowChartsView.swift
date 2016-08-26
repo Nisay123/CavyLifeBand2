@@ -104,7 +104,7 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
     func addyAxis() {
         
         let leftAxis = self.leftAxis
-        leftAxis.axisMaxValue = Double(1000)
+        leftAxis.axisMaxValue = Double((maxValue + 1) * 1000)
         leftAxis.enabled = true
 
         leftAxis.drawGridLinesEnabled = false

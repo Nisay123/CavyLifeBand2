@@ -154,10 +154,10 @@ class ContactsAccountInfoVC: UIViewController, BaseViewControllerPresenter, User
         
         let headCellViewModle  = PresonInfoCellViewModel(title: accountInfo.nickname, subTitle: userName, avatarUrl: accountInfo.avatarUrl)
         let genderCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoGender.string, info: gender)
-        let heightCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoHeight.string, info: "\(accountInfo.height)cm")
+        let heightCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoHeight.string, info: "\(Int(accountInfo.height))cm")
         let weightCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoWeight.string, info: "\(accountInfo.weight)kg")
         let birthCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoBirth.string, info: accountInfo.birthday)
-        let addressCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoAddress.string, info: accountInfo.address)
+        let addressCellViewModel = PresonInfoListCellViewModel(title: L10n.ContactsShowInfoCity.string, info: accountInfo.address)
         
         accountInfos.append(headCellViewModle)
         accountInfos.append(genderCellViewModel)
@@ -225,11 +225,17 @@ class ContactsAccountInfoVC: UIViewController, BaseViewControllerPresenter, User
                 
                 UIImage.deleteCacheImageWithName()
                 
+                EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.UserLogout)
+                
                 LogoutCleanObj.shareInstance.deleteUserDBData()
                 
                 CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId = ""
                 CavyDefine.loginUserBaseInfo.loginUserInfo.loginUsername = ""
                 CavyDefine.loginUserBaseInfo.loginUserInfo.loginAuthToken = ""
+                
+                NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.lastSyncDataDateKey)
+                NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.refreshSleepRingDateKey)
+                NSUserDefaults.standardUserDefaults().removeObjectForKey(CavyDefine.sleepRingCacheKey)
                 
                 UIApplication.sharedApplication().keyWindow?.setRootViewController(StoryboardScene.Main.instantiateMainPageView(), transition: CATransition())
                 self.loadingView.stopAnimating()

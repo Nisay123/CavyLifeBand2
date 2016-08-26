@@ -54,7 +54,7 @@ extension UserInfoModel {
         }
         
         let awardArr = self.awards.map { (award) -> Int in
-            return award.number.toInt() ?? 1
+            return award.number ?? 1
         }
         
         return awardArr
@@ -66,7 +66,7 @@ extension UserInfoModel {
 class UserAwardsModel: Object {
     
     dynamic var date: NSDate = NSDate()
-    dynamic var number: String = ""
+    dynamic var number: Int = 1
     
     let owners = LinkingObjects(fromType: UserInfoModel.self, property: "awards")
     
