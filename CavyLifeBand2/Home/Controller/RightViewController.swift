@@ -116,7 +116,7 @@ class RightViewController: UIViewController {
         } else {
             
             bandTitle.text = L10n.BandTitle.string
-            fwVersion.text = L10n.BandFWVersion.string + "\(BindBandCtrl.hwVersion)" + "." + "\(BindBandCtrl.fwVersion)"
+            fwVersion.text = L10n.BandFWVersion.string + L10n.BandDisconnectGetFWVersionTitle.string
             bandName.text  = LifeBandBle.shareInterface.getPeripheralName()
 //            getBandElectric()
             

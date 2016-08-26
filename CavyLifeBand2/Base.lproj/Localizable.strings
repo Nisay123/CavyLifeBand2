@@ -166,6 +166,8 @@
 "Band.Disconnect.Title"                = "手环未连接";
 "Band.Disconnect.FWVersion.Title"      = "按下手环按钮自动连接";
 "Band.Disconnect.BandName.Title"       = "开启蓝牙，";
+"Band.Disconnect.GetFWVersion.Title"   = "获取中";
+
 
 //Chart
 "Chart.Sleep"              = "睡眠";
@@ -376,6 +378,7 @@
 "UpdateFirmware.UpdateFail.AlertMsg"          = "固件升级失败";
 "UpdateFirmware.UpdateSuccess.AlertMsg"       = "请稍等，豚鼠手环将在重启后自动连接";
 "UpdateFirmware.CheckVersion.AlertMsg"        = "正在检测固件版本";
+"UpdateFirmware.GetBanFWVersion.AlertMsg"     = "手环当前固件版本获取中，请稍后再试";
 
 
 // 主页同步数据
@@ -407,3 +410,4 @@
 // 分享
 "Share.Title" = "能玩体感游戏的智能手环";
 "Share.Content" = "来自豚鼠科技";
+

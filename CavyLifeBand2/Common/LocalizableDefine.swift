@@ -277,6 +277,8 @@ enum L10n {
   case BandDisconnectFWVersionTitle
   /// 开启蓝牙，
   case BandDisconnectBandNameTitle
+  /// 获取中
+  case BandDisconnectGetFWVersionTitle
   /// 睡眠
   case ChartSleep
   /// 计步
@@ -651,6 +653,8 @@ enum L10n {
   case UpdateFirmwareUpdateSuccessAlertMsg
   /// 正在检测固件版本
   case UpdateFirmwareCheckVersionAlertMsg
+  /// 手环当前固件版本获取中，请稍后再试
+  case UpdateFirmwareGetBanFWVersionAlertMsg
   /// 下拉同步数据...
   case HomeRefreshIdle
   /// 松开同步数据...
@@ -980,6 +984,8 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Band.Disconnect.FWVersion.Title")
       case .BandDisconnectBandNameTitle:
         return L10n.tr("Band.Disconnect.BandName.Title")
+      case .BandDisconnectGetFWVersionTitle:
+        return L10n.tr("Band.Disconnect.GetFWVersion.Title")
       case .ChartSleep:
         return L10n.tr("Chart.Sleep")
       case .ChartStep:
@@ -1354,6 +1360,8 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("UpdateFirmware.UpdateSuccess.AlertMsg")
       case .UpdateFirmwareCheckVersionAlertMsg:
         return L10n.tr("UpdateFirmware.CheckVersion.AlertMsg")
+      case .UpdateFirmwareGetBanFWVersionAlertMsg:
+        return L10n.tr("UpdateFirmware.GetBanFWVersion.AlertMsg")
       case .HomeRefreshIdle:
         return L10n.tr("Home.Refresh.Idle")
       case .HomeRefreshPulling:

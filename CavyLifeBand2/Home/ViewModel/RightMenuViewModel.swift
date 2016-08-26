@@ -66,12 +66,21 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         
         let rootVC = UIApplication.sharedApplication().keyWindow?.rootViewController
         
-        rootVC?.presentViewController(requestAlert, animated: true, completion: nil)
-        
         let fwVersion = BindBandCtrl.fwVersion
         let hwVersion = BindBandCtrl.hwVersion
         
         let localVersion = "\(hwVersion)" + "." + "\(fwVersion)"
+        
+        // 手环固件版本尚未获取，终止更新流程
+        if localVersion == "0.0" {
+            requestAlert.message = L10n.UpdateFirmwareGetBanFWVersionAlertMsg.string
+            let cancelAction = UIAlertAction(title: L10n.AlertSureActionTitle.string, style: .Cancel) { (action) in }
+            requestAlert.addAction(cancelAction)
+            rootVC?.presentViewController(requestAlert, animated: true, completion: nil)
+            return
+        }
+        
+        rootVC?.presentViewController(requestAlert, animated: true, completion: nil)
         
         // 获取服务器最新固件版本信息
         NetWebApi.shareApi.netGetRequest(WebApiMethod.Firmware.description, modelObject: FirmwareUpdateResponse.self, successHandler: { (data) in

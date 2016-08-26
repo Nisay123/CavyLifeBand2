@@ -13,7 +13,10 @@ extension StoryboardSceneType {
   }
 
   static func initialViewController() -> UIViewController {
-    return storyboard().instantiateInitialViewController()!
+    guard let vc = storyboard().instantiateInitialViewController() else {
+      fatalError("Failed to instantiate initialViewController for \(self.storyboardName)")
+    }
+    return vc
   }
 }
 
@@ -40,7 +43,11 @@ struct StoryboardScene {
 
     case ContactsAccountInfoVCScene = "ContactsAccountInfoVC"
     static func instantiateContactsAccountInfoVC() -> ContactsAccountInfoVC {
-      return StoryboardScene.AccountInfo.ContactsAccountInfoVCScene.viewController() as! ContactsAccountInfoVC
+      guard let vc = StoryboardScene.AccountInfo.ContactsAccountInfoVCScene.viewController() as? ContactsAccountInfoVC
+      else {
+        fatalError("ViewController 'ContactsAccountInfoVC' is not of the expected class ContactsAccountInfoVC.")
+      }
+      return vc
     }
   }
   enum AlarmClock: String, StoryboardSceneType {
@@ -48,22 +55,38 @@ struct StoryboardScene {
 
     case AddClockViewControllerScene = "AddClockViewController"
     static func instantiateAddClockViewController() -> AddClockViewController {
-      return StoryboardScene.AlarmClock.AddClockViewControllerScene.viewController() as! AddClockViewController
+      guard let vc = StoryboardScene.AlarmClock.AddClockViewControllerScene.viewController() as? AddClockViewController
+      else {
+        fatalError("ViewController 'AddClockViewController' is not of the expected class AddClockViewController.")
+      }
+      return vc
     }
 
     case IntelligentClockViewControllerScene = "IntelligentClockViewController"
     static func instantiateIntelligentClockViewController() -> IntelligentClockViewController {
-      return StoryboardScene.AlarmClock.IntelligentClockViewControllerScene.viewController() as! IntelligentClockViewController
+      guard let vc = StoryboardScene.AlarmClock.IntelligentClockViewControllerScene.viewController() as? IntelligentClockViewController
+      else {
+        fatalError("ViewController 'IntelligentClockViewController' is not of the expected class IntelligentClockViewController.")
+      }
+      return vc
     }
 
     case RemindersSettingViewControllerScene = "RemindersSettingViewController"
     static func instantiateRemindersSettingViewController() -> RemindersSettingViewController {
-      return StoryboardScene.AlarmClock.RemindersSettingViewControllerScene.viewController() as! RemindersSettingViewController
+      guard let vc = StoryboardScene.AlarmClock.RemindersSettingViewControllerScene.viewController() as? RemindersSettingViewController
+      else {
+        fatalError("ViewController 'RemindersSettingViewController' is not of the expected class RemindersSettingViewController.")
+      }
+      return vc
     }
 
     case SafetySettingViewControllerScene = "SafetySettingViewController"
     static func instantiateSafetySettingViewController() -> SafetySettingViewController {
-      return StoryboardScene.AlarmClock.SafetySettingViewControllerScene.viewController() as! SafetySettingViewController
+      guard let vc = StoryboardScene.AlarmClock.SafetySettingViewControllerScene.viewController() as? SafetySettingViewController
+      else {
+        fatalError("ViewController 'SafetySettingViewController' is not of the expected class SafetySettingViewController.")
+      }
+      return vc
     }
   }
   enum Camera: String, StoryboardSceneType {
@@ -71,12 +94,20 @@ struct StoryboardScene {
 
     case CustomCameraViewScene = "CustomCameraView"
     static func instantiateCustomCameraView() -> CustomCamera {
-      return StoryboardScene.Camera.CustomCameraViewScene.viewController() as! CustomCamera
+      guard let vc = StoryboardScene.Camera.CustomCameraViewScene.viewController() as? CustomCamera
+      else {
+        fatalError("ViewController 'CustomCameraView' is not of the expected class CustomCamera.")
+      }
+      return vc
     }
 
     case PhotoViewScene = "PhotoView"
     static func instantiatePhotoView() -> PhotoView {
-      return StoryboardScene.Camera.PhotoViewScene.viewController() as! PhotoView
+      guard let vc = StoryboardScene.Camera.PhotoViewScene.viewController() as? PhotoView
+      else {
+        fatalError("ViewController 'PhotoView' is not of the expected class PhotoView.")
+      }
+      return vc
     }
   }
   enum Contacts: String, StoryboardSceneType {
@@ -84,37 +115,65 @@ struct StoryboardScene {
 
     case ContactsAddFriendVCScene = "ContactsAddFriendVC"
     static func instantiateContactsAddFriendVC() -> ContactsAddFriendVC {
-      return StoryboardScene.Contacts.ContactsAddFriendVCScene.viewController() as! ContactsAddFriendVC
+      guard let vc = StoryboardScene.Contacts.ContactsAddFriendVCScene.viewController() as? ContactsAddFriendVC
+      else {
+        fatalError("ViewController 'ContactsAddFriendVC' is not of the expected class ContactsAddFriendVC.")
+      }
+      return vc
     }
 
     case ContactsFriendInfoVCScene = "ContactsFriendInfoVC"
     static func instantiateContactsFriendInfoVC() -> ContactsFriendInfoVC {
-      return StoryboardScene.Contacts.ContactsFriendInfoVCScene.viewController() as! ContactsFriendInfoVC
+      guard let vc = StoryboardScene.Contacts.ContactsFriendInfoVCScene.viewController() as? ContactsFriendInfoVC
+      else {
+        fatalError("ViewController 'ContactsFriendInfoVC' is not of the expected class ContactsFriendInfoVC.")
+      }
+      return vc
     }
 
     case ContactsFriendListVCScene = "ContactsFriendListVC"
     static func instantiateContactsFriendListVC() -> ContactsFriendListVC {
-      return StoryboardScene.Contacts.ContactsFriendListVCScene.viewController() as! ContactsFriendListVC
+      guard let vc = StoryboardScene.Contacts.ContactsFriendListVCScene.viewController() as? ContactsFriendListVC
+      else {
+        fatalError("ViewController 'ContactsFriendListVC' is not of the expected class ContactsFriendListVC.")
+      }
+      return vc
     }
 
     case ContactsNewFriendVCScene = "ContactsNewFriendVC"
     static func instantiateContactsNewFriendVC() -> ContactsNewFriendVC {
-      return StoryboardScene.Contacts.ContactsNewFriendVCScene.viewController() as! ContactsNewFriendVC
+      guard let vc = StoryboardScene.Contacts.ContactsNewFriendVCScene.viewController() as? ContactsNewFriendVC
+      else {
+        fatalError("ViewController 'ContactsNewFriendVC' is not of the expected class ContactsNewFriendVC.")
+      }
+      return vc
     }
 
     case ContactsPersonInfoVCScene = "ContactsPersonInfoVC"
     static func instantiateContactsPersonInfoVC() -> ContactsPersonInfoVC {
-      return StoryboardScene.Contacts.ContactsPersonInfoVCScene.viewController() as! ContactsPersonInfoVC
+      guard let vc = StoryboardScene.Contacts.ContactsPersonInfoVCScene.viewController() as? ContactsPersonInfoVC
+      else {
+        fatalError("ViewController 'ContactsPersonInfoVC' is not of the expected class ContactsPersonInfoVC.")
+      }
+      return vc
     }
 
     case ContactsReqFriendVCScene = "ContactsReqFriendVC"
     static func instantiateContactsReqFriendVC() -> ContactsReqFriendVC {
-      return StoryboardScene.Contacts.ContactsReqFriendVCScene.viewController() as! ContactsReqFriendVC
+      guard let vc = StoryboardScene.Contacts.ContactsReqFriendVCScene.viewController() as? ContactsReqFriendVC
+      else {
+        fatalError("ViewController 'ContactsReqFriendVC' is not of the expected class ContactsReqFriendVC.")
+      }
+      return vc
     }
 
     case SearchResultViewScene = "SearchResultView"
     static func instantiateSearchResultView() -> UITableViewController {
-      return StoryboardScene.Contacts.SearchResultViewScene.viewController() as! UITableViewController
+      guard let vc = StoryboardScene.Contacts.SearchResultViewScene.viewController() as? UITableViewController
+      else {
+        fatalError("ViewController 'SearchResultView' is not of the expected class UITableViewController.")
+      }
+      return vc
     }
   }
   enum Guide: String, StoryboardSceneType {
@@ -122,7 +181,11 @@ struct StoryboardScene {
 
     case GuideViewScene = "GuideView"
     static func instantiateGuideView() -> GuideViewController {
-      return StoryboardScene.Guide.GuideViewScene.viewController() as! GuideViewController
+      guard let vc = StoryboardScene.Guide.GuideViewScene.viewController() as? GuideViewController
+      else {
+        fatalError("ViewController 'GuideView' is not of the expected class GuideViewController.")
+      }
+      return vc
     }
   }
   enum Home: String, StoryboardSceneType {
@@ -130,22 +193,38 @@ struct StoryboardScene {
 
     case HomeViewScene = "HomeView"
     static func instantiateHomeView() -> HomeViewController {
-      return StoryboardScene.Home.HomeViewScene.viewController() as! HomeViewController
+      guard let vc = StoryboardScene.Home.HomeViewScene.viewController() as? HomeViewController
+      else {
+        fatalError("ViewController 'HomeView' is not of the expected class HomeViewController.")
+      }
+      return vc
     }
 
     case LeftViewScene = "LeftView"
     static func instantiateLeftView() -> LeftMenViewController {
-      return StoryboardScene.Home.LeftViewScene.viewController() as! LeftMenViewController
+      guard let vc = StoryboardScene.Home.LeftViewScene.viewController() as? LeftMenViewController
+      else {
+        fatalError("ViewController 'LeftView' is not of the expected class LeftMenViewController.")
+      }
+      return vc
     }
 
     case RightViewScene = "RightView"
     static func instantiateRightView() -> RightViewController {
-      return StoryboardScene.Home.RightViewScene.viewController() as! RightViewController
+      guard let vc = StoryboardScene.Home.RightViewScene.viewController() as? RightViewController
+      else {
+        fatalError("ViewController 'RightView' is not of the expected class RightViewController.")
+      }
+      return vc
     }
 
     case RootViewScene = "RootView"
     static func instantiateRootView() -> RootViewController {
-      return StoryboardScene.Home.RootViewScene.viewController() as! RootViewController
+      guard let vc = StoryboardScene.Home.RootViewScene.viewController() as? RootViewController
+      else {
+        fatalError("ViewController 'RootView' is not of the expected class RootViewController.")
+      }
+      return vc
     }
   }
   enum InfoSecurity: String, StoryboardSceneType {
@@ -153,7 +232,11 @@ struct StoryboardScene {
 
     case AccountInfoSecurityVCScene = "AccountInfoSecurityVC"
     static func instantiateAccountInfoSecurityVC() -> AccountInfoSecurityVC {
-      return StoryboardScene.InfoSecurity.AccountInfoSecurityVCScene.viewController() as! AccountInfoSecurityVC
+      guard let vc = StoryboardScene.InfoSecurity.AccountInfoSecurityVCScene.viewController() as? AccountInfoSecurityVC
+      else {
+        fatalError("ViewController 'AccountInfoSecurityVC' is not of the expected class AccountInfoSecurityVC.")
+      }
+      return vc
     }
   }
   enum LaunchScreen: StoryboardSceneType {
@@ -164,17 +247,29 @@ struct StoryboardScene {
 
     case AccountManagerViewScene = "AccountManagerView"
     static func instantiateAccountManagerView() -> AccountManagerViewController {
-      return StoryboardScene.Main.AccountManagerViewScene.viewController() as! AccountManagerViewController
+      guard let vc = StoryboardScene.Main.AccountManagerViewScene.viewController() as? AccountManagerViewController
+      else {
+        fatalError("ViewController 'AccountManagerView' is not of the expected class AccountManagerViewController.")
+      }
+      return vc
     }
 
     case MainPageViewScene = "MainPageView"
     static func instantiateMainPageView() -> MainPageViewController {
-      return StoryboardScene.Main.MainPageViewScene.viewController() as! MainPageViewController
+      guard let vc = StoryboardScene.Main.MainPageViewScene.viewController() as? MainPageViewController
+      else {
+        fatalError("ViewController 'MainPageView' is not of the expected class MainPageViewController.")
+      }
+      return vc
     }
 
     case SignInViewScene = "SignInView"
     static func instantiateSignInView() -> SignInViewController {
-      return StoryboardScene.Main.SignInViewScene.viewController() as! SignInViewController
+      guard let vc = StoryboardScene.Main.SignInViewScene.viewController() as? SignInViewController
+      else {
+        fatalError("ViewController 'SignInView' is not of the expected class SignInViewController.")
+      }
+      return vc
     }
   }
   enum PK: String, StoryboardSceneType {
@@ -182,27 +277,47 @@ struct StoryboardScene {
 
     case PKIntroduceVCScene = "PKIntroduceVC"
     static func instantiatePKIntroduceVC() -> PKIntroduceVC {
-      return StoryboardScene.PK.PKIntroduceVCScene.viewController() as! PKIntroduceVC
+      guard let vc = StoryboardScene.PK.PKIntroduceVCScene.viewController() as? PKIntroduceVC
+      else {
+        fatalError("ViewController 'PKIntroduceVC' is not of the expected class PKIntroduceVC.")
+      }
+      return vc
     }
 
     case PKInvitationVCScene = "PKInvitationVC"
     static func instantiatePKInvitationVC() -> PKInvitationVC {
-      return StoryboardScene.PK.PKInvitationVCScene.viewController() as! PKInvitationVC
+      guard let vc = StoryboardScene.PK.PKInvitationVCScene.viewController() as? PKInvitationVC
+      else {
+        fatalError("ViewController 'PKInvitationVC' is not of the expected class PKInvitationVC.")
+      }
+      return vc
     }
 
     case PKListVCScene = "PKListVC"
     static func instantiatePKListVC() -> PKListVC {
-      return StoryboardScene.PK.PKListVCScene.viewController() as! PKListVC
+      guard let vc = StoryboardScene.PK.PKListVCScene.viewController() as? PKListVC
+      else {
+        fatalError("ViewController 'PKListVC' is not of the expected class PKListVC.")
+      }
+      return vc
     }
 
     case PKRulesVCScene = "PKRulesVC"
     static func instantiatePKRulesVC() -> PKRulesVC {
-      return StoryboardScene.PK.PKRulesVCScene.viewController() as! PKRulesVC
+      guard let vc = StoryboardScene.PK.PKRulesVCScene.viewController() as? PKRulesVC
+      else {
+        fatalError("ViewController 'PKRulesVC' is not of the expected class PKRulesVC.")
+      }
+      return vc
     }
 
     case PKSelectOppTVCScene = "PKSelectOppTVC"
     static func instantiatePKSelectOppTVC() -> PKSelectOppTVC {
-      return StoryboardScene.PK.PKSelectOppTVCScene.viewController() as! PKSelectOppTVC
+      guard let vc = StoryboardScene.PK.PKSelectOppTVCScene.viewController() as? PKSelectOppTVC
+      else {
+        fatalError("ViewController 'PKSelectOppTVC' is not of the expected class PKSelectOppTVC.")
+      }
+      return vc
     }
   }
   enum Relate: String, StoryboardSceneType {
@@ -210,27 +325,47 @@ struct StoryboardScene {
 
     case AboutVCScene = "AboutVC"
     static func instantiateAboutVC() -> AboutVC {
-      return StoryboardScene.Relate.AboutVCScene.viewController() as! AboutVC
+      guard let vc = StoryboardScene.Relate.AboutVCScene.viewController() as? AboutVC
+      else {
+        fatalError("ViewController 'AboutVC' is not of the expected class AboutVC.")
+      }
+      return vc
     }
 
     case FunctionIntroduceVCScene = "FunctionIntroduceVC"
     static func instantiateFunctionIntroduceVC() -> FunctionIntroduceVC {
-      return StoryboardScene.Relate.FunctionIntroduceVCScene.viewController() as! FunctionIntroduceVC
+      guard let vc = StoryboardScene.Relate.FunctionIntroduceVCScene.viewController() as? FunctionIntroduceVC
+      else {
+        fatalError("ViewController 'FunctionIntroduceVC' is not of the expected class FunctionIntroduceVC.")
+      }
+      return vc
     }
 
     case HelpAndFeedbackListVCScene = "HelpAndFeedbackListVC"
     static func instantiateHelpAndFeedbackListVC() -> HelpAndFeedbackListVC {
-      return StoryboardScene.Relate.HelpAndFeedbackListVCScene.viewController() as! HelpAndFeedbackListVC
+      guard let vc = StoryboardScene.Relate.HelpAndFeedbackListVCScene.viewController() as? HelpAndFeedbackListVC
+      else {
+        fatalError("ViewController 'HelpAndFeedbackListVC' is not of the expected class HelpAndFeedbackListVC.")
+      }
+      return vc
     }
 
     case HelpAndFeedbackVCScene = "HelpAndFeedbackVC"
     static func instantiateHelpAndFeedbackVC() -> HelpAndFeedbackVC {
-      return StoryboardScene.Relate.HelpAndFeedbackVCScene.viewController() as! HelpAndFeedbackVC
+      guard let vc = StoryboardScene.Relate.HelpAndFeedbackVCScene.viewController() as? HelpAndFeedbackVC
+      else {
+        fatalError("ViewController 'HelpAndFeedbackVC' is not of the expected class HelpAndFeedbackVC.")
+      }
+      return vc
     }
 
     case RelateAppVCScene = "RelateAppVC"
     static func instantiateRelateAppVC() -> RelateAppVC {
-      return StoryboardScene.Relate.RelateAppVCScene.viewController() as! RelateAppVC
+      guard let vc = StoryboardScene.Relate.RelateAppVCScene.viewController() as? RelateAppVC
+      else {
+        fatalError("ViewController 'RelateAppVC' is not of the expected class RelateAppVC.")
+      }
+      return vc
     }
   }
 }
