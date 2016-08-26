@@ -299,7 +299,7 @@ extension ChartsRealmProtocol {
             
             for data in dataInfo! {
                 
-                let index = (data.time - beginTime).components.day
+                let index = (data.time - beginTime).totalDays
                 
                 stepChartsData.totalKilometer += data.kilometer
                 stepChartsData.totalStep += data.step
