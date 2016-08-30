@@ -139,7 +139,15 @@ class HomeDateView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("HomeDateCell", forIndexPath: indexPath) as! HomeDateViewCell
         
-        cell.dateLabel.text = dateArray[indexPath.row]   //"2016.4.\(indexPath.row)"
+        
+        let  index = dateArray.count;      //"2016.4.\(indexPath.row)"
+        
+        if indexPath.row == index - 1 {
+            cell.dateLabel.text = "今天"
+        } else {
+             cell.dateLabel.text = dateArray[indexPath.row]
+        }
+        
         
         return cell
     }

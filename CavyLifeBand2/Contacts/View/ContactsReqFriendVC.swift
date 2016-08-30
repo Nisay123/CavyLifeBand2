@@ -21,7 +21,7 @@ class ContactsReqFriendVC: UIViewController, BaseViewControllerPresenter, UIText
     }
     
     /// 最大输入18个字符
-    var MAXCOUNT = 18
+    var MAXCOUNT = 30
     
     var viewModel: ContactsReqFriendPortocols?
     
@@ -54,9 +54,9 @@ class ContactsReqFriendVC: UIViewController, BaseViewControllerPresenter, UIText
         
         requestViewLayout()
         
-        if viewModel is UserChangeAddressVM  {
-            MAXCOUNT = 30
-        }
+//        if viewModel is UserChangeAddressVM  {
+//            MAXCOUNT = 30
+//        }
         
     }
     
