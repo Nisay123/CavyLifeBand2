@@ -398,6 +398,8 @@ enum NotificationName: String {
     case UploadDataSuccess
     case FirstTimeFetchData
     case UpdateRightTopView               // 更新右侧侧栏顶部视图的更新
+    case RemoveUpdateView                  //固件更新成功
+    case IsLatestEdition                   //是否是最新版本
     
 }
 

@@ -1,4 +1,4 @@
-//
+ //
 //  RightViewController.swift
 //  CavyLifeBand2
 //
@@ -47,7 +47,11 @@ class RightViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RightViewController.checkBandLining), name: BandBleNotificationName.BandDesconnectNotification.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RightViewController.updateRightTop), name: NotificationName.UpdateRightTopView.rawValue, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RightViewController.setEdition), name: NotificationName.IsLatestEdition.rawValue, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RightViewController.removeUpdateImage), name: NotificationName.RemoveUpdateView.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RightViewController.isUpdate), name: NotificationName.IsLatestEdition.rawValue,object: nil)
     }
 
     
@@ -74,11 +78,93 @@ class RightViewController: UIViewController {
         
     }
     
+    //显示固件部分图片
+    func setEdition(userInfo: NSNotification) {
+        
+        let newIndexpath = (NSIndexPath (forRow: 0, inSection: 1))
+        
+        
+        let cell =  menuTabelView.cellForRowAtIndexPath(newIndexpath) as? MenuTableViewCell
+        
+        if cell != nil {
+           cell?.updateImage.hidden = false
+            
+        }
+        
+
+        
+    }
+    
+    
+     //隐藏固件部分图片
+    func removeUpdateImage() {
+        
+//        let newIndexpath = (NSIndexPath (forRow: 0, inSection: 1))
+//        menuTabelView.reloadRowsAtIndexPaths([newIndexpath], withRowAnimation: .None)
+        
+        let newIndexpath = (NSIndexPath (forRow: 0, inSection: 1))
+        
+        
+        let cell =  menuTabelView.cellForRowAtIndexPath(newIndexpath) as? MenuTableViewCell
+        
+        if cell != nil {
+            cell?.updateImage.hidden = true
+            
+        }
+
+
+    }
+    
+    
+    //固件升级显示样式，
+    func  isUpdate (userInfo: NSNotification){
+        
+        let isUpdate = (userInfo.userInfo?["isLatest"] ?? false) as! Bool
+        
+//        let isUpdate = userInfo.userInfo?["isLasted"] as!BOOl 
+        
+        
+        if  isUpdate == true { //是最新版本
+            let newIndexpath = (NSIndexPath (forRow: 0, inSection: 1))
+            
+            
+            let cell =  menuTabelView.cellForRowAtIndexPath(newIndexpath) as? MenuTableViewCell
+            
+            if cell != nil {
+                cell?.updateImage.hidden = true
+                
+            }
+
+            
+        }else {
+            
+            let newIndexpath = (NSIndexPath (forRow: 0, inSection: 1))
+            
+            
+            let cell =  menuTabelView.cellForRowAtIndexPath(newIndexpath) as? MenuTableViewCell
+            
+            if cell != nil {
+                cell?.updateImage.hidden = false
+                
+            }
+            
+        }
+        
+        
+    }
+    
     deinit {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: BandBleNotificationName.BandConnectNotification.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: BandBleNotificationName.BandDesconnectNotification.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationName.UpdateRightTopView.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationName.IsLatestEdition.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationName.RemoveUpdateView.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationName.IsLatestEdition.rawValue, object: nil)
+        
     }
     
     func setTopViewLabel() {
@@ -182,6 +268,8 @@ extension RightViewController {
         let cellViewModel = menuGroup[indexPath.section].items[indexPath.row]
         menuCell.configure(cellViewModel, delegate: cellViewModel)
         
+        
+        
         return menuCell
         
     }
@@ -223,4 +311,6 @@ extension RightViewController {
         return menuGroup[indexPath.section].items[indexPath.row].cellHeight
     }
     
+    
 }
+ 

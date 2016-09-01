@@ -25,7 +25,6 @@ protocol MenuGroupDataSource {
     
     var titleColor: UIColor { get }
     
-    
     mutating func refurbishNextView()
     
 }
@@ -52,6 +51,8 @@ protocol MenuCellDateSource {
     var cellHeight: CGFloat { get }
     var titleColor: UIColor { get }
     var titleFont: UIFont { get }
+    var updateImage:UIImage?{ get }
+    
     
 }
 

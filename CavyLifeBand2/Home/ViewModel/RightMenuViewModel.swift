@@ -18,6 +18,8 @@ let testFile31E = "http://7xrhrs.com1.z0.glb.clouddn.com/Cavy2PR3F31e.bin"
 let testFile31  = "http://7xrhrs.com1.z0.glb.clouddn.com/Cavy2PR3F31e.bin"
 
 
+//var isLatest:Bool = false
+
 /**
  *  菜单项 view model
  */
@@ -27,15 +29,16 @@ struct MenuViewModel: MenuProtocol {
     var icon: UIImage?
     var nextView: UIViewController?
     var titleColor: UIColor
+    var updateImage: UIImage?
     
     
-    init(icon: UIImage? = nil, title: String, titleColor: UIColor = UIColor(named: .AColor), nextView: UIViewController) {
+    init(icon: UIImage? = nil, title: String, titleColor: UIColor = UIColor(named: .AColor), nextView: UIViewController, updateImage: UIImage? = nil) {
         
         self.icon = icon
         self.title = title
         self.nextView = nextView
         self.titleColor = titleColor
-        
+        self.updateImage = updateImage
     }
     
 }
@@ -47,13 +50,15 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
     var nextView: UIViewController? = nil
     var filePath: String = ""
     var titleColor: UIColor = UIColor.whiteColor()
-
+    var updateImage: UIImage?
     
-    init(icon: UIImage? = nil, title: String, titleColor: UIColor) {
+    
+    init(icon: UIImage? = nil, title: String, titleColor: UIColor, updateImage: UIImage? = nil) {
         
         self.icon = icon
         self.title = title
         self.titleColor = titleColor
+        self.updateImage = updateImage
         
     }
     
@@ -91,19 +96,27 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
             
             if localVersion.compareIsNewVersionStr(data.data.version) {
                 
-                NSTimer.runThisAfterDelay(seconds: 0.5, queue: dispatch_get_main_queue(), after: {
+                isLatest = true
+                
+                NSTimer.runThisAfterDelay(seconds: 0.5, queue: dispatch_get_main_queue(), after: { //固件已是最新版本
                     CavyLifeBandAlertView.sharedIntance.showViewTitle(message: L10n.UpdateFirmwareIsNewVersionAlertMsg.string)
                 })
                 
                 return
             
+            }else {
+//                isLatest = true
             }
             
+            //安装新的固件版本（5.47）
             let title = L10n.UpdateFirmwareInstallNewVersionAlertTitle.string + "（\(data.data.version)）"
             
-            let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Cancel) { (action) in }
+            let cancelAction = UIAlertAction(title: L10n.AlertCancelActionTitle.string, style: .Cancel) { (action) in //取消按钮
             
-            let updateAction = UIAlertAction(title: L10n.AlertUpdateActionTitle.string, style: .Default) { (action) in
+            
+            }
+            
+            let updateAction = UIAlertAction(title: L10n.AlertUpdateActionTitle.string, style: .Default) { (action) in //升级
                 
                 // 检测电量是否足够
                 LifeBandCtrl.shareInterface.getBandElectric { electric in
@@ -228,6 +241,7 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         versionAlert.addAction(updateAction)
         
         UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionAlert, animated: true, completion: nil)
+        
     }
     
     // 固件升级成功的Alert提示
@@ -241,6 +255,17 @@ struct UpdateFWViewModel: MenuProtocol, FirmwareDownload {
         
         UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionAlert, animated: true, completion: nil)
         
+        //升级成功，更新图片消失，添加通知
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.RemoveUpdateView.rawValue, object: nil)
+        
+        isLatest = true
+        var items: [MenuProtocol] = []
+//        var sectionView: UIView = LeftHeaderView(frame: CGRectMake(0, 0, ez.screenWidth, 20))
+//        var sectionHeight: CGFloat = 10
+//        var titleColor = UIColor(named: .AColor)
+        
+        items.append(UpdateFWViewModel(title: L10n.HomeRightListTitleFirmwareUpgrade.string,titleColor : UIColor(named: .BColor)))
+
     }
     
 }
@@ -251,6 +276,7 @@ struct UndoBindViewModel: MenuProtocol {
     var icon: UIImage?
     var nextView: UIViewController?
     var titleColor: UIColor
+    var updateImage: UIImage?
     
     
     init(icon: UIImage? = nil, title: String, titleColor: UIColor = UIColor.whiteColor()) {
@@ -344,7 +370,16 @@ struct BandHardwareMenuGroupDataModel: MenuGroupDataSource {
     
     init(isConnect: Bool) {
         
-        items.append(UpdateFWViewModel(title: L10n.HomeRightListTitleFirmwareUpgrade.string, titleColor: isConnect ? titleColor : UIColor(named: .BColor)))
+        //如果是最新版本，有图片，如果不是最新版本，无图片
+        
+//        if isLatest { //最新版本
+//            items.append(UpdateFWViewModel(title: L10n.HomeRightListTitleFirmwareUpgrade.string, titleColor: isConnect ? titleColor : UIColor(named: .BColor)))
+        
+//        }else {
+            items.append(UpdateFWViewModel(title: L10n.HomeRightListTitleFirmwareUpgrade.string, titleColor: isConnect ? titleColor : UIColor(named: .BColor), updateImage: UIImage(asset : .RightMenuUpdate)))
+            
+        
+//        }
         
     }
     

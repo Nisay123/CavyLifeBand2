@@ -14,6 +14,8 @@ class MenuTableViewCell: UITableViewCell {
     @IBOutlet weak var listIcon: UIImageView!
     @IBOutlet weak var listTitle: UILabel!
 
+    @IBOutlet weak var updateImage: UIImageView!
+
     override func awakeFromNib() {
 
         super.awakeFromNib()
@@ -42,6 +44,7 @@ class MenuTableViewCell: UITableViewCell {
         listTitle.font = dataSource.titleFont
         listTitle.textColor = dataSource.titleColor
         
+        updateImage.image = dataSource.updateImage
         configLayoutView()
 
     }
@@ -52,6 +55,7 @@ class MenuTableViewCell: UITableViewCell {
     func configLayoutView() {
         
         let listTitleOffset = listIcon.image == nil ? 32 : 62
+        
         
         listTitle.snp_makeConstraints {
             $0.left.equalTo(self).offset(listTitleOffset)

@@ -14,10 +14,21 @@ import EZSwiftExtensions
 import RealmSwift
 import MJRefresh
 
+
 let dateViewHeight: CGFloat = 50.0
 // 大环是 0.55 大环顶部距离NavBar高度是 96
 let ringViewHeight: CGFloat = 96 + ez.screenWidth * 0.55
 let navBarHeight: CGFloat = 64.0
+
+
+struct LifeBandInfo {
+    var fwVersion: Int
+    var model: Int
+    var hwVersion: Int
+    
+}
+
+var isLatest: Bool = false
 
 class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsRealmProtocol, SinglePKRealmModelOperateDelegate, ChartStepRealmProtocol, QueryUserInfoRequestsDelegate {
     
@@ -87,9 +98,10 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         addNotificationObserver(NotificationName.HomeShowHealthyView.rawValue, selector: #selector(HomeViewController.showHealthyDetailView))
         addNotificationObserver(NotificationName.UploadDataSuccess.rawValue, selector: #selector(HomeViewController.fetchDataAfterUpload(_:)))
         addNotificationObserver(NotificationName.FirstTimeFetchData.rawValue, selector: #selector(HomeViewController.parseChartListData))
-        
+        addNotificationObserver(NotificationName.RemoveUpdateView.rawValue, selector: #selector(HomeViewController.removeUpdateImage))
         addNotificationObserver(BandBleNotificationName.BandDesconnectNotification.rawValue, selector: #selector(HomeViewController.bandDesconnect))
         addNotificationObserver(BandBleNotificationName.BandConnectNotification.rawValue, selector: #selector(HomeViewController.bandConnect))
+                                                                                                                                                                                                                                                                                                       
         
         // 刷新
         addRefershHeader()
@@ -147,8 +159,61 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
 //            LifeBandCtrl.shareInterface.installButtonEven()
 //            
 //        }
-        rightBtn?.setBackgroundImage(UIImage(asset: .HomeBandMenu), forState: .Normal)
+//        
         
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * NSEC_PER_SEC)), dispatch_get_main_queue ()) {
+            // 等待两秒 连接手环的时间
+            
+            //获取当前版本号
+            LifeBandCtrl.shareInterface.getLifeBandInfo {
+                    BindBandCtrl.fwVersion = $0.fwVersion
+                    BindBandCtrl.hwVersion = $0.hwVersion
+                    let fwVersion = BindBandCtrl.fwVersion
+                    let hwVersion = BindBandCtrl.hwVersion
+                    
+                    let localVersion = "\(hwVersion)" + "." + "\(fwVersion)"
+                    
+                    //获取服务器上最新固件版本号
+                    NetWebApi.shareApi.netGetRequest(WebApiMethod.Firmware.description,  modelObject:  FirmwareUpdateResponse.self, successHandler: { (data) in
+                        
+                            if localVersion.compareIsNewVersionStr(data.data.version) {
+                                self.rightBtn?.setBackgroundImage(UIImage(asset: .HomeBandMenu), forState: .Normal)
+                                
+                                isLatest = true
+                                let userInfo: [String: Bool] = ["isLatest": isLatest]
+                                
+                                NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.IsLatestEdition.rawValue, object: nil, userInfo: userInfo)
+
+                                
+                            }else {
+                                self.rightBtn?.setBackgroundImage(UIImage(asset: .HomeNavRightUpdate), forState: .Normal)
+                                isLatest = false
+                                let userInfo: [String: Bool] = ["isLatest": isLatest]
+                                
+                                NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.IsLatestEdition.rawValue, object: nil, userInfo: userInfo)
+
+                                
+                            }
+                        
+                      }) { (msg) in
+                        
+                    }
+            }
+        }
+        
+    }
+    
+    
+    /*
+     移除右上角提示按钮
+     
+     */
+    
+    func removeUpdateImage() {
+        
+        self.rightBtn?.setBackgroundImage(UIImage(asset: .HomeBandMenu), forState: .Normal)
+
     }
     
     /**
@@ -430,6 +495,46 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
     
         self.addStepData(NChartStepDataRealm(userId: self.userId, date: list.date!, totalTime: list.totalTime, totalStep: list.totalSteps, stepList: stepList))
         
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * NSEC_PER_SEC)), dispatch_get_main_queue ()) {
+            // 等待两秒 连接手环的时间
+            
+//            //获取当前版本号
+//            LifeBandCtrl.shareInterface.getLifeBandInfo {
+//                BindBandCtrl.fwVersion = $0.fwVersion
+//                BindBandCtrl.hwVersion = $0.hwVersion
+//                let fwVersion = BindBandCtrl.fwVersion
+//                let hwVersion = BindBandCtrl.hwVersion
+//                
+//                let localVersion = "\(hwVersion)" + "." + "\(fwVersion)"
+//                
+//                //获取服务器上最新固件版本号
+//                NetWebApi.shareApi.netGetRequest(WebApiMethod.Firmware.description,  modelObject:  FirmwareUpdateResponse.self, successHandler: { (data) in
+//                    
+//                    if localVersion.compareIsNewVersionStr(data.data.version) {
+//                        self.rightBtn?.setBackgroundImage(UIImage(asset: .HomeBandMenu), forState: .Normal)
+//                        
+//                        isLatest = true
+//                        
+//                        let userInfo: [String: Bool] = ["isLatest": isLatest]
+//                        
+//                        NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.IsLatestEdition.rawValue, object: nil, userInfo: userInfo)
+//
+//                    }else {
+//                        self.rightBtn?.setBackgroundImage(UIImage(asset: .HomeNavRightUpdate), forState: .Normal)
+//                        
+//                        isLatest = false
+//                        
+//                        let userInfo: [String: Bool] = ["isLatest": isLatest]
+//                        
+//                        NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.IsLatestEdition.rawValue, object: nil, userInfo: userInfo)
+//                        
+//                    }
+//                    
+//                }) { (msg) in
+//                    
+//                }
+//            }
+        
     }
     
     
@@ -456,6 +561,16 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
         
         self.addSleepData(ChartSleepDataRealm(userId: self.userId, time: time, tilts: list.rollCount))
 
+    }
+    
+    
+    /*
+
+     移除提示固件升级图片
+     */
+    
+    func removeUdeateImage(){
+        
     }
     
     // MARK: 加载详情
