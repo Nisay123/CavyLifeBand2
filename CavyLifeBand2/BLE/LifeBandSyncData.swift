@@ -182,8 +182,8 @@ class LifeBandSyncData {
         let timeCmd  = (hour * 60 + min) / 10
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)) {
-            
-            // 等待同步完成，再继续同步
+        
+             //等待同步完成，再继续同步
             while self.syncState == .Sync {
                 NSThread.sleepForTimeInterval(1)
             }
@@ -201,13 +201,13 @@ class LifeBandSyncData {
             }.sendMsgToBand("%SYNC=\(dayCmd.rawValue),\(timeCmd)\n")
             
             Log.info("Band sync begin ----  \(newBeginDate.toString(format: "yyyy-MM-dd HH:mm:ss"))")
-            
-            NSTimer.runThisAfterDelay(seconds: 8, after: {
+//            
+            NSTimer.runThisAfterDelay(seconds: 10, after: {
                 if syncState == 0 {
                     NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
                 }
             })
-            
+        
         }
         
     }
@@ -245,6 +245,9 @@ class LifeBandSyncData {
      */
     private func saveTiltsAndStepsData(beginDate: NSDate, data: NSData, reslut: LifeBandSyncReslut<[TitlsAndSteps], LifeBandSyncDataError> -> Void) -> Bool {
         
+        
+        print("返回的数据数据数据－－－－－－－－－－－－－－－－－－－－－",data)
+ 
         if data[2...3]?.uint16 == 0xFFFF {
             
             /**
@@ -297,6 +300,8 @@ class LifeBandSyncData {
             syncState = .NoSync
             
             Log.info("Band sync end")
+//            NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
+            
             
             return true
             
@@ -356,6 +361,7 @@ class LifeBandSyncData {
         
         Log.info("\(dateCmd) - \(no) - \(data) - \(newDate.toString(format: "yyyy-MM-dd HH:mm:ss"), tilts, step)")
         
+        print("步数－－－－－－－－－－－－－－－－－－－－－－",step)
         return (newDate, tilts, step)
         
     }

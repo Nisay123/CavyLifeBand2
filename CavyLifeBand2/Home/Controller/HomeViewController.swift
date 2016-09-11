@@ -161,6 +161,7 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
 //        }
 //        
         
+         self.rightBtn?.setBackgroundImage(UIImage(asset: .HomeBandMenu), forState: .Normal)
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * NSEC_PER_SEC)), dispatch_get_main_queue ()) {
             // 等待两秒 连接手环的时间
@@ -495,45 +496,6 @@ class HomeViewController: UIViewController, BaseViewControllerPresenter, ChartsR
     
         self.addStepData(NChartStepDataRealm(userId: self.userId, date: list.date!, totalTime: list.totalTime, totalStep: list.totalSteps, stepList: stepList))
         
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * NSEC_PER_SEC)), dispatch_get_main_queue ()) {
-            // 等待两秒 连接手环的时间
-            
-//            //获取当前版本号
-//            LifeBandCtrl.shareInterface.getLifeBandInfo {
-//                BindBandCtrl.fwVersion = $0.fwVersion
-//                BindBandCtrl.hwVersion = $0.hwVersion
-//                let fwVersion = BindBandCtrl.fwVersion
-//                let hwVersion = BindBandCtrl.hwVersion
-//                
-//                let localVersion = "\(hwVersion)" + "." + "\(fwVersion)"
-//                
-//                //获取服务器上最新固件版本号
-//                NetWebApi.shareApi.netGetRequest(WebApiMethod.Firmware.description,  modelObject:  FirmwareUpdateResponse.self, successHandler: { (data) in
-//                    
-//                    if localVersion.compareIsNewVersionStr(data.data.version) {
-//                        self.rightBtn?.setBackgroundImage(UIImage(asset: .HomeBandMenu), forState: .Normal)
-//                        
-//                        isLatest = true
-//                        
-//                        let userInfo: [String: Bool] = ["isLatest": isLatest]
-//                        
-//                        NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.IsLatestEdition.rawValue, object: nil, userInfo: userInfo)
-//
-//                    }else {
-//                        self.rightBtn?.setBackgroundImage(UIImage(asset: .HomeNavRightUpdate), forState: .Normal)
-//                        
-//                        isLatest = false
-//                        
-//                        let userInfo: [String: Bool] = ["isLatest": isLatest]
-//                        
-//                        NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.IsLatestEdition.rawValue, object: nil, userInfo: userInfo)
-//                        
-//                    }
-//                    
-//                }) { (msg) in
-//                    
-//                }
-//            }
         
     }
     

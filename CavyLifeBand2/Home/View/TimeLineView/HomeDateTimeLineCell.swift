@@ -34,7 +34,7 @@ class HomeDateTimeLineCell: UICollectionViewCell, UITableViewDelegate, UITableVi
         
         // 跟随上面的环的数值再变化一下
         // 接收通知
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeSleepAndStep), name: NumberFollowUpper.FollowUpperStep.rawValue, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeSleepAndStep), name: NumberFollowUpper.FollowUpperStep.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(changeSleepAndStep), name: NumberFollowUpper.FollowUpperSleep.rawValue, object: nil)
     }
