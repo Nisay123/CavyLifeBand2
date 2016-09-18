@@ -129,7 +129,7 @@ extension SettingRealmListOperateDelegate {
         
         let settingModel = SettingRealmModel()
         
-        settingModel.isOpenSetting = true
+        settingModel.isOpenSetting = false
         
         settingModel.settingType = settingType
         

@@ -375,7 +375,7 @@
 "UpdateFirmware.LowElectric.AlertTitle"       = "手环电量过低";
 "UpdateFirmware.LowEle.AlertMsg"              = "手环电量过低，固件升级至少需要20%%电量，请充电后再试";
 "UpdateFirmware.UpdateFail.AlertMsg"          = "固件升级失败";
-"UpdateFirmware.UpdateSuccess.AlertMsg"       = "请稍等，豚鼠手环将在重启后自动连接";
+"UpdateFirmware.UpdateSuccess.AlertMsg"       = "手环正在重启，请在绿灯亮起后点击'确定'连接手环";
 "UpdateFirmware.CheckVersion.AlertMsg"        = "正在检测固件版本";
 "UpdateFirmware.GetBanFWVersion.AlertMsg"     = "手环当前固件版本获取中，请稍后再试";
 

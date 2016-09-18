@@ -11,7 +11,6 @@ import Log
 import EZSwiftExtensions
 import RealmSwift
 
-
 #if UITEST
 import OHHTTPStubs
 #endif
@@ -77,7 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate {
             
         #endif
         
+        //初始化Bugly
         
+        Bugly.startWithAppId("68bfe3e16c")
         return true
 
     }

@@ -27,4 +27,10 @@
 // 友盟统计SDK
 #import <UMMobClick/MobClick.h>
 
+
+//Bugly 统计
+#import <Bugly/Bugly.h>
+
 #endif /* CavyLifeBand2_Swift_h */
+
+

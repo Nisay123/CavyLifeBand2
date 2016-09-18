@@ -83,7 +83,11 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
             dragEnabled = false // 是否可以拖拽
             setScaleEnabled(false)
             pinchZoomEnabled = false
-
+            
+        }
+        if timeBucketStyle == .Month {
+            scaleXEnabled = true //X轴可以伸缩，Y轴不可以
+            scaleYEnabled = false
         }
         
         descriptionText = "\(maxValue + 1)k"
@@ -106,7 +110,6 @@ class ShowChartsView: BarChartView, ChartViewDelegate {
         let leftAxis = self.leftAxis
         leftAxis.axisMaxValue = Double((maxValue + 1) * 1000)
         leftAxis.enabled = true
-
         leftAxis.drawGridLinesEnabled = false
         leftAxis.labelFont = UIFont.systemFontOfSize(0)//[UIFont systemFontOfSize:10.f]
         leftAxis.labelCount = 0

@@ -91,27 +91,18 @@ class RightViewController: UIViewController {
             
         }
         
-
-        
     }
     
     
      //隐藏固件部分图片
     func removeUpdateImage() {
-        
-//        let newIndexpath = (NSIndexPath (forRow: 0, inSection: 1))
-//        menuTabelView.reloadRowsAtIndexPaths([newIndexpath], withRowAnimation: .None)
-        
         let newIndexpath = (NSIndexPath (forRow: 0, inSection: 1))
-        
-        
         let cell =  menuTabelView.cellForRowAtIndexPath(newIndexpath) as? MenuTableViewCell
         
         if cell != nil {
             cell?.updateImage.hidden = true
             
         }
-
 
     }
     
@@ -198,6 +189,7 @@ class RightViewController: UIViewController {
             addMenumenuGroupData(BandHardwareMenuGroupDataModel(isConnect: false))
             addMenumenuGroupData(BindingBandMenuGroupDataModel())
             menuTabelView.reloadData()
+            removeUpdateImage()
             
         } else {
             

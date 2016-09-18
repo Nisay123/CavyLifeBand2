@@ -80,6 +80,10 @@ class ShowStackedChartsView: BarChartView, ChartViewDelegate {
             pinchZoomEnabled = false
             
         }
+        if timeBucketStyle == .Month {
+            scaleXEnabled = true  //X轴可以伸缩，Y轴不可以
+            scaleYEnabled = false
+        }
         
         descriptionText = "\(maxValue  / 60 + 1)h"
         descriptionFont = UIFont.systemFontOfSize(12)

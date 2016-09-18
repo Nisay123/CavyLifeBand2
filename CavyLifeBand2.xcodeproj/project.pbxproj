@@ -82,6 +82,10 @@
 		4CF9CB331D2A41FF00D9C88F /* HomeRealmApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB2F1D2A41FF00D9C88F /* HomeRealmApi.swift */; };
 		4CF9CB341D2A41FF00D9C88F /* HomeWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB301D2A41FF00D9C88F /* HomeWebApi.swift */; };
 		4CF9CB351D2A41FF00D9C88F /* HomeWebJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB311D2A41FF00D9C88F /* HomeWebJSON.swift */; };
+		5AABC8A71D86A576003AA8CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AABC8A61D86A576003AA8CA /* SystemConfiguration.framework */; };
+		5AABC8A91D86A57F003AA8CA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AABC8A81D86A57F003AA8CA /* Security.framework */; };
+		5AABC8AD1D86ABD5003AA8CA /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AABC8AC1D86ABD5003AA8CA /* Bugly.framework */; };
+		5AABC8AF1D86AD6E003AA8CA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AABC8AE1D86AD6E003AA8CA /* libz.tbd */; };
 		63B434DCCEB536C360E2037A /* Pods_CavyLifeBand2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 590A4176408FA696E63D90F6 /* Pods_CavyLifeBand2.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		67837F3055FAE4CB07F34391 /* Pods_CavyLifeBand2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B308C2BA77F2EED99C226A28 /* Pods_CavyLifeBand2UITests.framework */; };
 		683655271CBB3B2C009373EA /* SettingSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683655251CBB3B2C009373EA /* SettingSwitchTableViewCell.swift */; };
@@ -443,6 +447,10 @@
 		4CF9CB301D2A41FF00D9C88F /* HomeWebApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWebApi.swift; sourceTree = "<group>"; };
 		4CF9CB311D2A41FF00D9C88F /* HomeWebJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWebJSON.swift; sourceTree = "<group>"; };
 		590A4176408FA696E63D90F6 /* Pods_CavyLifeBand2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CavyLifeBand2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AABC8A61D86A576003AA8CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5AABC8A81D86A57F003AA8CA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5AABC8AC1D86ABD5003AA8CA /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
+		5AABC8AE1D86AD6E003AA8CA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		62B877474089074C0F590F2C /* Pods-CavyLifeBand2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CavyLifeBand2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CavyLifeBand2UITests/Pods-CavyLifeBand2UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		683655251CBB3B2C009373EA /* SettingSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		683655261CBB3B2C009373EA /* SettingSwitchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingSwitchTableViewCell.xib; sourceTree = "<group>"; };
@@ -729,6 +737,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AABC8AF1D86AD6E003AA8CA /* libz.tbd in Frameworks */,
+				5AABC8AD1D86ABD5003AA8CA /* Bugly.framework in Frameworks */,
+				5AABC8A91D86A57F003AA8CA /* Security.framework in Frameworks */,
+				5AABC8A71D86A576003AA8CA /* SystemConfiguration.framework in Frameworks */,
 				918AA2301CE328070022AE30 /* CoreBluetooth.framework in Frameworks */,
 				63B434DCCEB536C360E2037A /* Pods_CavyLifeBand2.framework in Frameworks */,
 			);
@@ -1802,6 +1814,10 @@
 		E460B001B67D19857BA48CA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5AABC8AE1D86AD6E003AA8CA /* libz.tbd */,
+				5AABC8A81D86A57F003AA8CA /* Security.framework */,
+				5AABC8AC1D86ABD5003AA8CA /* Bugly.framework */,
+				5AABC8A61D86A576003AA8CA /* SystemConfiguration.framework */,
 				918AA22F1CE328070022AE30 /* CoreBluetooth.framework */,
 				C848EB391C46240F001FA1BF /* AssetsLibrary.framework */,
 				24A7CFAEA8FAD0237C60B20B /* Pods.framework */,
@@ -2593,6 +2609,7 @@
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/UI\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/Core\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/Extend/QQConnectSDK\"",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = CavyLifeBand2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2640,6 +2657,7 @@
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/UI\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/Core\"",
 					"\"${PODS_ROOT}/ShareSDK2/ShareSDK/Extend/QQConnectSDK\"",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = CavyLifeBand2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
