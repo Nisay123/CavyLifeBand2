@@ -154,7 +154,7 @@ extension UserAchievementView {
      - returns: String
      */
     func infoStrFormatter(info: String = "0") -> String {
-        return "\(L10n.AccountInfoAchieveViewNumPrefix)\(info)\(L10n.GuideStep.string)"
+        return "\(L10n.AccountInfoAchieveViewNumPrefix)\(info)"
     }
 
 }

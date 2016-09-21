@@ -143,7 +143,8 @@ class HomeDateView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         let  index = dateArray.count;      //"2016.4.\(indexPath.row)"
         
         if indexPath.row == index - 1 {
-            cell.dateLabel.text = "今天"
+//            cell.dateLabel.text = "今天"
+            cell.dateLabel.text = L10n.HomeTimeLineCellDate.string
         } else {
              cell.dateLabel.text = dateArray[indexPath.row]
         }

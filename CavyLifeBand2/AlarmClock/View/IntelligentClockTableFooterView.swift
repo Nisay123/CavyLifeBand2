@@ -49,6 +49,7 @@ class IntelligentClockTableFooterView: UIView {
         infoLabel.font          = UIFont.mediumSystemFontOfSize(12.0)
 
         infoLabel.text          = L10n.AlarmClockIntelligentClockTableFooterInfo.string
+        infoLabel.numberOfLines = 0
 
         infoLabel.textColor     = UIColor(named: .AColor)
 

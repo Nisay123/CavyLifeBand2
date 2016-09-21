@@ -115,7 +115,7 @@ class HomeRingView: UIView {
             
             currentLabel!.attributedText =  NSMutableAttributedString().attributeString("0", numSize: 30, unit: L10n.GuideStep.string, unitSize: 16)
             
-            percentLabel?.text = "\(L10n.HomeStepRingPercerntText.string)\(0)%"
+            percentLabel?.text = "\(L10n.HomeStepRingPercerntText.string )\(0)%"
             
         case .SleepRing:
             
@@ -127,7 +127,7 @@ class HomeRingView: UIView {
             attrs.appendAttributedString(NSMutableAttributedString().attributeString("0", numSize: 16, unit: L10n.HomeSleepRingUnitMinute.string, unitSize: 12))
             currentLabel!.attributedText = attrs
             
-            percentLabel!.text = "\(L10n.HomeSleepRingPercerntText.string)\(0)%"
+            percentLabel!.text = "\(L10n.HomeSleepRingPercerntText.string )\(0)%"
             
         }
         
@@ -241,7 +241,7 @@ class HomeRingView: UIView {
             attrs.appendAttributedString(NSMutableAttributedString().attributeString(minutes, numSize: 16, unit: minUnit, unitSize: 12))
             currentLabel!.attributedText = attrs
             
-            percentLabel!.text = "\(L10n.HomeSleepRingPercerntText.string)\(percent)%"
+            percentLabel!.text = "\(L10n.HomeSleepRingPercerntText.string )\(percent)%"
             
         case .StepRing:
             
@@ -250,7 +250,7 @@ class HomeRingView: UIView {
             
             currentLabel!.attributedText =  NSMutableAttributedString().attributeString(step, numSize: 30, unit: stepUnit, unitSize: 16)
             
-            percentLabel?.text = "\(L10n.HomeStepRingPercerntText)\(percent)%"
+            percentLabel?.text = "\(L10n.HomeStepRingPercerntText )\(percent)%"
             
         }
         

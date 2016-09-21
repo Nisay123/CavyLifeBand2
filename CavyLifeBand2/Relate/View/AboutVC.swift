@@ -9,6 +9,7 @@
 import UIKit
 import EZSwiftExtensions
 
+var isChinese: Bool = false
 class AboutVC: UIViewController, BaseViewControllerPresenter {
     
     var navTitle: String { return L10n.RelateAboutNavTitle.string }
@@ -37,9 +38,7 @@ class AboutVC: UIViewController, BaseViewControllerPresenter {
         updateNavUI()
         
         baseUISetting()
-        
         addGensture()
-
         // Do any additional setup after loading the view.
     }
 
@@ -66,9 +65,19 @@ class AboutVC: UIViewController, BaseViewControllerPresenter {
         
         copyrightLabel.font = UIFont.systemFontOfSize(12.0)
         useAndPrivateLabel.font = UIFont.systemFontOfSize(14.0)
-        
-        useAndPrivateLabel.text = L10n.RelateAboutUseAndPrivate.string
+        useAndPrivateLabel.text = L10n.RelateAboutUseAndPrivate.string //隐私条款
         copyrightLabel.text = L10n.RelateAboutCopyrightInfo.string
+        
+        let languageArr = NSLocale.preferredLanguages()
+        let currentLan = languageArr.first
+        
+        let currenLanguage = currentLan
+        if currenLanguage == "zh-Hans" {
+            useAndPrivateLabel.hidden = false
+
+        }else {
+            useAndPrivateLabel.hidden = true
+        }
         
         tableView.separatorStyle = .None
         tableView.tableFooterView = UIView()
@@ -110,6 +119,16 @@ class AboutVC: UIViewController, BaseViewControllerPresenter {
     
 }
 
+ //获取当前语言
+
+    func getPresentLanguage() ->String {
+        let arr = NSLocale.preferredLanguages()
+        let currentLan = arr.first
+        
+        return currentLan!
+    
+        
+    }
 // MARK: - UITableViewDelegate
 extension AboutVC: UITableViewDelegate {
     

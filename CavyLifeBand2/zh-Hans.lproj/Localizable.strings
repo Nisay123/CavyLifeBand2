@@ -137,6 +137,7 @@
 "Home.Weather.AirPollution.Bad"        = "重度污染";
 "Home.TimeLine.Cell.Sleep"             = "睡眠";
 "Home.TimeLine.Cell.Step"              = "计步";
+"Home.TimeLine.Cell.Date"              = "今天";
 "Home.TimeLine.Cell.PK"                = "PK";
 "Home.TimeLine.Cell.Achive"            = "成就";
 "Home.TimeLine.Cell.Healthiy"          = "健康";

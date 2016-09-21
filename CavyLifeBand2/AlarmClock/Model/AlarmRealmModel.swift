@@ -61,29 +61,81 @@ class AlarmRealmModel: Object {
             
         } else {
             
-            for j in 0..<arr.count {
-                
-                var day: String = numberFormatter.stringFromNumber(NSNumber.init(integer: arr[j]))!
-                
-                if arr[j] == 7 {
-                    day = "日"
+            let languageArr = NSLocale.preferredLanguages()
+            let currentLan = languageArr.first
+            let currenLanguage = currentLan
+            if currenLanguage == "zh-Hans" {
+                for j in 0..<arr.count {
+                    
+                    var day: String = numberFormatter.stringFromNumber(NSNumber.init(integer: arr[j]))!
+                    
+                    if arr[j] == 7 {
+                        day = "日"
+                    }
+                    
+                    if j == 0 {
+                        daysStr += day
+                    } else {
+                        daysStr += ",\(day)"
+                    }
                 }
+
+                return daysStr
+            }else {
                 
-                if j == 0 {
-                    daysStr += day
-                } else {
-                    daysStr += ",\(day)"
+                for j in 0..<arr.count {
+                    
+                    
+                    let day: String = numberFormatter.stringFromNumber(NSNumber.init(integer: arr[j]))!
+                    
+//                    if j == 0 {
+//                         daysStr += day
+//                    }else {
+                        if day == "one" {
+                            daysStr += " \(L10n.AlarmDayMonday.string)"
+                        }
+                        if day == "two" {
+                            daysStr += " \(L10n.AlarmDayTuesday.string)"
+                        }
+                        if day == "three" {
+                            daysStr += " \(L10n.AlarmDayWednesday.string)"
+                        }
+                        if day == "four" {
+                            daysStr += " \(L10n.AlarmDayThursday.string)"
+                        }
+                        if day == "five" {
+                            daysStr += " \(L10n.AlarmDayFriday.string)"
+                        }
+                        if day == "six" {
+                            daysStr += " \(L10n.AlarmDaySaturday.string)"
+                        }
+                        if day == "seven" {
+                            daysStr += " \(L10n.AlarmDaySunday.string)"
+                        }
+
+//                    }
+                    
                 }
+                return daysStr
+                
             }
             
         }
-        
-        
         
         return daysStr
     }
     
 }
+
+//func getPresentLanguage() ->String {
+//    let arr = NSLocale.preferredLanguages()
+//    let currentLan = arr.first
+//    
+//    return currentLan!
+//    
+//    
+//}
+
 
 class AlarmRealmListModel: Object {
     

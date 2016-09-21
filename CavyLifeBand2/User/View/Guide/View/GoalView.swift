@@ -104,12 +104,14 @@ class GoalView: UIView {
         
         // 平均值线
         stepPinAvg.textColor = UIColor(named: .HColor)
+        stepPinAvg.text = L10n.GuideAverage.string
         stepPinAvg.font = UIFont.systemFontOfSize(12)
         stepPineLine.backgroundColor = UIColor(named: .HColor)
         
         // 推荐值线
         stepPinRecom.textColor = UIColor(named: .HColor)
         stepPinRecom.font = UIFont.systemFontOfSize(12)
+        stepPinRecom.text = L10n.GuideRecommend.string
         stepPinRecomLIne.backgroundColor = UIColor(named: .HColor)
 
     }
@@ -142,11 +144,13 @@ class GoalView: UIView {
         // 平均值线
         sleepPinAvgLab.textColor = UIColor(named: .HColor)
         sleepPinAvgLab.font = UIFont.systemFontOfSize(12)
+        sleepPinAvgLab.text = L10n.GuideAverage.string
         sleepPineAvgLine.backgroundColor = UIColor(named: .HColor)
         
         // 推荐值线
         sleepPinRecomLine.backgroundColor = UIColor(named: .HColor)
         sleepPinRecomLab.textColor = UIColor(named: .HColor)
+        sleepPinRecomLab.text = L10n.GuideRecommend.string
         sleepPinRecomLab.font = UIFont.systemFontOfSize(12)
 
     }

@@ -20,7 +20,9 @@ class UserProtocolView: UIView {
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect) {
-
+        
+        let currentLanguage = getPresentLanguage()
+        
         desText.text = L10n.SignUpProcotolViewTitle.string
         desText.textColor = UIColor(named: .AColor)
         desText.font = UIFont.systemFontOfSize(14)
@@ -28,7 +30,17 @@ class UserProtocolView: UIView {
         protocolBtn.setTitle(L10n.SignUpProcotolViewBtn.string, forState: .Normal)
         protocolBtn.setTitleColor(UIColor(named: .CColor), forState: .Normal)
         protocolBtn.titleLabel!.font = UIFont.systemFontOfSize(14)
-
+        
+        if currentLanguage == "zh-Hans" {
+            protocolBtn.hidden = false
+            desText.hidden = false
+            checkboxBtn.hidden = false
+            
+        }else {
+            protocolBtn.hidden = true
+            desText.hidden = true
+            checkboxBtn.hidden = true
+        }
         
         defineViewLayout()
       
@@ -64,5 +76,15 @@ class UserProtocolView: UIView {
         }
 
     }
+    
+    func getPresentLanguage() ->String {
+        let arr = NSLocale.preferredLanguages()
+        let currentLan = arr.first
+        
+        return currentLan!
+        
+        
+    }
+
 
 }

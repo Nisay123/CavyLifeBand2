@@ -38,7 +38,8 @@ class CustomCamera: UIViewController {
     @IBOutlet weak var videRecordTime: UILabel!
     @IBOutlet weak var shutterPhoto: UIButton!
     @IBOutlet weak var lastImage: UIButton!
-
+    //取消按钮
+    @IBOutlet weak var cancelButton: UIButton!
     var isPhotoOrVideo: Bool = true // true 代表拍照
     var camera         = LLSimpleCamera()
     var library        = ALAssetsLibrary()
@@ -57,6 +58,7 @@ class CustomCamera: UIViewController {
 
         }
         
+        
         getLastPhoto()         // show lastImage
         
         camera.start()         // start Camera
@@ -72,7 +74,8 @@ class CustomCamera: UIViewController {
         super.viewDidLoad()
         
         UIApplication.sharedApplication().idleTimerDisabled = true
-        
+//        self.cancelButton.setTitle(L10n.CameraBack.string, forState: .Normal)
+//        self.cancelButton.titleLabel?.font = UIFont.mediumSystemFontOfSize(9)
         cameraAllViewLayout()
         
     }
@@ -85,6 +88,15 @@ class CustomCamera: UIViewController {
         
     }
     
+    func getPresentLanguage() ->String {
+        let arr = NSLocale.preferredLanguages()
+        let currentLan = arr.first
+        
+        return currentLan!
+        
+        
+    }
+
     // 全部控件布局
     func cameraAllViewLayout() {
         
@@ -92,6 +104,16 @@ class CustomCamera: UIViewController {
         self.camera = LLSimpleCamera(quality: AVCaptureSessionPresetHigh, position: LLCameraPositionRear, videoEnabled: true)
         self.camera.attachToViewController(self, withFrame: CGRectMake(0, 0, ez.screenWidth, ez.screenHeight))
         self.camera.fixOrientationAfterCapture = false
+        self.changeToPhoto.setTitle(L10n.CameraPhoto.string, forState: .Normal)
+        self.changeToVideo.setTitle(L10n.CameraVideo.string, forState: .Normal)
+        self.cancelButton.setTitle(L10n.CameraBack.string, forState: .Normal)
+        let currenLanguage = getPresentLanguage()
+        if currenLanguage == "zh-Hans" {
+             self.cancelButton.titleLabel?.font = UIFont.mediumSystemFontOfSize(14)
+        }else {
+           self.cancelButton.titleLabel?.font = UIFont.mediumSystemFontOfSize(9)
+        }
+
         
         // 重写LLSimpleCamera两个Block属性
         self.camera.onDeviceChange = deviceChange

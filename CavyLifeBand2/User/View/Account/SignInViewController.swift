@@ -148,11 +148,15 @@ class SignInViewController: UIViewController, SignInDelegate, BaseViewController
         userNameTextField.placeholder = L10n.SignInUserNameTextField.string
         passwdTextField.placeholder = L10n.SignInPasswdTextField.string
         
-        forgetPasswdBtn.titleLabel?.text = L10n.SignInForgotPasswdBtn.string
+        //忘记密码
+//        forgetPasswdBtn.titleLabel?.text = L10n.SignInForgotPasswdBtn.string
+        forgetPasswdBtn.setTitle(L10n.SignInForgotPasswdBtn.string, forState: .Normal)
         forgetPasswdBtn.setTitleColor(UIColor(named: .AColor), forState: .Normal)
         forgetPasswdBtn.titleLabel?.font = UIFont.systemFontOfSize(14.0)
         
-        signInBtn.titleLabel?.text = L10n.SignInPasswdTextField.string
+        //登录按钮
+//        signInBtn.titleLabel?.text = L10n.SignInPasswdTextField.string
+        signInBtn.setTitle(L10n.SignInSignInBtn.string, forState: .Normal)
         
     }
     

@@ -22,8 +22,9 @@ class EmergencyContactPersonCell: UITableViewCell {
         
         titleLabel.textColor = UIColor(named: .EColor)
         titleLabel.font = UIFont.mediumSystemFontOfSize(16.0)
-        
+        titleLabel.text = L10n.SettingSafetyTableCellContactTitle.string
         addBtn.setTitleColor(UIColor(named: .GColor), forState: .Normal)
+        addBtn.setTitle(L10n.SettingSafetyTableCellContactButton.string, forState: .Normal)
         addBtn.titleLabel?.font = UIFont.mediumSystemFontOfSize(16.0)
         addBtn.addTarget(nil, action: #selector(SafetySettingViewController.addEmergencyContact(_:)), forControlEvents: .TouchUpInside)
     }

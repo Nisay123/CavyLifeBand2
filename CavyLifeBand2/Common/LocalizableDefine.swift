@@ -223,6 +223,8 @@ enum L10n {
   case HomeTimeLineCellSleep
   /// 计步
   case HomeTimeLineCellStep
+  /// 今天
+  case HomeTimeLineCellDate
   /// PK
   case HomeTimeLineCellPK
   /// 成就
@@ -649,7 +651,7 @@ enum L10n {
   case UpdateFirmwareLowEleAlertMsg
   /// 固件升级失败
   case UpdateFirmwareUpdateFailAlertMsg
-  /// 请稍等，豚鼠手环将在重启后自动连接
+  /// 手环正在重启，请在绿灯亮起后点击'确定'连接手环
   case UpdateFirmwareUpdateSuccessAlertMsg
   /// 正在检测固件版本
   case UpdateFirmwareCheckVersionAlertMsg
@@ -703,6 +705,7 @@ enum L10n {
   case ShareTitle
   /// 来自豚鼠科技
   case ShareContent
+
 }
 
 extension L10n: CustomStringConvertible {
@@ -930,6 +933,8 @@ extension L10n: CustomStringConvertible {
         return L10n.tr("Home.TimeLine.Cell.Sleep")
       case .HomeTimeLineCellStep:
         return L10n.tr("Home.TimeLine.Cell.Step")
+      case .HomeTimeLineCellDate:
+        return L10n.tr("Home.TimeLine.Cell.Date")
       case .HomeTimeLineCellPK:
         return L10n.tr("Home.TimeLine.Cell.PK")
       case .HomeTimeLineCellAchive:
