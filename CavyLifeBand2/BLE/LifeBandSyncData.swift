@@ -181,35 +181,24 @@ class LifeBandSyncData {
         let min      = newBeginDate.toString(format: "mm").toInt() ?? 0
         let timeCmd  = (hour * 60 + min) / 10
         
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)) {
+        var i :Int = 0
+        var syncState: Int = 0
+        LifeBandBle.shareInterface.installCmd(0xDA) { [unowned self] data in
+            Log.info("同步\(i += 1)")
+            Log.info("syncDataFormBand ---- \(data)")
+
+            Log.info("同步数据 ---- \(data)")
+            syncState = 1
+             self.saveTiltsAndStepsData(newBeginDate, data: data, reslut: reslut)
+        }.sendMsgToBand("%SYNC=\(dayCmd.rawValue),\(timeCmd)\n")
         
-             //等待同步完成，再继续同步
-            while self.syncState == .Sync {
-                NSThread.sleepForTimeInterval(1)
+        
+        NSTimer.runThisAfterDelay(seconds: 16, after: {
+            if syncState == 0 {
+                NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
             }
-            
-            var i: Int = 0
-            var syncState: Int = 0
-            LifeBandBle.shareInterface.installCmd(0xDA) { [unowned self] data in
-                syncState = 1
-                Log.info("同步\(i += 1)")
-                
-                Log.info("syncDataFormBand ---- \(data)")
-                
-                self.saveTiltsAndStepsData(newBeginDate, data: data, reslut: reslut)
-                
-            }.sendMsgToBand("%SYNC=\(dayCmd.rawValue),\(timeCmd)\n")
-            
-            Log.info("Band sync begin ----  \(newBeginDate.toString(format: "yyyy-MM-dd HH:mm:ss"))")
-//            
-            NSTimer.runThisAfterDelay(seconds: 10, after: {
-                if syncState == 0 {
-                    NSNotificationCenter.defaultCenter().postNotificationName(RefreshStyle.StopRefresh.rawValue, object: nil)
-                }
-            })
         
-        }
-        
+        })
     }
     
     /**

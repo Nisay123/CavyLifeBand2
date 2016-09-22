@@ -35,7 +35,8 @@ class RightViewController: UIViewController {
         addMenumenuGroupData(BandHardwareMenuGroupDataModel(isConnect: false))
         addMenumenuGroupData(BindingBandMenuGroupDataModel())
         
-        NSTimer.runThisEvery(seconds: 3) { _ in
+       
+        NSTimer.runThisEvery(seconds: 600) { _ in
             
             self.getBandElectric()
             
@@ -196,7 +197,6 @@ class RightViewController: UIViewController {
             bandTitle.text = L10n.BandTitle.string
             fwVersion.text = L10n.BandFWVersion.string + L10n.BandDisconnectGetFWVersionTitle.string
             bandName.text  = LifeBandBle.shareInterface.getPeripheralName()
-//            getBandElectric()
             
             isConnect  = true
             clearMenuMenuGroupData()
@@ -204,9 +204,28 @@ class RightViewController: UIViewController {
             addMenumenuGroupData(BandHardwareMenuGroupDataModel(isConnect: true))
             addMenumenuGroupData(BindingBandMenuGroupDataModel())
             menuTabelView.reloadData()
+            self.getBandElectric()
+            self.getFwVersion()
         }
         
         
+    }
+    
+    
+    /*
+     获取固件版本
+   */
+    
+    func getFwVersion () {
+    
+        
+        LifeBandCtrl.shareInterface.getLifeBandInfo {
+            BindBandCtrl.fwVersion = $0.fwVersion
+            BindBandCtrl.hwVersion = $0.hwVersion
+            self.fwVersion.text = L10n.BandFWVersion.string + "\( BindBandCtrl.hwVersion)" + "." + "\(BindBandCtrl.fwVersion)"
+           
+        }
+
     }
     
     override func didReceiveMemoryWarning() {
