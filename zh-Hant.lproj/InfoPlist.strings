@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  CavyLifeBand2
+
+  Created by xuemincai on 16/1/5.
+  Copyright © 2016年 xuemincai. All rights reserved.
+*/
+"CFBundleDisplayName" = "豚鼠生活";
+"CFBundleName" = "豚鼠生活";
+"NSLocationWhenInUseUsageDescription" = "開啟定位功能->設置->隱私->定位服務 打開該服務";

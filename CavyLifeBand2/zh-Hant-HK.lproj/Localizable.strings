@@ -1,0 +1,416 @@
+/*
+ Localizable.strings
+ CavyLifeBand2
+ 
+ Created by xuemincai on 16/1/5.
+ Copyright © 2016年 xuemincai. All rights reserved.
+ */
+
+
+// Web 错误码定义
+"WebErrorCode.1000" = "請求參數錯誤";
+"WebErrorCode.1001" = "用戶名或密碼錯誤";
+"WebErrorCode.1002" = "手機號碼錯誤";
+"WebErrorCode.1003" = "驗證碼錯誤";
+"WebErrorCode.1004" = "修改用戶信息失敗";
+"WebErrorCode.1005" = "用戶已存在";
+"WebErrorCode.1006" = "用戶名錯誤或不存在";
+"WebErrorCode.1007" = "短訊驗證碼發送失敗";
+"WebErrorCode.5001" = "系統錯誤";
+"WebErrorCode.5002" = "數據庫錯誤";
+
+// 用户模块错误定义
+"UserModuleErrorCode.NetError"        = "網絡不給力，請檢查你的網絡";
+"UserModuleErrorCode.NetAPIError"     = "服務器返回錯誤";
+"UserModuleErrorCode.PhoneError"      = "手機號碼錯誤";
+"UserModuleErrorCode.EmailError"      = "郵箱格式錯誤";
+"UserModuleErrorCode.PasswdError"     = "密碼長度應不少於6位";
+"UserModuleErrorCode.SecurityError"   = "驗證碼錯誤";
+"UserModuleErrorCode.UserNameError"   = "用戶名格式錯誤";
+"UserModuleErrorCode.PhoneNil"        = "手機號碼不能為空";
+"UserModuleErrorCode.EmailNil"        = "郵箱不能為空";
+"UserModuleErrorCode.PasswdNil"       = "密碼不能為空";
+"UserModuleErrorCode.SecurityNil"     = "驗證碼不能為空";
+"UserModuleErrorCode.UserNameNil"     = "用戶名不能為空";
+"UserModuleErrorCode.UserIdNil"       = "用戶Id不能為空";
+"UserModuleErrorCode.UnknownError"    = "未知錯誤";
+"UserModuleErrorCode.FriendIdNil"     = "好友Id不能為空";
+"UserModuleErrorCode.SearchTypeNil"   = "搜索類型不能為空";
+"UserModuleErrorCode.ParaNil"         = "參數有誤";
+"UserModuleErrorCode.ParaError"       = "參數有誤";
+"UserModuleErrorCode.LBSNil"          = "LBS不能為空";
+"UserModuleErrorCode.PhoneNumListNil" = "電話號碼列表不能為空";
+"UserModuleErrorCode.ImageParseFail"  = "圖片轉換失敗";
+
+
+// 首页
+"MainPage.SignInBtn"       = "登錄";
+"MainPage.SignUpBtn"       = "加入豚鼠";
+
+// 登录页面
+"SignIn.SignInBtn"         = "登錄";
+"SignIn.UserNameTextField" = "手機/郵箱";
+"SignIn.PasswdTextField"   = "密碼";
+"SignIn.title"             = "準備開始";
+"SignIn.SignUpItemBtn"     = "註冊";
+"SignIn.ForgotPasswdBtn"   = "忘記了密碼？";
+
+// 注册页面
+"SignUp.PhoneRightItemBtn"   = "郵箱";
+"SignUp.EmailRightItemBtn"   = "手機";
+"SignUp.Title"               = "加入豚鼠";
+"SignUp.PhoneNumTextField"   = "手機";
+"SignUp.EmailTextField"      = "郵箱";
+"SignUp.SafetyCodeTextField" = "驗證碼";
+"SignUp.SendSafetyCode"      = "發送驗證碼";
+"SignUp.ProcotolViewTitle"   = "我已經閱讀並接受";
+"SignUp.ProcotolViewBtn"     = "《豚鼠科技服務協議》";
+"SignUp.SignUpBtn"           = "註冊";
+"SignUp.ReadProcotol"        = "請先閱讀《豚鼠科技服務協議》";
+"SignUp.ReSignUp"            = "重新註冊";
+"SignUp.DirectSinIn"         = "直接登錄";
+
+// 引导页
+"Guide.MyInfo"                = "我的信息";
+"Guide.Mine"                  = "我是";
+"Guide.Birthday"              = "生日";
+"Guide.Height"                = "身高";
+"Guide.Weight"                = "體重";
+"Guide.Goal"                  = "目標";
+"Guide.GoalStep"              = "計步";
+"Guide.GoalSleep"             = "睡眠";
+"Guide.Step"                  = "步";
+"Guide.Average"               = "平均";
+"Guide.Recommend"             = "推薦";
+"Guide.Introduce"             = "準確填寫，健康監測更精確！";
+"Guide.Minute"                = "分鐘";
+"Guide.Hour"                  = "小時";
+
+"Guide.Setting"               = "設置";
+"Guide.PassButton"            = "跳過";
+"Guide.OpenNotice"            = "開啟智能通知";
+"Guide.OpenNoticeInfo"        = "隨時關注我的健康生活";
+"Guide.OpenLocationShare"     = "開啟位置共享";
+"Guide.OpenLocationShareInfo" = "告訴豚鼠你的位置，更有安全服務！";
+
+"Guide.LinkCavy"              = "綁定手環";
+"Guide.OpenBluetooth"         = "請打開藍牙";
+"Guide.OpenBluetoothInfo"     = "手機藍牙打開後才能成功連接手環";
+"Guide.OpenCavy"              = "連接手環";
+"Guide.OpenCavySugg"          = "沒有燈? 充電試試看";
+"Guide.OpenCavyInfo"          = "按下手環按鈕，連接手環";
+"Guide.Linking"               = "正在連接...";
+"Guide.PairSuccess"           = "綁定成功";
+"Guide.PairSuccessInfo"       = "開始健康之旅吧";
+"Guide.PairFail"              = "綁定失敗";
+"Guide.PairFailInfo"          = "確保手環有電，並且位於手機的連接範圍內";
+
+"Guide.PhoneRemind.Title"     = "來電提醒";
+"Guide.PhoneRemind.Info"      = "來電振動提醒，不漏接一個重要來電";
+"Guide.PK.Title"              = "計步成就";
+"Guide.PK.Info"               = "讓走路成為一種樂趣";
+"Guide.SafetyService.Title"   = "安全服務";
+"Guide.SafetyService.Info"    = "遇到緊急情況，連按4下按鈕\n立即向聯繫人發送求救信息";
+"Guide.LifeBand.Title"        = "豚鼠手環";
+"Guide.LifeBand.Info"         = "開啟我的豚鼠生活";
+
+// 忘记密码页面
+"Forgot.Title"                = "忘記密碼了?";
+"Forgot.PasswdTextField"      = "新密碼";
+"Forgot.BackTextBtn"          = "且慢,我想起來了!";
+"Forgot.finish"               = "完成";
+
+// 照相机
+"Camera.Photo"                = "拍照";
+"Camera.Video"                = "攝影";
+"Camera.Back"                 = "取消";
+
+// 主页面
+"Home.SleepRing.PercerntText"          = "已完成";
+"Home.SleepRing.Unit.Hour"             = "小時";
+"Home.SleepRing.Unit.Minute"           = "分鐘";
+"Home.StepRing.PercerntText"           = "已完成目標的";
+"Home.Weather.Air"                     = "空氣";
+"Home.Weather.AirCondition.Best"       = "優";
+"Home.Weather.AirCondition.Good"       = "良";
+"Home.Weather.AirPollution.Mild"       = "輕度污染";
+"Home.Weather.AirPollution.Middle"     = "中度污染";
+"Home.Weather.AirPollution.Bad"        = "重度污染";
+"Home.TimeLine.Cell.Sleep"             = "睡眠";
+"Home.TimeLine.Cell.Step"              = "計步";
+"Home.TimeLine.Cell.Date"              = "今天";
+"Home.TimeLine.Cell.PK"                = "PK";
+"Home.TimeLine.Cell.Achive"            = "成就";
+"Home.TimeLine.Cell.Healthiy"          = "健康";
+"Home.TimeLine.Achive.Badge"           = "累計";
+"Home.TimeLine.PK.Lead"                = "領先";
+"Home.TimeLine.PK.Back"                = "落後";
+"Home.TimeLine.PK.Win"                 = "勝利了!";
+"Home.TimeLine.PK.Lose"                = "失敗了!";
+"Home.TimeLine.Healthy.Care"           = "需要關懷";
+"Home.LifeList.Title.Target"           = "目標";
+"Home.LifeList.Title.InfoOpen"         = "信息公開";
+"Home.LifeList.Title.Friend"           = "好友";
+"Home.LifeList.Title.PK"               = "PK";
+"Home.LifeList.Title.About"            = "關於";
+"Home.LifeList.Title.Help"             = "幫助與反饋";
+"Home.LifeList.Title.Related"          = "體感應用";
+"Home.RightList.Title.Camera"          = "遙控相機";
+"Home.RightList.Title.Notification"    = "來電提醒";
+"Home.RightList.Title.AlarmClock"      = "手環鬧鐘";
+"Home.RightList.Title.Security"        = "緊急求救";
+"Home.RightList.Title.FirmwareUpgrade" = "固件升級";
+"Home.RightList.Title.BindingBand"     = "綁定新的豚鼠手環";
+
+"Band.Title"                           = "我的豚鼠手環";
+"Band.FWVersion"                       = "固件版本: ";
+"Band.Disconnect.Title"                = "手環未連接";
+"Band.Disconnect.FWVersion.Title"      = "按下手環按鈕自動連接";
+"Band.Disconnect.BandName.Title"       = "開啟藍牙，";
+"Band.Disconnect.GetFWVersion.Title"   = "獲取中";
+
+
+//Chart
+"Chart.Sleep"              = "睡眠";
+"Chart.Step"               = "計步";
+"Chart.TimeBucket.Day"     = "日";
+"Chart.TimeBucket.Week"    = "周";
+"Chart.TimeBucket.Month"   = "月";
+
+"Chart.Target.Percent"     = "目標完成度";
+"Chart.Step.Today.Step"    = "步數";
+"Chart.Step.Kilometer"     = "路程";
+"Chart.Step.TimeUsed"      = "用時";
+"Chart.Step.Week.Step"     = "周總步數";
+"Chart.Step.Average.Step"  = "日均步數";
+"Chart.Step.Month.Step"    = "月總步數";
+
+"Chart.Sleep.Deep"         = "深睡";
+"Chart.Sleep.Light"        = "淺睡";
+"Chart.Sleep.Degree.Deep"  = "深度";
+"Chart.Sleep.Degree.Light" = "淺度";
+"Chart.Sleep.Average."     = "日均睡眠";
+"Share.To"                 = "分享到";
+
+//好友，联系人
+"Contacts.ListCell.Cavy"               = "生活豚鼠";
+"Contacts.SearchBar.Search"            = "搜索";
+"Contacts.Title"                       = "聯繫人";
+"Contacts.NewFriendsCell"              = "新的朋友";
+"Contacts.AddFriendsCell"              = "添加好友";
+"Contacts.SearchplaceHolder"           = "  搜索你得聯繫人";
+"Contacts.ListCell.Delete"             = "刪除";
+"Contacts.ListCell.Care"               = "關注";
+"Contacts.ListCell.UndoCare"           = "取消關注";
+"Contacts.ListCell.Add"                = "添加";
+"Contacts.ListCell.Agree"              = "同意";
+"Contacts.ListCell.AlreaydAdd"         = "已發送";
+"Contacts.Search.PhoneNum"             = "通訊錄好友";
+"Contacts.Search.RecommendNum"         = "推薦好友";
+"Contacts.Search.NearbyNum"            = "附近好友";
+"Contacts.Search.placeHolder"          = "  搜索新的好友";
+"Contacts.Search.dropRefresh"          = "下拉換一批";
+"Contacts.Request.placeHolder"         = "發送驗證申請，等待對方通過";
+"Contacts.Request.SendButton"          = "發送";
+"Contacts.ShowInfo.city"               = "城市";
+"Contacts.ShowInfo.Address"            = "地址";
+"Contacts.ShowInfo.old"                = "年齡";
+"Contacts.ShowInfo.Gender"             = "性別";
+"Contacts.Gender.Girl"                 = "女";
+"Contacts.Gender.Boy"                  = "男";
+"Contacts.ShowInfo.NotesName"          = "設置備註";
+"Contacts.ShowInfo.TransformNotes"     = "點擊修改備註";
+"Contacts.ShowInfo.Height"             = "身高";
+"Contacts.ShowInfo.Weight"             = "體重";
+"Contacts.ShowInfo.Birth"              = "生日";
+"Contacts.ShowInfo.PK"                 = "PK";
+"Contacts.ShowInfo.PKSubInfo"          = "點擊查看";
+"Contacts.ShowInfo.Step"               = "計步";
+"Contacts.ShowInfo.Sleep"              = "睡眠";
+"Contacts.ShowInfo.Achievement"        = "成就";
+"Contacts.ShowInfo.AchievementNum"     = "您已累計走了";
+"Contacts.ChangeNotesName.PlaceHolder" = "輸入備註名";
+"Contacts.ChangeNotesName.Button"      = "確定";
+"Contacts.ChangeSelfName.PlaceHolder"  = "更改的昵稱";
+"Contacts.Request.VerifyMsg"           = "哈嘍，我是";
+"Contacts.NavTitle.Remark"             = "修改備註";
+"Contacts.NavTitle.AccountInfo"        = "賬戶信息";
+"Contacts.Request.SureButton"          = "確定";
+"Contacts.EmptyView.NearbyInfo"        = "附近暫時未搜索到";
+"Contacts.EmptyView.AddressBookInfo"   = "手機通訊錄中的好友中\n還沒加入豚鼠";
+"Contacts.ChangeNickName.NavTitle"     = "昵稱";
+"Contacts.ChangeAddress.NavTitle"      = "地址";
+
+//账户信息
+"AccountInfo.Title"                      = "账户信息";
+"AccountInfo.LoginoutButton.Title"       = "退出登录";
+"AccountInfo.Photo"                      = "从手机相册中选择";
+"AccountInfo.Camera"                     = "拍照";
+"AccountInfo.ChangeNickname.Placeholder" = "输入昵称";
+"AccountInfo.ChangeAddress.Placeholder"  = "输入城市";
+"AccountInfo.AchieveView.NumPrefix"      = "您已累计行走";
+"AccountInfo.EditNickName"               = "编辑昵称";
+
+//闹钟
+"AlarmClock.IntelligentClockTableFooter.Info" = "手環振動提醒 遠離傳統鬧鈴噪聲";
+"AlarmClock.Title"                            = "手環鬧鐘";
+"AlarmClock.Awake.Title"                      = "智能喚醒";
+"AlarmClock.Awake.Description"                = "允許你鬧鐘在目標喚醒時間之前30分鐘內將我從淺度睡眠中喚醒，讓我更輕鬆的起床。";
+"AlarmClock.AlarmCircle.Title"                = "鬧鐘周期";
+"AlarmClock.AlarmCircle.SubTitle"             = "小提示";
+"AlarmClock.AlarmCircle.Description"          = "鬧鐘振動過程中，按一下手環按鈕即可停止振動。";
+"AlarmClock.DeleteBtn.Title"                  = "刪除";
+"AlarmClock.AlarmCircle.AlertTitle"           = "請選擇鬧鐘周期";
+"AlarmClock.EmptyView.Title"                  = "未設置鬧鐘";
+"AlarmClock.EmptyView.Info"                   = "手環震動喚醒，遠離傳統鬧鈴噪聲";
+"AlarmClock.NoCircle.Info"                    = "提醒一次";
+"AlarmClock.CircleEveryday.Info"              = "每天";
+"AlarmClock.CircleWeekday.Info"               = "工作日";
+"AlarmClock.CircleWeekend.Info"               = "雙休日";
+"AlarmClock.AlarmClockCountError"             = "手環最多只能添加2個鬧鐘";
+
+//设置
+"Setting.Safety.Title"                          = "緊急求救";
+"Setting.SafetyTableCell.ContactButton"         = "點擊添加";
+"Setting.SafetyTableCell.ContactTitle"          = "緊急聯繫人";
+"Setting.SafetyPhoneNumberError"                = "手機號格式錯誤，無法發送短訊";
+"Setting.SafetyPhoneNumberCancel"               = "取消";
+"Setting.SafetyTableCell.GPSTitle"              = "GPS定位";
+"Setting.SafetyTableFooter.Title"               = "溫馨提示";
+"Setting.SafetyTableFooter.Info"                = "緊急情況下，連續按4下按鈕，緊急聯繫人即可收到豚鼠為您發送的請求信息及GPS定位消息。";
+"Setting.SafetyTableEmergencyContact.CancelBtn" = "取消";
+"Setting.SafetyTableEmergency.AlertMsg"         = "緊急聯繫人上限3人";
+"Setting.ReminderPhoneCall.Title"               = "來電提醒";
+"Setting.ReminderPhoneCall.Description"         = "秒未接提醒";
+"Setting.ReminderMessage.Title"                 = "短訊提醒";
+"Setting.ReminderMessage.Description"           = "振動一次通知提醒";
+"Setting.ReminderReconnect.Title"               = "斷線手環自動重連";
+"Setting.ReminderReconnect.Type"                = "3";
+"Setting.ReminderMessage.Type"                  = "2";
+"Setting.ReminderPhone.Type"                    = "1";
+
+//PK
+"PK.RulesView.HowPKTitle"               = "怎麼PK？";
+"PK.RulesView.HowPKInfo"                = "PK是與好友比拼步數，只需點擊「+」選擇比賽時長即開始PK";
+"PK.RulesView.HowWinTitle"              = "怎麼取勝？";
+"PK.RulesView.HowWinInfo"               = "比賽規定時間內，比對手行走更多步數即可取勝";
+"PK.RulesView.HowSeeTitle"              = "別人是否能看到我的步數？";
+"PK.RulesView.HowSeeInfo"               = "在創建對決時選擇公開PK時況，則所有好友能看到你的PK時況，選擇關閉表示僅對決雙方可見";
+"PK.IntroduceVC.InfoTitle"              = "讓我們比一比吧";
+"PK.IntroduceVC.SelectInfo"             = "選擇好友、選定時長";
+"PK.PK.Title"                           = "PK";
+"PK.InvitationVC.Title"                 = "對決邀請";
+"PK.InvitationVC.SelectFriend"          = "選擇對手";
+"PK.InvitationVC.SelectTime"            = "選擇時長";
+"PK.InvitationVC.TimeUnit"              = "天";
+"PK.InvitationVC.PKState"               = "PK時況";
+"PK.InvitationVC.PKOtherSeeAble"        = "所有好友可見";
+"PK.InvitationVC.PKOtherSeeUnable"      = "對決雙方可見";
+"PK.ChallengeView.PKTimeTitle"          = "PK時長";
+"PK.ChallengeView.PKRules"              = "如不接受，三天後失效";
+"PK.InfoOrResultView.PKEndTimeTitle"    = "PK時長";
+"PK.InfoOrResultView.PKNotEndTimeTitle" = "余剩時間";
+"PK.InfoOrResultView.DayUnit"           = "天";
+"PK.InfoOrResultView.HourUnit"          = "小時";
+"PK.InfoOrResultView.MinUnit"           = "分鐘";
+"PK.CustomView.UserName"                = "我";
+"PK.CustomView.WinState"                = "勝利了";
+"PK.RecordsCell.DurationDescription"    = "天步數對決";
+"PK.RecordsCell.YouWin"                 = "你贏了";
+"PK.RecordsCell.Win"                    = "贏了";
+"PK.RecordsCell.PKAgainBtnTitle"        = "再戰";
+"PK.RecordsCell.AcceptBtnTitle"         = "接受";
+"PK.RecordsCell.UndoBtnTitle"           = "撤銷";
+"PK.RecordsCell.DeleteBtnTitle"         = "刪除";
+"PK.RecordsVC.WaitSectionTitle"         = "待回應";
+"PK.RecordsVC.DueSectionTitle"          = "進行中";
+"PK.RecordsVC.FinishSectionTitle"       = "已完成";
+"PK.RecordsVC.LaunchPkTitle"            = "發起PK";
+
+
+// 天气
+"Home.Weather.Sun"             = "晴";
+"Home.Weather.Cloudy"          = "多雲";
+"Home.Weather.Overcast"        = "陰";
+"Home.Weather.Rain.Occasional" = "陣雨";
+"Home.Weather.Rain.Thundery"   = "雷陣雨";
+"Home.Weather.Rain.Light"      = "小雨";
+"Home.Weather.Rain.Middle"     = "中雨";
+"Home.Weather.Rain.Heavy"      = "大雨";
+"Home.Weather.Snow.Light"      = "小雪";
+"Home.Weather.Snow.Middle"     = "中雪";
+"Home.Weather.Snow.Heavy"      = "大雪";
+
+
+//相关
+"Relate.About.NavTitle"                      = "關於豚鼠";
+"Relate.About.CurrentVersion"                = "當前版本";
+"Relate.About.FunctionIntroduce"             = "功能介紹";
+"Relate.About.GoOfficialWebsite"             = "進入官網";
+"Relate.About.OfficialWebsiteNavTitle"       = "官網";
+"Relate.About.CopyrightInfo"                 = "豚鼠科技 版權所有\nCopyright © 2014-2016 CavyTech\nAll Right Reserved";
+"Relate.About.CopyrightNavTitle"             = "版權信息";
+"Relate.About.UseAndPrivate"                 = "使用條款和隱私政策";
+"Relate.HelpAndFeedback.NavTitle"            = "幫助與反饋";
+"Relate.HelpAndFeedback.NavRightBtnTitle"    = "意見反饋";
+"Relate.HelpAndFeedback.SendBtnTitle"        = "發送";
+"Relate.HelpAndFeedback.TextViewPlaceHolder" = "請描述你的問題或意見";
+"Relate.HelpAndFeedback.SendSuccessAlertMsg" = "發送成功";
+"Relate.RelateApp.NavTitle"                  = "體感應用";
+"Relate.RelateAppCell.DownloadBtnTitle"      = "下載";
+
+//星期
+"AlarmDay.Monday"    = "一";
+"AlarmDay.Tuesday"   = "二";
+"AlarmDay.Wednesday" = "三";
+"AlarmDay.Thursday"  = "四";
+"AlarmDay.Friday"    = "五";
+"AlarmDay.Saturday"  = "六";
+"AlarmDay.Sunday"    = "日";
+
+// 固件升级
+"UpdateProgress.Info"                         = "請勿退出應用或關閉手環";
+"UpdateProgress.title"                        = "手環固件正在升級";
+"UpdateFirmware.BandDisconnect.AlertMsg"      = "請先連接手環";
+"UpdateFirmware.IsNewVersion.AlertMsg"        = "固件已是最新版本";
+"UpdateFirmware.InstallNewVersion.AlertTitle" = "安裝新的固件版本";
+"UpdateFirmware.DownloadError"                = "error";
+"UpdateFirmware.LowElectric.AlertTitle"       = "手環電量過低";
+"UpdateFirmware.LowEle.AlertMsg"              = "手環電量過低，固件升級至少需要20%%電量，請充電後再試";
+"UpdateFirmware.UpdateFail.AlertMsg"          = "固件升級失敗";
+"UpdateFirmware.UpdateSuccess.AlertMsg"       = "手環正在重啟，請在綠燈亮起後點擊'確定'連接手環";
+"UpdateFirmware.CheckVersion.AlertMsg"        = "正在檢測固件版本";
+"UpdateFirmware.GetBanFWVersion.AlertMsg"     = "手環當前固件版本獲取中，請稍後再試";
+
+
+
+// 主页同步数据
+"Home.Refresh.Idle"       = "下拉同步數據...";
+"Home.Refresh.Pulling"    = "鬆開同步數據...";
+"Home.Refresh.Refreshing" = "  正在同步數據...";
+"Home.Refresh.AlertTitle" = "同步數據失敗";
+"Home.Refresh.faildDes"   = "                1.確認藍牙已打開\n                2.確認手環處於連接狀態\n                3.下拉重新同步數據";
+
+// 弹窗相关
+"Alert.SureAction.Title"             = "確定";
+"Alert.CancelAction.Title"           = "取消";
+"Alert.UpdateAction.Title"           = "升級";
+"Alert.UndoPKWaitRecord.Msg"         = "確認撤銷此次PK？";
+"Alert.ReBindBand.Msg"               = "是否確定要綁定新的手環？該操作將會解除與當前豚鼠手環的綁定。";
+"Alert.tips.Msg"                     = "提示";
+"Alert.relogin.Title"                = "登錄已失效，請重新登錄";
+"Alert.ReUpdateAction.Title"         = "重新升級";
+"Alert.ReTryAfterChargeAction.Title" = "充電後再試";
+"Alert.Camera.OpenCamera"            = "請在iPhone的「設置-隱私-相機」選項中，允許豚鼠生活訪問你的相機";
+"Alert.Camera.OpenMicrophone"        = "請在iPhone的「設置-隱私-麥克風」選項中，允許豚鼠生活訪問你的麥克風";
+"Alert.Camera.Open.All"              = "請在iPhone的「設置-隱私」選項中，允許豚鼠生活訪問你的相機和麥克風";
+"Alert.SignUpSendEmailCode.Title"    = "驗證碼已發送到你的郵箱，請注意查收";
+"Alert.SetAction.Title"              = "設置";
+"Alert.Location.Title"               = "緊急求救功能無法使用";
+"Alert.Location.Msg"                 = "請點擊「設置」前往開啟定位服務";
+"Alert.AppUpdate.Title"              = "發現新版本";
+
+// 分享
+"Share.Title" = "能玩體感遊戲的智能手環";
+"Share.Content" = "來自豚鼠科技";
+
