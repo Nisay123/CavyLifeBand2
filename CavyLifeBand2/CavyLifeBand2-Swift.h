@@ -31,6 +31,10 @@
 //Bugly 统计
 #import <Bugly/Bugly.h>
 
+//个推
+#import "GeTuiSdk.h"
+
+
 #endif /* CavyLifeBand2_Swift_h */
 
 

@@ -82,6 +82,14 @@
 		4CF9CB331D2A41FF00D9C88F /* HomeRealmApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB2F1D2A41FF00D9C88F /* HomeRealmApi.swift */; };
 		4CF9CB341D2A41FF00D9C88F /* HomeWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB301D2A41FF00D9C88F /* HomeWebApi.swift */; };
 		4CF9CB351D2A41FF00D9C88F /* HomeWebJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF9CB311D2A41FF00D9C88F /* HomeWebJSON.swift */; };
+		5A93C1FD1D9A5BF90098AD53 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A93C1FC1D9A5BF90098AD53 /* libc++.tbd */; };
+		5A93C1FF1D9A5C090098AD53 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A93C1FE1D9A5C090098AD53 /* libsqlite3.tbd */; };
+		5A93C2011D9A5C5F0098AD53 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A93C2001D9A5C5F0098AD53 /* MobileCoreServices.framework */; };
+		5A93C2031D9A5C6F0098AD53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A93C2021D9A5C6F0098AD53 /* CoreTelephony.framework */; };
+		5A93C2051D9A5C830098AD53 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A93C2041D9A5C830098AD53 /* AVFoundation.framework */; };
+		5A93C2071D9A5C8F0098AD53 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A93C2061D9A5C8F0098AD53 /* JavaScriptCore.framework */; };
+		5A93C2091D9A5C990098AD53 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A93C2081D9A5C990098AD53 /* CoreLocation.framework */; };
+		5A93C20B1D9A5CA20098AD53 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A93C20A1D9A5CA20098AD53 /* AdSupport.framework */; };
 		5AABC8A71D86A576003AA8CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AABC8A61D86A576003AA8CA /* SystemConfiguration.framework */; };
 		5AABC8A91D86A57F003AA8CA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AABC8A81D86A57F003AA8CA /* Security.framework */; };
 		5AABC8AD1D86ABD5003AA8CA /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AABC8AC1D86ABD5003AA8CA /* Bugly.framework */; };
@@ -447,6 +455,15 @@
 		4CF9CB301D2A41FF00D9C88F /* HomeWebApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWebApi.swift; sourceTree = "<group>"; };
 		4CF9CB311D2A41FF00D9C88F /* HomeWebJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWebJSON.swift; sourceTree = "<group>"; };
 		590A4176408FA696E63D90F6 /* Pods_CavyLifeBand2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CavyLifeBand2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A93C1FA1D9A5BE10098AD53 /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
+		5A93C1FC1D9A5BF90098AD53 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		5A93C1FE1D9A5C090098AD53 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		5A93C2001D9A5C5F0098AD53 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5A93C2021D9A5C6F0098AD53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		5A93C2041D9A5C830098AD53 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5A93C2061D9A5C8F0098AD53 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		5A93C2081D9A5C990098AD53 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5A93C20A1D9A5CA20098AD53 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		5AABC8A61D86A576003AA8CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5AABC8A81D86A57F003AA8CA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5AABC8AC1D86ABD5003AA8CA /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
@@ -737,6 +754,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A93C20B1D9A5CA20098AD53 /* AdSupport.framework in Frameworks */,
+				5A93C2091D9A5C990098AD53 /* CoreLocation.framework in Frameworks */,
+				5A93C2071D9A5C8F0098AD53 /* JavaScriptCore.framework in Frameworks */,
+				5A93C2051D9A5C830098AD53 /* AVFoundation.framework in Frameworks */,
+				5A93C2031D9A5C6F0098AD53 /* CoreTelephony.framework in Frameworks */,
+				5A93C2011D9A5C5F0098AD53 /* MobileCoreServices.framework in Frameworks */,
+				5A93C1FF1D9A5C090098AD53 /* libsqlite3.tbd in Frameworks */,
+				5A93C1FD1D9A5BF90098AD53 /* libc++.tbd in Frameworks */,
 				5AABC8AF1D86AD6E003AA8CA /* libz.tbd in Frameworks */,
 				5AABC8AD1D86ABD5003AA8CA /* Bugly.framework in Frameworks */,
 				5AABC8A91D86A57F003AA8CA /* Security.framework in Frameworks */,
@@ -1814,6 +1839,15 @@
 		E460B001B67D19857BA48CA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A93C20A1D9A5CA20098AD53 /* AdSupport.framework */,
+				5A93C2081D9A5C990098AD53 /* CoreLocation.framework */,
+				5A93C2061D9A5C8F0098AD53 /* JavaScriptCore.framework */,
+				5A93C2041D9A5C830098AD53 /* AVFoundation.framework */,
+				5A93C2021D9A5C6F0098AD53 /* CoreTelephony.framework */,
+				5A93C2001D9A5C5F0098AD53 /* MobileCoreServices.framework */,
+				5A93C1FE1D9A5C090098AD53 /* libsqlite3.tbd */,
+				5A93C1FC1D9A5BF90098AD53 /* libc++.tbd */,
+				5A93C1FA1D9A5BE10098AD53 /* libc.tbd */,
 				5AABC8AE1D86AD6E003AA8CA /* libz.tbd */,
 				5AABC8A81D86A57F003AA8CA /* Security.framework */,
 				5AABC8AC1D86ABD5003AA8CA /* Bugly.framework */,
