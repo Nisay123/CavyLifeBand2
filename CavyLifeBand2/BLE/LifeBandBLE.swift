@@ -444,6 +444,7 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
         Log.error("Fail connect to: \(peripheral.name)")
     }
     
+    //扫描到设备会进入方法
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String: AnyObject], RSSI: NSNumber) {
         
         if self.peripheral?.state == .Connected {
@@ -484,6 +485,7 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
 
 extension LifeBandBle: CBPeripheralDelegate {
     
+    //搜索服务
     func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
         
         guard let services = peripheral.services else {
@@ -510,6 +512,7 @@ extension LifeBandBle: CBPeripheralDelegate {
         
     }
     
+    //搜索特征
     func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
         
         Log.info("\(service)")
