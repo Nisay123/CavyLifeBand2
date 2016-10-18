@@ -21,6 +21,7 @@ let UMAPPKey = "579abf0be0f55a8e1e00131a"
 let kGtAppId:String = "iQGy0CNwwA8AnZcCXTQ8S6"
 let kGtAppKey:String = "lf6MDVzUAi9DEjbLlGVGh3"
 let kGtAppSecret:String = "ABWaKOPNAl5TgqpGxmyVgA"
+var keepAlive:NSTimer!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTuiSdkDelegate {
@@ -148,7 +149,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-//        application.applicationIconBadgeNumber = 0;
         // [ GTSdk ]：将收到的APNs信息传给个推统计
         GeTuiSdk.handleRemoteNotification(userInfo);
         
@@ -190,7 +190,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
         NSLog("\n>>>[GeTuiSdk DidReceivePayload]:%@\n\n",msg);
     }
 
-    
     
     
     /**
@@ -416,10 +415,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        // 进入后台和杀死进程
+        // 进入后台和杀死进程(统计事件)
         EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.AppQuit)
+                
+        keepAlive = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(AppDelegate.tickDown), userInfo: nil, repeats: true)
+        
     }
 
+    func tickDown() {
+        LifeBandCtrl.shareInterface.getBandElectric { [unowned self] electric in
+    
+        }
+
+    }
+    
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         
@@ -431,6 +440,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
         
         NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.HomeRefreshDate.rawValue, object: nil)
         EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.AppOpen)
+        
+        keepAlive.invalidate()
         
     }
 
