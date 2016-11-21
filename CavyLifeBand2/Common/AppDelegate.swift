@@ -22,6 +22,7 @@ let kGtAppId:String = "iQGy0CNwwA8AnZcCXTQ8S6"
 let kGtAppKey:String = "lf6MDVzUAi9DEjbLlGVGh3"
 let kGtAppSecret:String = "ABWaKOPNAl5TgqpGxmyVgA"
 var keepAlive:NSTimer!
+var reconnectTimer:NSTimer!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTuiSdkDelegate {
@@ -93,7 +94,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
         // 注册APNs - custom method - 开发者自定义的方法
         self.registerUserNotification(application);
         
-
+        
+        //注册定时器（用于来电提醒）
+        keepAlive = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(AppDelegate.tickDown), userInfo: nil, repeats: true)
+        
+        //关闭定时器
+        keepAlive.fireDate = NSDate.distantFuture()
         
         return true
 
@@ -113,7 +119,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
             let userSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(userSettings)
         } else {
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes([.Alert, .Sound, .Badge])
+//            UIApplication.sharedApplication().registerForRemoteNotificationTypes([.Alert, .Sound, .Badge])
+            
+            let userSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound, .Badge], categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(userSettings)
         }
     }
 
@@ -411,22 +420,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
+     // MARK: - 进入后台
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         // 进入后台和杀死进程(统计事件)
         EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.AppQuit)
-                
-        keepAlive = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(AppDelegate.tickDown), userInfo: nil, repeats: true)
+        
+        //为保持后台活性（来电提醒）
+        if LifeBandBle.shareInterface.centraManager?.state == .PoweredOn && LifeBandBle.shareInterface.getConnectState() == .Connected {
+            //开启定时器
+            keepAlive.fireDate = NSDate.distantPast()
+            
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.backgroundConnect), name: BandBleNotificationName.BandDesconnectNotification.rawValue, object: nil)
+        
         
     }
-
-    func tickDown() {
-        LifeBandCtrl.shareInterface.getBandElectric { [unowned self] electric in
     
+    //app后台保持和手环通信
+    func tickDown() {
+        
+        LifeBandCtrl.shareInterface.getBandElectric { [unowned self] electric in
+            
+        }
+    }
+    
+    //后台自动重连
+    func backgroundConnect() {
+        if LifeBandBle.shareInterface.centraManager?.state == .PoweredOn  {
+            
+            if CavyDefine.loginUserBaseInfo.loginUserInfo.loginUserId.isEmpty {
+                return
+            }
+            
+            LifeBandBle.shareInterface.connect(LifeBandBle.shareInterface.centraManager!, peripheral: LifeBandBle.shareInterface.peripheral!)
+            
+            print("试图自动重连")
         }
 
+    
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
@@ -441,7 +476,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
         NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.HomeRefreshDate.rawValue, object: nil)
         EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.AppOpen)
         
-        keepAlive.invalidate()
+        //进入前台关闭定时器
+        keepAlive.fireDate = NSDate.distantFuture()
+        
         
     }
 
@@ -457,7 +494,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LifeBandBleDelegate,GeTui
             EventStatisticsApi.shareApi.uploadEventInfo(ActivityEventType.BandDisconnect)
             EventStatisticsApi.shareApi.uploadUMeng(ActivityEventType.BandDisconnect)
         }
-        
     }
 
     // MARK: - 如果使用SSO（可以简单理解成跳客户端授权），以下方法是必要的

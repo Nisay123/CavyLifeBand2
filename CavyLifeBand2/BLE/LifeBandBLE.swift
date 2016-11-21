@@ -353,7 +353,7 @@ class LifeBandBle: NSObject {
      - parameter central:    控制中心
      - parameter peripheral: 设备
      */
-    private func connect(central: CBCentralManager, peripheral: CBPeripheral) {
+     func connect(central: CBCentralManager, peripheral: CBPeripheral) {
         
         self.peripheral = peripheral
         peripheral.delegate = self
@@ -485,7 +485,7 @@ extension LifeBandBle: CBCentralManagerDelegate, LifeBandBleDelegate {
 
 extension LifeBandBle: CBPeripheralDelegate {
     
-    //搜索服务
+    //当连接完毕后，就是扫描这个外设（Peripheral）所支持服务。然后可以保存下来，下次可以直接调用
     func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
         
         guard let services = peripheral.services else {
@@ -512,7 +512,7 @@ extension LifeBandBle: CBPeripheralDelegate {
         
     }
     
-    //搜索特征
+    //扫描到Service后，要遍历这个Service所包含的Characteristics。
     func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
         
         Log.info("\(service)")
